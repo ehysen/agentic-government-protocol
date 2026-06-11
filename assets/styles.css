@@ -599,6 +599,9 @@ figcaption {
    With JS: the [data-enhanced] flag turns it into a stepper.
    ========================================================================== */
 .demo {
+  /* --chan: per-channel accent, switched by [data-channel] below. */
+  --chan: var(--brand);
+  --chan-soft: var(--brand-soft);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   background: var(--paper);
@@ -606,6 +609,36 @@ figcaption {
   margin: 1.6rem 0;
   box-shadow: var(--shadow);
 }
+.demo[data-channel="agent"] { --chan: var(--brand);   --chan-soft: var(--brand-soft); }
+.demo[data-channel="app"]   { --chan: var(--accent);  --chan-soft: var(--accent-soft); }
+.demo[data-channel="sms"]   { --chan: #0a7d32;        --chan-soft: #e3f3e7; }
+.demo[data-channel="phone"] { --chan: #7c3aed;        --chan-soft: #ede7fb; }
+
+/* Channel toggle — the same protocol, reached however the person prefers. */
+.demo__channels {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .55rem .8rem;
+  padding: .75rem 1rem; background: var(--paper-soft); border-bottom: 1px solid var(--line);
+}
+.demo__channels-label { font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 700; color: var(--ink-soft); }
+.demo__channels-set { display: flex; flex-wrap: wrap; gap: .4rem; }
+.demo__chan {
+  display: inline-flex; align-items: center; gap: .4rem;
+  padding: .38rem .7rem; border: 1px solid var(--line); border-radius: 999px;
+  background: var(--paper); cursor: pointer;
+  font: inherit; font-size: .82rem; font-weight: 600; color: var(--ink-soft);
+  transition: background .18s, color .18s, border-color .18s;
+}
+.demo__chan svg { width: 16px; height: 16px; flex: 0 0 16px; }
+.demo__chan:hover { color: var(--ink); border-color: var(--ink-soft); }
+.demo__chan.is-active { background: var(--chan); border-color: var(--chan); color: #fff; }
+.demo__chan:focus-visible { outline: 2px solid var(--chan); outline-offset: 2px; }
+.demo__channel-note {
+  margin: 0; padding: .7rem 1rem; font-size: .86rem; color: var(--ink-soft);
+  background: var(--chan-soft); border-bottom: 1px solid var(--line);
+  border-left: 3px solid var(--chan);
+}
+.demo__channel-note strong { color: var(--ink); }
+
 .demo__bar { display: flex; background: var(--paper-soft); border-bottom: 1px solid var(--line); overflow-x: auto; }
 .demo__tab {
   flex: 1 1 0; min-width: 116px;
@@ -626,10 +659,18 @@ figcaption {
 
 .demo__body { display: grid; grid-template-columns: 1fr 1fr; }
 @media (max-width: 740px) { .demo__body { grid-template-columns: 1fr; } }
-.demo__chat { padding: 1.2rem; border-right: 1px solid var(--line-soft); }
+.demo__chat { padding: 1.2rem; border-right: 1px solid var(--line-soft); border-top: 3px solid var(--chan); }
 .demo__behind { padding: 1.2rem; background: var(--paper-soft); }
 @media (max-width: 740px) {
   .demo__chat { border-right: none; border-bottom: 1px solid var(--line-soft); }
+}
+
+/* Fixed height: the demo holds its size as steps are revealed, so the page
+   doesn't jump. Each column scrolls internally instead of growing. */
+@media (min-width: 741px) {
+  .demo[data-enhanced] .demo__body { height: clamp(360px, 56vh, 480px); }
+  .demo[data-enhanced] .demo__chat,
+  .demo[data-enhanced] .demo__behind { overflow-y: auto; }
 }
 .demo__col-label { font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 700; color: var(--ink-soft); margin: 0 0 .9rem; }
 .demo__behind .demo__col-label { color: var(--accent); }

@@ -76,9 +76,32 @@ return [
       <p>Maria was laid off two weeks ago, with two kids and her main income gone. Step
       through the same moment below &mdash; <strong>what she experiences</strong> on the left,
       and <strong>what the government agent and the session do behind the scenes</strong> on
-      the right.</p>
+      the right. The same protocol reaches her through whatever channel she prefers &mdash;
+      <strong>switch it below</strong> and watch the right-hand side stay identical.</p>
 
-      <div class="demo" data-demo aria-label="Interactive walkthrough: Maria applies for food assistance through an agent">
+      <div class="demo" data-demo data-channel="agent" aria-label="Interactive walkthrough: Maria applies for food assistance through an agent">
+        <div class="demo__channels" role="radiogroup" aria-label="How Maria reaches the service">
+          <span class="demo__channels-label">She reaches it via</span>
+          <div class="demo__channels-set">
+            <button class="demo__chan is-active" type="button" role="radio" aria-checked="true" data-channel="agent">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="6" width="16" height="12" rx="3"/><circle cx="9" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="1.3" fill="currentColor" stroke="none"/><path d="M12 3v3" stroke-linecap="round"/></svg>
+              <span>Consumer AI agent</span>
+            </button>
+            <button class="demo__chan" type="button" role="radio" aria-checked="false" data-channel="app">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 18h2" stroke-linecap="round"/></svg>
+              <span>Free gov agent app</span>
+            </button>
+            <button class="demo__chan" type="button" role="radio" aria-checked="false" data-channel="sms">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 5h16v11H9l-4 3z" stroke-linejoin="round"/><path d="M8 10h8M8 13h5" stroke-linecap="round"/></svg>
+              <span>SMS</span>
+            </button>
+            <button class="demo__chan" type="button" role="radio" aria-checked="false" data-channel="phone">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 3h3l2 5-2 1.5a11 11 0 0 0 5 5L17 17l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 4 6 2 2 0 0 1 6 3z" stroke-linejoin="round"/></svg>
+              <span>1&#8209;800&#8209;GOVERNMENT</span>
+            </button>
+          </div>
+        </div>
+        <p class="demo__channel-note" data-channel-note>Through <strong>Maria&rsquo;s own consumer AI agent</strong> &mdash; the assistant she already uses. It speaks AGP to the government agent for her. The exchange on the right is identical on every channel.</p>
         <div class="demo__bar" role="tablist" aria-label="Stages of the interaction">
           <button class="demo__tab is-active" type="button" role="tab" id="d-tab-0" aria-controls="d-bts-0" aria-selected="true" data-i="0"><span class="demo__tabnum">1</span><span class="demo__tablabel">Discovery</span></button>
           <button class="demo__tab" type="button" role="tab" id="d-tab-1" aria-controls="d-bts-1" aria-selected="false" data-i="1"><span class="demo__tabnum">2</span><span class="demo__tablabel">Eligibility</span></button>
@@ -87,7 +110,7 @@ return [
           <button class="demo__tab" type="button" role="tab" id="d-tab-4" aria-controls="d-bts-4" aria-selected="false" data-i="4"><span class="demo__tabnum">5</span><span class="demo__tablabel">Outcome</span></button>
         </div>
         <div class="demo__body">
-          <div class="demo__chat">
+          <div class="demo__chat" data-chat>
             <p class="demo__col-label">What Maria experiences</p>
             <div class="bubble bubble--system is-shown" data-stage="0"><small>Context</small> Maria, household of 3, just lost her job.</div>
             <div class="bubble bubble--person is-shown" data-stage="0"><small>Maria</small> I&rsquo;m really worried about groceries this month.</div>
