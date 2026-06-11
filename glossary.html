@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glossary — AGP</title>
+  <meta name="description" content="Definitions of the key AGP terms: the four actors, the constituent and agency agents, the agent-to-agent model, the core vocabulary types, agency-of-record, and validate-after.">
+  <link rel="stylesheet" href="assets/styles.css?v=mq9d0g48">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d4ed8'/%3E%3Cg fill='none' stroke='white' stroke-width='4' stroke-linecap='round'%3E%3Ccircle cx='20' cy='20' r='6'/%3E%3Ccircle cx='44' cy='20' r='6'/%3E%3Ccircle cx='32' cy='46' r='6'/%3E%3Cpath d='M24 24 28 40M40 24 36 40M26 20h12'/%3E%3C/g%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="index.html">
+      <svg class="brand__mark" viewBox="0 0 64 64" role="img" aria-label="AGP logo">
+        <rect width="64" height="64" rx="14" fill="#1d4ed8"/>
+        <g fill="none" stroke="white" stroke-width="4" stroke-linecap="round">
+          <circle cx="20" cy="20" r="6"/><circle cx="44" cy="20" r="6"/><circle cx="32" cy="46" r="6"/>
+          <path d="M24 24 28 40M40 24 36 40M26 20h12"/>
+        </g>
+      </svg>
+      <span>
+        <span class="brand__name">Agentic Government Protocol</span><br>
+        <span class="brand__sub">An open standard for agent-mediated public service delivery</span>
+      </span>
+    </a>
+    <span class="header-spacer"></span>
+    <span class="status-badge" title="Early strawman; conceptual, not yet machine-readable">v0.1 · Beta</span>
+    <nav class="header-links" aria-label="External">
+      <a href="https://github.com/ehysen/agentic-government-protocol">GitHub</a>
+      <a href="governance.html">Governance</a>
+    </nav>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" hidden>
+    <label for="nav-toggle" class="nav-toggle-label">Spec contents</label>
+    <nav aria-label="Specification contents">
+      <ul>
+        <li><a href="index.html">Overview</a></li>
+      </ul>
+      <p>Specification</p>
+      <ul>
+        <li><a href="principles.html">Principles</a></li>
+        <li><a href="actors.html">Actors &amp; roles</a></li>
+        <li><a href="concepts.html">Core concepts &amp; vocabulary</a></li>
+        <li><a href="flow.html">The canonical flow</a></li>
+        <li><a href="schema.html">The schema</a></li>
+        <li><a href="authorization.html">Authorization, consent &amp; identity</a></li>
+        <li><a href="example.html">Worked example</a></li>
+      </ul>
+      <p>For agencies</p>
+      <ul>
+        <li><a href="get-started.html">Get started</a></li>
+      </ul>
+      <p>Project</p>
+      <ul>
+        <li><a href="governance.html">Governance &amp; contribution</a></li>
+        <li><a href="roadmap.html">Status &amp; roadmap</a></li>
+        <li><a href="related-work.html">Related work</a></li>
+        <li><a href="open-questions.html">Open questions</a></li>
+      </ul>
+      <p>Reference</p>
+      <ul>
+        <li><a href="glossary.html" aria-current="page">Glossary</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main id="main">
+    <div class="content">
+      <p class="eyebrow">Reference</p>
+      <h1>Glossary</h1>
+      <p class="lede">Key AGP terms in one place. Vocabulary types are defined more fully in
+      <a href="concepts.html">Core concepts</a> and <a href="schema.html">The schema</a>;
+      actors in <a href="actors.html">Actors &amp; roles</a>. For the standards AGP builds on,
+      see <a href="related-work.html">Related work</a>.</p>
+
+      <dl class="deflist">
+        <dt>Agency agent</dt>
+        <dd>The government agency&rsquo;s machine endpoint in an AGP exchange. It advertises services, answers eligibility queries, verifies authorization, accepts requests, and returns receipts &mdash; strictly within the authority of the agency of record.</dd>
+
+        <dt>Agency of record</dt>
+        <dd>The government agency that owns a service and retains authority over eligibility determination and provisioning. Authority never transfers away from it to an agent.</dd>
+
+        <dt>Agent-to-agent (A2A)</dt>
+        <dd>AGP&rsquo;s core posture: a constituent-side agent and a government agency agent exchange standardized messages directly, rather than an app calling a bespoke API.</dd>
+
+        <dt>Authorization</dt>
+        <dd>A scoped grant from a constituent letting a specific agent act on their behalf and use specific data for a specific purpose. A core type; its cryptographic proof is deferred to the companion layer.</dd>
+
+        <dt>Catalog</dt>
+        <dd>The single published document an agency agent serves to advertise itself and its services &mdash; the entry point for discovery and the &ldquo;publish once&rdquo; artifact.</dd>
+
+        <dt>Companion layer</dt>
+        <dd>The deferred authorization / consent / identity mechanism that proves a constituent authorized an agent. AGP v1 defines its interaction points but not its cryptography.</dd>
+
+        <dt>Constituent</dt>
+        <dd>The person or household seeking a government service or benefit; the source of authority for any agent action.</dd>
+
+        <dt>Constituent-side agent</dt>
+        <dd>Software acting on a constituent&rsquo;s behalf &mdash; the Public AI Option, a state agent, or a trusted third-party / NGO agent. Never a decision-maker of record.</dd>
+
+        <dt>EligibilityRule</dt>
+        <dd>A machine-readable condition the agency uses to determine who qualifies, expressed over named attributes. Owned and published by the agency.</dd>
+
+        <dt>Extension</dt>
+        <dd>A namespaced set of program- or jurisdiction-specific terms layered on the small core. May graduate into core by consensus.</dd>
+
+        <dt>Intermediary</dt>
+        <dd>NGOs, navigators, caseworkers, trusted orgs, and data intermediaries that assist constituents &mdash; including by operating a constituent-side agent for them. Central to equity.</dd>
+
+        <dt>Pending</dt>
+        <dd>The staging area where proposed AGP terms can be seen and used together &mdash; explicitly marked subject to change &mdash; before graduating into the core.</dd>
+
+        <dt>Publish once, read everywhere</dt>
+        <dd>The pattern AGP adopts: agencies publish authoritative service metadata and eligibility rules once, and any compliant agent reads them, preserving a chain back to the authoritative source.</dd>
+
+        <dt>Receipt / StatusRecord</dt>
+        <dd>The agency&rsquo;s standardized response to a request: outcome, audit trail, live status, and the correction/appeal path. A core type.</dd>
+
+        <dt>Service</dt>
+        <dd>A government service or benefit with its channels and requirements, published once by the agency agent. The core type read during discovery.</dd>
+
+        <dt>ServiceRequest</dt>
+        <dd>A standardized request an agent submits to the agency agent, referencing a Service and an Authorization. A core type.</dd>
+
+        <dt>Validate-after</dt>
+        <dd>An allowed delivery pattern in which an agency provisions provisionally on attested attributes and verifies afterward. Declared per Service; never required.</dd>
+      </dl>
+
+      <nav class="pagenav" aria-label="Pagination">
+        <a class="prev" href="open-questions.html"><small>Previous</small> ← Open questions</a>
+        <a class="next" href="faq.html"><small>Next</small> FAQ →</a>
+      </nav>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div>
+      <strong>Agentic Government Protocol</strong> — v0.1 (strawman).<br>
+      An open standard for agent-mediated public service delivery.
+    </div>
+    <div>
+      <a href="governance.html">Governance</a> ·
+      <a href="https://github.com/ehysen/agentic-government-protocol">GitHub</a> ·
+      <a href="glossary.html">Glossary</a> ·
+      <a href="faq.html">FAQ</a><br>
+      Licensed under Apache 2.0 (proposed). Conceptual specification.
+    </div>
+  </div>
+</footer>
+</body>
+</html>

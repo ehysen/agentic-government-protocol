@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Core concepts & vocabulary — AGP</title>
+  <meta name="description" content="AGP defines a small core vocabulary — Service, EligibilityRule, Authorization, ServiceRequest, Receipt/StatusRecord, and the actor types — plus an extension mechanism for the long tail. The concrete schema is on the Schema page.">
+  <link rel="stylesheet" href="assets/styles.css?v=mq9d0g48">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d4ed8'/%3E%3Cg fill='none' stroke='white' stroke-width='4' stroke-linecap='round'%3E%3Ccircle cx='20' cy='20' r='6'/%3E%3Ccircle cx='44' cy='20' r='6'/%3E%3Ccircle cx='32' cy='46' r='6'/%3E%3Cpath d='M24 24 28 40M40 24 36 40M26 20h12'/%3E%3C/g%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="index.html">
+      <svg class="brand__mark" viewBox="0 0 64 64" role="img" aria-label="AGP logo">
+        <rect width="64" height="64" rx="14" fill="#1d4ed8"/>
+        <g fill="none" stroke="white" stroke-width="4" stroke-linecap="round">
+          <circle cx="20" cy="20" r="6"/><circle cx="44" cy="20" r="6"/><circle cx="32" cy="46" r="6"/>
+          <path d="M24 24 28 40M40 24 36 40M26 20h12"/>
+        </g>
+      </svg>
+      <span>
+        <span class="brand__name">Agentic Government Protocol</span><br>
+        <span class="brand__sub">An open standard for agent-mediated public service delivery</span>
+      </span>
+    </a>
+    <span class="header-spacer"></span>
+    <span class="status-badge" title="Early strawman; conceptual, not yet machine-readable">v0.1 · Beta</span>
+    <nav class="header-links" aria-label="External">
+      <a href="https://github.com/ehysen/agentic-government-protocol">GitHub</a>
+      <a href="governance.html">Governance</a>
+    </nav>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" hidden>
+    <label for="nav-toggle" class="nav-toggle-label">Spec contents</label>
+    <nav aria-label="Specification contents">
+      <ul>
+        <li><a href="index.html">Overview</a></li>
+      </ul>
+      <p>Specification</p>
+      <ul>
+        <li><a href="principles.html">Principles</a></li>
+        <li><a href="actors.html">Actors &amp; roles</a></li>
+        <li><a href="concepts.html" aria-current="page">Core concepts &amp; vocabulary</a></li>
+        <li><a href="flow.html">The canonical flow</a></li>
+        <li><a href="schema.html">The schema</a></li>
+        <li><a href="authorization.html">Authorization, consent &amp; identity</a></li>
+        <li><a href="example.html">Worked example</a></li>
+      </ul>
+      <p>For agencies</p>
+      <ul>
+        <li><a href="get-started.html">Get started</a></li>
+      </ul>
+      <p>Project</p>
+      <ul>
+        <li><a href="governance.html">Governance &amp; contribution</a></li>
+        <li><a href="roadmap.html">Status &amp; roadmap</a></li>
+        <li><a href="related-work.html">Related work</a></li>
+        <li><a href="open-questions.html">Open questions</a></li>
+      </ul>
+      <p>Reference</p>
+      <ul>
+        <li><a href="glossary.html">Glossary</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main id="main">
+    <div class="content">
+      <p class="eyebrow">Specification</p>
+      <h1>Core concepts &amp; vocabulary</h1>
+      <p class="lede">AGP keeps a deliberately small core of common types and pushes the
+      long tail to extensions. The core is the set of objects that move between agents in
+      the <a href="flow.html">canonical flow</a>; every flow step maps to one of these
+      types. The concrete field-level definitions live on <a href="schema.html">The
+      schema</a>.</p>
+
+      <h2 class="anchored" id="core">The core types<a class="h-anchor" href="#core" aria-label="Link to this section">#</a></h2>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Type</th><th>One-line definition</th><th>Flow step</th></tr></thead>
+        <tbody>
+          <tr><td><code>Service</code></td><td>A government service or benefit, with the channels it&rsquo;s offered through and what it requires. Published once by the agency agent.</td><td>1 &middot; Discovery</td></tr>
+          <tr><td><code>EligibilityRule</code></td><td>A machine-readable condition (or set of conditions) the agency uses to determine who qualifies, expressed over named attributes.</td><td>2 &middot; Eligibility</td></tr>
+          <tr><td><code>Authorization</code></td><td>A scoped grant from a constituent letting a specific agent act on their behalf and use specific data for a specific purpose.</td><td>3 &middot; Authorization</td></tr>
+          <tr><td><code>ServiceRequest</code></td><td>A standardized request an agent submits to the agency agent, referencing a Service and an Authorization.</td><td>4 &middot; Request</td></tr>
+          <tr><td><code>Receipt</code> / <code>StatusRecord</code></td><td>The agency&rsquo;s standardized response: outcome, audit trail, current status, and the path to correction or appeal.</td><td>5 &middot; Receipt</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>Alongside these five process types, the core names the actor types &mdash;
+      <code>Constituent</code>, <code>Agent</code>, <code>Intermediary</code>, and
+      <code>Agency</code> &mdash; and the two agent roles (<code>constituent-agent</code>,
+      <code>agency-agent</code>) that produce and consume the objects above. That is the
+      entire core. Everything else is an extension.</p>
+
+      <h2 class="anchored" id="extensions">The extension mechanism<a class="h-anchor" href="#extensions" aria-label="Link to this section">#</a></h2>
+      <p>The core cannot anticipate every program, state, or category of benefit &mdash; nor
+      should it try:</p>
+      <ul>
+        <li><strong>Extensions carry the long tail.</strong> A program or jurisdiction
+        that needs terms the core lacks defines them in a namespaced extension (e.g.
+        <code>snap:</code>, <code>ca:</code>) rather than waiting for the core to grow.</li>
+        <li><strong>A <code>pending</code> staging area.</strong> Proposed additions live
+        in <code>pending</code>, where they can be seen and used together &mdash; explicitly
+        marked subject to change &mdash; before they graduate into core.</li>
+        <li><strong>Graduation by consensus, additively.</strong> Terms that prove broadly
+        useful fold into the core through the <a href="governance.html">public process</a>.
+        The core grows slowly and never breaks existing extensions.</li>
+        <li><strong>Bias to the simplest thing that works.</strong> Adoption by real
+        agencies is the success metric, not vocabulary completeness.</li>
+      </ul>
+
+      <div class="callout">
+        <p class="callout__label">Why small-core matters here</p>
+        <p>Government programs are heterogeneous by design &mdash; SNAP, Medicaid, unemployment
+        insurance, and a local utility-assistance program share almost no fields. A large,
+        rigid core would be wrong for most of them. A small core plus extensions lets each
+        program be precise without forcing one schema on all of them.</p>
+      </div>
+      <p>Ready for specifics? See <a href="schema.html">The schema &rarr;</a></p>
+
+      <nav class="pagenav" aria-label="Pagination">
+        <a class="prev" href="actors.html"><small>Previous</small> ← Actors &amp; roles</a>
+        <a class="next" href="flow.html"><small>Next</small> The canonical flow →</a>
+      </nav>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div>
+      <strong>Agentic Government Protocol</strong> — v0.1 (strawman).<br>
+      An open standard for agent-mediated public service delivery.
+    </div>
+    <div>
+      <a href="governance.html">Governance</a> ·
+      <a href="https://github.com/ehysen/agentic-government-protocol">GitHub</a> ·
+      <a href="glossary.html">Glossary</a> ·
+      <a href="faq.html">FAQ</a><br>
+      Licensed under Apache 2.0 (proposed). Conceptual specification.
+    </div>
+  </div>
+</footer>
+</body>
+</html>

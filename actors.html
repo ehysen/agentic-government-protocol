@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Actors & roles — AGP</title>
+  <meta name="description" content="AGP is agent-to-agent: a constituent-side agent (the person’s own or an intermediary’s) speaks to a government agency agent that represents the agency of record. The four actors are Constituent, Agent, Intermediary, and Government agency.">
+  <link rel="stylesheet" href="assets/styles.css?v=mq9d0g48">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d4ed8'/%3E%3Cg fill='none' stroke='white' stroke-width='4' stroke-linecap='round'%3E%3Ccircle cx='20' cy='20' r='6'/%3E%3Ccircle cx='44' cy='20' r='6'/%3E%3Ccircle cx='32' cy='46' r='6'/%3E%3Cpath d='M24 24 28 40M40 24 36 40M26 20h12'/%3E%3C/g%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="index.html">
+      <svg class="brand__mark" viewBox="0 0 64 64" role="img" aria-label="AGP logo">
+        <rect width="64" height="64" rx="14" fill="#1d4ed8"/>
+        <g fill="none" stroke="white" stroke-width="4" stroke-linecap="round">
+          <circle cx="20" cy="20" r="6"/><circle cx="44" cy="20" r="6"/><circle cx="32" cy="46" r="6"/>
+          <path d="M24 24 28 40M40 24 36 40M26 20h12"/>
+        </g>
+      </svg>
+      <span>
+        <span class="brand__name">Agentic Government Protocol</span><br>
+        <span class="brand__sub">An open standard for agent-mediated public service delivery</span>
+      </span>
+    </a>
+    <span class="header-spacer"></span>
+    <span class="status-badge" title="Early strawman; conceptual, not yet machine-readable">v0.1 · Beta</span>
+    <nav class="header-links" aria-label="External">
+      <a href="https://github.com/ehysen/agentic-government-protocol">GitHub</a>
+      <a href="governance.html">Governance</a>
+    </nav>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" hidden>
+    <label for="nav-toggle" class="nav-toggle-label">Spec contents</label>
+    <nav aria-label="Specification contents">
+      <ul>
+        <li><a href="index.html">Overview</a></li>
+      </ul>
+      <p>Specification</p>
+      <ul>
+        <li><a href="principles.html">Principles</a></li>
+        <li><a href="actors.html" aria-current="page">Actors &amp; roles</a></li>
+        <li><a href="concepts.html">Core concepts &amp; vocabulary</a></li>
+        <li><a href="flow.html">The canonical flow</a></li>
+        <li><a href="schema.html">The schema</a></li>
+        <li><a href="authorization.html">Authorization, consent &amp; identity</a></li>
+        <li><a href="example.html">Worked example</a></li>
+      </ul>
+      <p>For agencies</p>
+      <ul>
+        <li><a href="get-started.html">Get started</a></li>
+      </ul>
+      <p>Project</p>
+      <ul>
+        <li><a href="governance.html">Governance &amp; contribution</a></li>
+        <li><a href="roadmap.html">Status &amp; roadmap</a></li>
+        <li><a href="related-work.html">Related work</a></li>
+        <li><a href="open-questions.html">Open questions</a></li>
+      </ul>
+      <p>Reference</p>
+      <ul>
+        <li><a href="glossary.html">Glossary</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main id="main">
+    <div class="content">
+      <p class="eyebrow">Specification</p>
+      <h1>Actors &amp; roles</h1>
+      <p class="lede">AGP is an <strong>agent-to-agent</strong> protocol. Its core
+      interaction is between a <strong>constituent-side agent</strong> and a
+      <strong>government agency agent</strong>. Behind those agents stand the people and
+      institutions they represent: four actors, one of which &mdash; the intermediary &mdash; is
+      distinctive to the government context.</p>
+
+      <figure>
+        <div class="figure-box">
+          <svg viewBox="0 0 760 360" role="img" aria-labelledby="actorsDiagTitle actorsDiagDesc" width="760" height="360">
+            <title id="actorsDiagTitle">AGP agent-to-agent actor diagram</title>
+            <desc id="actorsDiagDesc">A constituent (and an intermediary who can act for them) is represented by a constituent-side agent on the left. A government agency, the agency of record, is represented by a government agency agent on the right. The two agents exchange AGP messages: the constituent agent sends requests, the agency agent returns receipts. Authority over eligibility and provisioning stays with the agency of record.</desc>
+            <defs>
+              <marker id="aarrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#3c4a63"/></marker>
+            </defs>
+            <g font-family="-apple-system, Segoe UI, Roboto, sans-serif">
+              <!-- left people -->
+              <rect x="24" y="150" width="150" height="70" rx="12" fill="#eaf0fe" stroke="#1d4ed8" stroke-width="2"/>
+              <text x="99" y="180" text-anchor="middle" font-size="15" font-weight="700" fill="#14358f">Constituent</text>
+              <text x="99" y="200" text-anchor="middle" font-size="11.5" fill="#3c4a63">person / household</text>
+              <rect x="24" y="40" width="150" height="66" rx="12" fill="#f6f8fb" stroke="#5d6b85" stroke-width="2"/>
+              <text x="99" y="68" text-anchor="middle" font-size="15" font-weight="700" fill="#11203a">Intermediary</text>
+              <text x="99" y="88" text-anchor="middle" font-size="11.5" fill="#3c4a63">navigator / NGO</text>
+              <!-- constituent agent -->
+              <rect x="250" y="120" width="160" height="120" rx="14" fill="#fff" stroke="#1d4ed8" stroke-width="2.5"/>
+              <text x="330" y="158" text-anchor="middle" font-size="15" font-weight="700" fill="#14358f">Constituent</text>
+              <text x="330" y="176" text-anchor="middle" font-size="15" font-weight="700" fill="#14358f">agent</text>
+              <text x="330" y="206" text-anchor="middle" font-size="11.5" fill="#3c4a63">acts on behalf of</text>
+              <text x="330" y="221" text-anchor="middle" font-size="11.5" fill="#3c4a63">the constituent</text>
+              <!-- agency agent -->
+              <rect x="470" y="120" width="160" height="120" rx="14" fill="#fff" stroke="#0f766e" stroke-width="2.5"/>
+              <text x="550" y="158" text-anchor="middle" font-size="15" font-weight="700" fill="#0f766e">Agency</text>
+              <text x="550" y="176" text-anchor="middle" font-size="15" font-weight="700" fill="#0f766e">agent</text>
+              <text x="550" y="206" text-anchor="middle" font-size="11.5" fill="#3c4a63">represents the</text>
+              <text x="550" y="221" text-anchor="middle" font-size="11.5" fill="#3c4a63">agency of record</text>
+              <!-- agency of record -->
+              <rect x="666" y="130" width="78" height="100" rx="12" fill="#e2f3f0" stroke="#0f766e" stroke-width="2"/>
+              <text x="705" y="170" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0f766e">Agency</text>
+              <text x="705" y="186" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0f766e">of record</text>
+              <text x="705" y="206" text-anchor="middle" font-size="10.5" fill="#3c4a63">holds</text>
+              <text x="705" y="219" text-anchor="middle" font-size="10.5" fill="#3c4a63">authority</text>
+            </g>
+            <g stroke="#3c4a63" stroke-width="1.8" fill="none">
+              <path d="M174 182 L250 182" marker-end="url(#aarrow)"/>
+              <path d="M99 106 C99 150 180 150 250 160" stroke-dasharray="5 4" marker-end="url(#aarrow)"/>
+              <path d="M410 160 L470 160" marker-end="url(#aarrow)"/>
+              <path d="M470 200 L410 200" marker-end="url(#aarrow)"/>
+              <path d="M630 180 L666 180" marker-end="url(#aarrow)"/>
+            </g>
+            <g font-family="-apple-system, Segoe UI, Roboto, sans-serif" font-size="11" fill="#3c4a63">
+              <text x="212" y="174" text-anchor="middle">uses</text>
+              <text x="440" y="150" text-anchor="middle">request</text>
+              <text x="440" y="216" text-anchor="middle">receipt</text>
+              <text x="180" y="132" text-anchor="start" font-style="italic">may operate</text>
+              <text x="648" y="170" text-anchor="middle">within</text>
+              <text x="440" y="262" text-anchor="middle" font-weight="700" fill="#0f766e">&larr;&mdash;&mdash; agent-to-agent (AGP) &mdash;&mdash;&rarr;</text>
+            </g>
+          </svg>
+        </div>
+        <figcaption>AGP&rsquo;s core interaction is agent-to-agent. People and institutions
+        stand behind the agents; authority remains with the agency of record.</figcaption>
+      </figure>
+
+      <h2 class="anchored" id="table">The four actors<a class="h-anchor" href="#table" aria-label="Link to this section">#</a></h2>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Actor</th><th>Role</th><th>Operates</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Constituent</strong></td><td>The person or household seeking a service or benefit. The source of authority.</td><td>&mdash; (is represented)</td></tr>
+          <tr><td><strong>Agent</strong></td><td>Software acting on the constituent&rsquo;s behalf &mdash; the Public AI Option, a state agent, or a trusted third-party / NGO agent.</td><td>Constituent-side agent</td></tr>
+          <tr><td><strong>Intermediary</strong></td><td>NGOs, navigators, caseworkers, trusted orgs (and data intermediaries) that assist constituents &mdash; including by running an agent for them.</td><td>Constituent-side agent (for others)</td></tr>
+          <tr><td><strong>Government agency</strong></td><td>The service provider &mdash; the <strong>agency of record</strong> that retains authority over eligibility and provisioning.</td><td>Agency agent</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h2 class="anchored" id="constituent">Constituent<a class="h-anchor" href="#constituent" aria-label="Link to this section">#</a></h2>
+      <p>The person or household at the center of every flow, and the source of all
+      authority an agent exercises. AGP is judged by whether it makes that person&rsquo;s
+      experience of government simpler, faster, and more dignified.</p>
+
+      <h2 class="anchored" id="agent">Constituent-side agent<a class="h-anchor" href="#agent" aria-label="Link to this section">#</a></h2>
+      <p>Software acting on the constituent&rsquo;s behalf &mdash; discovering services, assembling
+      attributes, checking eligibility, submitting requests, and relaying receipts by
+      speaking to agency agents. It may be the shared &ldquo;Public AI Option,&rdquo; a
+      state-operated agent, or a trusted third-party or NGO agent. It is a fiduciary of
+      <em>action</em>, never a decision-maker of record.</p>
+
+      <h2 class="anchored" id="agency-agent">Government agency agent<a class="h-anchor" href="#agency-agent" aria-label="Link to this section">#</a></h2>
+      <p>The agency&rsquo;s machine endpoint and counterpart in every exchange. The agency
+      agent advertises the agency&rsquo;s services, answers eligibility queries, verifies
+      authorization, accepts <code>ServiceRequest</code>s, and returns
+      <code>Receipt</code>s &mdash; all strictly within the authority delegated to it by the
+      agency of record. It is how an agency becomes reachable by any compliant agent
+      without bespoke, agent-by-agent integration.</p>
+
+      <h2 class="anchored" id="intermediary">Intermediary<a class="h-anchor" href="#intermediary" aria-label="Link to this section">#</a></h2>
+      <p>The actor with no clean commercial analog, and the one that makes AGP a
+      <em>government</em> protocol. Intermediaries are caseworkers, navigators, legal-aid
+      orgs, community organizations, libraries, and benefits-screening nonprofits &mdash; plus
+      <em>data intermediaries</em> that broker attributes between systems.</p>
+      <p>Intermediaries matter for <strong>equity</strong>: many constituents do not have,
+      or do not want, their own agent or device. The intermediary is how those people are
+      still served &mdash; by operating a constituent-side agent <em>for</em> them, or by
+      carrying the same flow through a human-staffed channel. AGP keeps the intermediary a
+      first-class participant, never a workaround.</p>
+
+      <h2 class="anchored" id="agency">Government agency (agency of record)<a class="h-anchor" href="#agency" aria-label="Link to this section">#</a></h2>
+      <p>The institution that owns the service and the determination. It publishes service
+      metadata and eligibility rules, verifies authorization, makes the eligibility
+      determination, provisions the benefit, and issues the receipt &mdash; through its agency
+      agent. Authority stops here and does not transfer: an agent can <em>ask</em>, but
+      only the agency of record can <em>decide</em>. That is the load-bearing trust anchor
+      of the whole protocol.</p>
+
+      <div class="callout callout--note">
+        <p class="callout__label">Trust relationships in one line</p>
+        <p>The <strong>constituent</strong> authorizes a <strong>constituent-side agent</strong>
+        (possibly run by an <strong>intermediary</strong>) to carry a standardized request,
+        agent-to-agent, to the <strong>agency agent</strong> of the
+        <strong>agency of record</strong>, which alone decides and provisions, then returns
+        a receipt along the same chain.</p>
+      </div>
+
+      <nav class="pagenav" aria-label="Pagination">
+        <a class="prev" href="principles.html"><small>Previous</small> ← Principles</a>
+        <a class="next" href="concepts.html"><small>Next</small> Core concepts &amp; vocabulary →</a>
+      </nav>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div>
+      <strong>Agentic Government Protocol</strong> — v0.1 (strawman).<br>
+      An open standard for agent-mediated public service delivery.
+    </div>
+    <div>
+      <a href="governance.html">Governance</a> ·
+      <a href="https://github.com/ehysen/agentic-government-protocol">GitHub</a> ·
+      <a href="glossary.html">Glossary</a> ·
+      <a href="faq.html">FAQ</a><br>
+      Licensed under Apache 2.0 (proposed). Conceptual specification.
+    </div>
+  </div>
+</footer>
+</body>
+</html>

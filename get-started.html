@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Get started — AGP</title>
+  <meta name="description" content="A practical guide for government agencies: how to make your services accessible to agents in five steps — describe your services, express eligibility rules, stand up an agency agent, choose delivery patterns, and return receipts.">
+  <link rel="stylesheet" href="assets/styles.css?v=mq9d0g48">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d4ed8'/%3E%3Cg fill='none' stroke='white' stroke-width='4' stroke-linecap='round'%3E%3Ccircle cx='20' cy='20' r='6'/%3E%3Ccircle cx='44' cy='20' r='6'/%3E%3Ccircle cx='32' cy='46' r='6'/%3E%3Cpath d='M24 24 28 40M40 24 36 40M26 20h12'/%3E%3C/g%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="index.html">
+      <svg class="brand__mark" viewBox="0 0 64 64" role="img" aria-label="AGP logo">
+        <rect width="64" height="64" rx="14" fill="#1d4ed8"/>
+        <g fill="none" stroke="white" stroke-width="4" stroke-linecap="round">
+          <circle cx="20" cy="20" r="6"/><circle cx="44" cy="20" r="6"/><circle cx="32" cy="46" r="6"/>
+          <path d="M24 24 28 40M40 24 36 40M26 20h12"/>
+        </g>
+      </svg>
+      <span>
+        <span class="brand__name">Agentic Government Protocol</span><br>
+        <span class="brand__sub">An open standard for agent-mediated public service delivery</span>
+      </span>
+    </a>
+    <span class="header-spacer"></span>
+    <span class="status-badge" title="Early strawman; conceptual, not yet machine-readable">v0.1 · Beta</span>
+    <nav class="header-links" aria-label="External">
+      <a href="https://github.com/ehysen/agentic-government-protocol">GitHub</a>
+      <a href="governance.html">Governance</a>
+    </nav>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" hidden>
+    <label for="nav-toggle" class="nav-toggle-label">Spec contents</label>
+    <nav aria-label="Specification contents">
+      <ul>
+        <li><a href="index.html">Overview</a></li>
+      </ul>
+      <p>Specification</p>
+      <ul>
+        <li><a href="principles.html">Principles</a></li>
+        <li><a href="actors.html">Actors &amp; roles</a></li>
+        <li><a href="concepts.html">Core concepts &amp; vocabulary</a></li>
+        <li><a href="flow.html">The canonical flow</a></li>
+        <li><a href="schema.html">The schema</a></li>
+        <li><a href="authorization.html">Authorization, consent &amp; identity</a></li>
+        <li><a href="example.html">Worked example</a></li>
+      </ul>
+      <p>For agencies</p>
+      <ul>
+        <li><a href="get-started.html" aria-current="page">Get started</a></li>
+      </ul>
+      <p>Project</p>
+      <ul>
+        <li><a href="governance.html">Governance &amp; contribution</a></li>
+        <li><a href="roadmap.html">Status &amp; roadmap</a></li>
+        <li><a href="related-work.html">Related work</a></li>
+        <li><a href="open-questions.html">Open questions</a></li>
+      </ul>
+      <p>Reference</p>
+      <ul>
+        <li><a href="glossary.html">Glossary</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main id="main">
+    <div class="content wide">
+      <p class="eyebrow">For agencies</p>
+      <h1>Get started: make your services accessible to agents</h1>
+      <p class="lede">If you run a public service, here is what adopting AGP actually
+      involves. The goal is that <strong>any compliant agent can work with your agency</strong>
+      without a custom integration &mdash; while your agency keeps full authority over every
+      determination. You can pilot this for a single service.</p>
+
+      <div class="callout callout--official">
+        <p class="callout__label">The one rule that never changes</p>
+        <p>Adopting AGP does <strong>not</strong> hand decisions to an agent. Your agency
+        remains the <strong>agency of record</strong>. AGP gives agents a standard way to
+        <em>ask</em>; your agency agent enforces your rules and your authority on every
+        request.</p>
+      </div>
+
+      <h2 class="anchored" id="overview">The five things you publish or stand up<a class="h-anchor" href="#overview" aria-label="Link to this section">#</a></h2>
+      <ol class="steps">
+        <li>
+          <h3 class="anchored" id="g1">Describe your services<a class="h-anchor" href="#g1" aria-label="Link to this section">#</a></h3>
+          <p>Write each service as a <a href="schema.html#service"><code>Service</code></a>
+          object &mdash; name, plain-language summary, channels, and the attributes it
+          requires &mdash; and list them in a single published
+          <a href="schema.html#catalog">catalog</a> at a well-known URL. This is the
+          &ldquo;publish once, read everywhere&rdquo; artifact: write it once, and every agent can
+          discover your service. Point <code>requires</code> at your existing data
+          definitions rather than inventing new ones.</p>
+        </li>
+        <li>
+          <h3 class="anchored" id="g2">Express your eligibility rules<a class="h-anchor" href="#g2" aria-label="Link to this section">#</a></h3>
+          <p>Capture who qualifies as an
+          <a href="schema.html#eligibility"><code>EligibilityRule</code></a> over those
+          same attributes, so agents can give constituents an honest preview before they
+          apply. The rule is yours and authoritative; agents only <em>read</em> it. Start
+          with the common case and refine &mdash; you don&rsquo;t have to encode every edge case to
+          begin.</p>
+        </li>
+        <li>
+          <h3 class="anchored" id="g3">Stand up an agency agent<a class="h-anchor" href="#g3" aria-label="Link to this section">#</a></h3>
+          <p>Expose an <strong>agency agent</strong> &mdash; an endpoint that speaks AGP over a
+          transport you already support (e.g. an <abbr title="Model Context Protocol">MCP</abbr>
+          server or HTTPS+JSON). It needs to handle four things:</p>
+          <ul>
+            <li><strong>Discovery:</strong> serve your catalog and Service objects.</li>
+            <li><strong>Eligibility:</strong> optionally answer determination previews.</li>
+            <li><strong>Requests:</strong> accept a <a href="schema.html#request"><code>ServiceRequest</code></a>, <strong>verify its <code>Authorization</code></strong>, run your determination, and provision.</li>
+            <li><strong>Receipts:</strong> return a <a href="schema.html#receipt"><code>Receipt</code></a> with audit trail and recourse.</li>
+          </ul>
+          <p>Reference agency-agent implementations agencies can adopt instead of building
+          from scratch are an explicit <a href="roadmap.html">roadmap</a> deliverable.</p>
+        </li>
+        <li>
+          <h3 class="anchored" id="g4">Choose a delivery pattern per service<a class="h-anchor" href="#g4" aria-label="Link to this section">#</a></h3>
+          <p>Set each service&rsquo;s <code>deliveryPattern</code>: <code>instant</code> when
+          you can decide automatically, <a href="schema.html#validate-after"><code>validate-after</code></a>
+          where law lets you provision provisionally and verify later, or <code>manual</code>
+          where a human must review. This is entirely your policy choice &mdash; AGP just
+          carries it.</p>
+        </li>
+        <li>
+          <h3 class="anchored" id="g5">Return receipts &amp; honor recourse<a class="h-anchor" href="#g5" aria-label="Link to this section">#</a></h3>
+          <p>For every request, return a receipt that records the outcome, an audit trail,
+          live status, and a real correction / appeal path. This is what makes outcomes
+          trustworthy and contestable, and it is non-optional.</p>
+        </li>
+      </ol>
+
+      <h2 class="anchored" id="verify">Verifying authorization (the part you must enforce)<a class="h-anchor" href="#verify" aria-label="Link to this section">#</a></h2>
+      <p>Your agency agent must check, on <em>every</em> request, that a valid, in-scope
+      <a href="schema.html#authorization-obj"><code>Authorization</code></a> covers it
+      before the agency of record acts. v0.1 defines the
+      <a href="authorization.html#interaction-points">interaction points</a>; the
+      cryptographic verification mechanism is supplied by the companion authorization
+      layer. Until that layer lands in your jurisdiction, agencies typically rely on
+      existing identity and an <a href="actors.html#intermediary">intermediary</a>-assisted
+      path for constituents without verifiable digital identity.</p>
+
+      <h2 class="anchored" id="checklist">Adoption checklist<a class="h-anchor" href="#checklist" aria-label="Link to this section">#</a></h2>
+      <div class="callout">
+        <ul style="margin:0;">
+          <li>&#9633; Pick one high-volume, sympathetic service to pilot.</li>
+          <li>&#9633; Publish a <code>catalog.json</code> with one <code>Service</code>.</li>
+          <li>&#9633; Encode the common-case <code>EligibilityRule</code>.</li>
+          <li>&#9633; Stand up an agency agent over a transport you already run.</li>
+          <li>&#9633; Verify <code>Authorization</code> on every request.</li>
+          <li>&#9633; Return <code>Receipt</code>s with audit trail and appeal path.</li>
+          <li>&#9633; Choose <code>instant</code> vs <code>validate-after</code> deliberately.</li>
+          <li>&#9633; Share what broke &mdash; <a href="governance.html#contribute">co-author the spec</a>.</li>
+        </ul>
+      </div>
+      <p>New to the objects referenced here? Read <a href="schema.html">The schema &rarr;</a></p>
+
+      <nav class="pagenav" aria-label="Pagination">
+        <a class="prev" href="example.html"><small>Previous</small> ← Worked example</a>
+        <a class="next" href="governance.html"><small>Next</small> Governance &amp; contribution →</a>
+      </nav>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div>
+      <strong>Agentic Government Protocol</strong> — v0.1 (strawman).<br>
+      An open standard for agent-mediated public service delivery.
+    </div>
+    <div>
+      <a href="governance.html">Governance</a> ·
+      <a href="https://github.com/ehysen/agentic-government-protocol">GitHub</a> ·
+      <a href="glossary.html">Glossary</a> ·
+      <a href="faq.html">FAQ</a><br>
+      Licensed under Apache 2.0 (proposed). Conceptual specification.
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open questions — AGP</title>
+  <meta name="description" content="Genuinely open design questions AGP surfaces rather than resolves: where agent authority ends, consent defaults, liability for stale data, equity for constituents without agents, whether authorization should be a sibling standard, and the relationship to existing standards.">
+  <link rel="stylesheet" href="assets/styles.css?v=mq9d0g48">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d4ed8'/%3E%3Cg fill='none' stroke='white' stroke-width='4' stroke-linecap='round'%3E%3Ccircle cx='20' cy='20' r='6'/%3E%3Ccircle cx='44' cy='20' r='6'/%3E%3Ccircle cx='32' cy='46' r='6'/%3E%3Cpath d='M24 24 28 40M40 24 36 40M26 20h12'/%3E%3C/g%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="index.html">
+      <svg class="brand__mark" viewBox="0 0 64 64" role="img" aria-label="AGP logo">
+        <rect width="64" height="64" rx="14" fill="#1d4ed8"/>
+        <g fill="none" stroke="white" stroke-width="4" stroke-linecap="round">
+          <circle cx="20" cy="20" r="6"/><circle cx="44" cy="20" r="6"/><circle cx="32" cy="46" r="6"/>
+          <path d="M24 24 28 40M40 24 36 40M26 20h12"/>
+        </g>
+      </svg>
+      <span>
+        <span class="brand__name">Agentic Government Protocol</span><br>
+        <span class="brand__sub">An open standard for agent-mediated public service delivery</span>
+      </span>
+    </a>
+    <span class="header-spacer"></span>
+    <span class="status-badge" title="Early strawman; conceptual, not yet machine-readable">v0.1 · Beta</span>
+    <nav class="header-links" aria-label="External">
+      <a href="https://github.com/ehysen/agentic-government-protocol">GitHub</a>
+      <a href="governance.html">Governance</a>
+    </nav>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" hidden>
+    <label for="nav-toggle" class="nav-toggle-label">Spec contents</label>
+    <nav aria-label="Specification contents">
+      <ul>
+        <li><a href="index.html">Overview</a></li>
+      </ul>
+      <p>Specification</p>
+      <ul>
+        <li><a href="principles.html">Principles</a></li>
+        <li><a href="actors.html">Actors &amp; roles</a></li>
+        <li><a href="concepts.html">Core concepts &amp; vocabulary</a></li>
+        <li><a href="flow.html">The canonical flow</a></li>
+        <li><a href="schema.html">The schema</a></li>
+        <li><a href="authorization.html">Authorization, consent &amp; identity</a></li>
+        <li><a href="example.html">Worked example</a></li>
+      </ul>
+      <p>For agencies</p>
+      <ul>
+        <li><a href="get-started.html">Get started</a></li>
+      </ul>
+      <p>Project</p>
+      <ul>
+        <li><a href="governance.html">Governance &amp; contribution</a></li>
+        <li><a href="roadmap.html">Status &amp; roadmap</a></li>
+        <li><a href="related-work.html">Related work</a></li>
+        <li><a href="open-questions.html" aria-current="page">Open questions</a></li>
+      </ul>
+      <p>Reference</p>
+      <ul>
+        <li><a href="glossary.html">Glossary</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main id="main">
+    <div class="content">
+      <p class="eyebrow">Project</p>
+      <h1>Open questions</h1>
+      <p class="lede">A strawman earns trust by being honest about what it has <em>not</em>
+      settled. These are surfaced deliberately and left <strong>unresolved</strong> &mdash; each
+      a candidate for an <a href="governance.html#process">AGP-RFC</a>.</p>
+
+      <h2 class="anchored" id="q1">1. Where does the agent&rsquo;s authority end and the agency&rsquo;s begin, in edge cases?<a class="h-anchor" href="#q1" aria-label="Link to this section">#</a></h2>
+      <p>The control invariant is clear in the common case &mdash; the agency of record decides.
+      But edge cases blur: provisional approvals under
+      <a href="schema.html#validate-after">validate-after</a>, agent-supplied attestations
+      the agency hasn&rsquo;t yet verified, partial determinations, and corrections mid-flight.
+      Exactly where the line sits in those cases is unresolved.</p>
+
+      <h2 class="anchored" id="q2">2. Opt-in vs. opt-out defaults, and how consent is scoped and revoked.<a class="h-anchor" href="#q2" aria-label="Link to this section">#</a></h2>
+      <p>Should a given program default to opt-in or opt-out for agent action and data use?
+      How granular is scoping (per program? per attribute? per request?), and what does
+      revocation guarantee once data has already been used? AGP requires the default to be
+      <em>explicit</em>; it does not yet say what the default <em>should</em> be.</p>
+
+      <h2 class="anchored" id="q3">3. Liability when an agent acts on stale or wrong data.<a class="h-anchor" href="#q3" aria-label="Link to this section">#</a></h2>
+      <p>If an agent submits outdated income and a benefit is wrongly granted or denied, who
+      is liable to the constituent, and what makes them whole? This is entangled with the
+      <a href="authorization.html#liability">authorization mechanism</a> and is not resolved
+      in v1.</p>
+
+      <h2 class="anchored" id="q4">4. Equity: how are constituents without agents or devices served?<a class="h-anchor" href="#q4" aria-label="Link to this section">#</a></h2>
+      <p>AGP leans on the <a href="actors.html#intermediary">intermediary</a> as the
+      answer &mdash; but how is parity actually guaranteed so the agent-equipped don&rsquo;t get
+      faster or better outcomes than those served through a human channel? Designing against
+      a two-tier system is an open problem.</p>
+
+      <h2 class="anchored" id="q5">5. Should agent authorization / identity be its own sibling standard?<a class="h-anchor" href="#q5" aria-label="Link to this section">#</a></h2>
+      <p>AGP treats authorization as a <a href="authorization.html">companion concern</a>.
+      Should it remain an AGP appendix, or become a separate, independently governed standard
+      that AGP merely depends on? There are real trade-offs either way.</p>
+
+      <h2 class="anchored" id="q6">6. Overlay or dependency on existing standards?<a class="h-anchor" href="#q6" aria-label="Link to this section">#</a></h2>
+      <p>AGP intends to <a href="related-work.html">reuse</a> existing data models and agent
+      transports. But is AGP a thin <em>overlay</em> that merely references them, or a hard
+      <em>dependency</em> that requires them? How much AGP mandates versus recommends is
+      still being worked out.</p>
+
+      <div class="callout callout--note">
+        <p class="callout__label">Help resolve these</p>
+        <p>Each question above is a good first issue. If you operate a program, run an
+        intermediary, or work on identity, your input is exactly what turns an open question
+        into a spec decision. See <a href="governance.html#contribute">Contribute</a>.</p>
+      </div>
+
+      <nav class="pagenav" aria-label="Pagination">
+        <a class="prev" href="related-work.html"><small>Previous</small> ← Related work</a>
+        <a class="next" href="glossary.html"><small>Next</small> Glossary →</a>
+      </nav>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div>
+      <strong>Agentic Government Protocol</strong> — v0.1 (strawman).<br>
+      An open standard for agent-mediated public service delivery.
+    </div>
+    <div>
+      <a href="governance.html">Governance</a> ·
+      <a href="https://github.com/ehysen/agentic-government-protocol">GitHub</a> ·
+      <a href="glossary.html">Glossary</a> ·
+      <a href="faq.html">FAQ</a><br>
+      Licensed under Apache 2.0 (proposed). Conceptual specification.
+    </div>
+  </div>
+</footer>
+</body>
+</html>
