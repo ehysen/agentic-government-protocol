@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The canonical flow — AGP</title>
-  <meta name="description" content="The canonical AGP flow between a constituent-side agent and a government agency agent: service discovery, eligibility assessment, authorization and consent, service request and delivery, and receipt, status and recourse.">
-  <link rel="stylesheet" href="assets/styles.css?v=mq9d0g48">
+  <meta name="description" content="The canonical AGP flow between a constituent-side agent and a government agent: service discovery, eligibility assessment, authorization and consent, service request and delivery, and receipt, status and recourse.">
+  <link rel="stylesheet" href="assets/styles.css?v=mq9g2n1g">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d4ed8'/%3E%3Cg fill='none' stroke='white' stroke-width='4' stroke-linecap='round'%3E%3Ccircle cx='20' cy='20' r='6'/%3E%3Ccircle cx='44' cy='20' r='6'/%3E%3Ccircle cx='32' cy='46' r='6'/%3E%3Cpath d='M24 24 28 40M40 24 36 40M26 20h12'/%3E%3C/g%3E%3C/svg%3E">
 </head>
 <body>
@@ -76,122 +76,122 @@
     <div class="content wide">
       <p class="eyebrow">Specification &middot; the heart of AGP</p>
       <h1>The canonical flow</h1>
-      <p class="lede">AGP decomposes service delivery into five steps exchanged
-      <strong>agent-to-agent</strong> &mdash; between a constituent-side agent and a government
-      agency agent. Each step produces or consumes a <a href="concepts.html">core type</a>
-      (defined concretely in <a href="schema.html">The schema</a>).</p>
+      <p class="lede">A government interaction in AGP is <strong>one
+      <code>ServiceSession</code></strong> that a constituent agent and a government agent
+      advance together &mdash; agent-to-agent &mdash; through a <strong>status lifecycle</strong>.
+      The same five conceptual steps still apply, but each is an <em>operation on the
+      session</em> rather than a separate object. Often the life event itself &mdash; a job loss,
+      a new baby, a move &mdash; is what starts it.</p>
 
       <figure>
         <div class="figure-box">
           <svg viewBox="0 0 760 300" role="img" aria-labelledby="flowTitle flowDesc" width="760" height="300">
-            <title id="flowTitle">AGP canonical flow diagram</title>
-            <desc id="flowDesc">Five sequential steps shown left to right: Service discovery producing a Service object, Eligibility assessment using EligibilityRule, Authorization and consent producing an Authorization, Service request producing a ServiceRequest, and Receipt producing a Receipt or StatusRecord. Each step is an exchange between the constituent agent and the agency agent. The agency of record holds authority over steps four and five.</desc>
+            <title id="flowTitle">AGP service session status machine</title>
+            <desc id="flowDesc">A constituent agent reads the agency's catalog, then creates a ServiceSession in status gathering, adds a scoped authorization to reach status ready to submit, and submits it. The agency of record then decides, moving the one session to completed (approved or provisioned), or to requires intervention for human review, documents, or identity checks (which returns to in progress once resolved), or to denied with recourse. Every transition is an operation on the same session.</desc>
             <defs>
-              <marker id="farrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#1d4ed8"/></marker>
+              <marker id="farrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#3c4a63"/></marker>
             </defs>
             <g font-family="-apple-system, Segoe UI, Roboto, sans-serif">
-              <text x="20" y="28" font-size="11.5" font-weight="700" fill="#14358f">constituent agent</text>
-              <text x="740" y="28" text-anchor="end" font-size="11.5" font-weight="700" fill="#0f766e">agency agent</text>
-              
-              <g>
-                <circle cx="50" cy="68" r="18" fill="#1d4ed8"/>
-                <text x="50" y="74" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">1</text>
-                <rect x="20" y="108" width="124" height="92" rx="10" fill="#fff" stroke="#1d4ed8" stroke-width="2"/>
-                <text x="82" y="140" text-anchor="middle" font-size="12.5" font-weight="700" fill="#11203a"><tspan x="82" dy="0">Service</tspan><tspan x="82" dy="14">discovery</tspan></text>
-                <text x="82" y="186" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="10.5" fill="#1d4ed8">Service</text>
-              </g><path d="M146 154 L166 154" stroke="#1d4ed8" stroke-width="2" marker-end="url(#farrow)"/>
-              <g>
-                <circle cx="198" cy="68" r="18" fill="#1d4ed8"/>
-                <text x="198" y="74" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">2</text>
-                <rect x="168" y="108" width="124" height="92" rx="10" fill="#fff" stroke="#1d4ed8" stroke-width="2"/>
-                <text x="230" y="140" text-anchor="middle" font-size="12.5" font-weight="700" fill="#11203a"><tspan x="230" dy="0">Eligibility</tspan><tspan x="230" dy="14">assessment</tspan></text>
-                <text x="230" y="186" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="10.5" fill="#1d4ed8">EligibilityRule</text>
-              </g><path d="M294 154 L314 154" stroke="#1d4ed8" stroke-width="2" marker-end="url(#farrow)"/>
-              <g>
-                <circle cx="346" cy="68" r="18" fill="#b45309"/>
-                <text x="346" y="74" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">3</text>
-                <rect x="316" y="108" width="124" height="92" rx="10" fill="#fff" stroke="#b45309" stroke-width="2"/>
-                <text x="378" y="140" text-anchor="middle" font-size="12.5" font-weight="700" fill="#11203a"><tspan x="378" dy="0">Authorization</tspan><tspan x="378" dy="14">&amp;</tspan><tspan x="378" dy="14">consent</tspan></text>
-                <text x="378" y="186" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="10.5" fill="#b45309">Authorization</text>
-              </g><path d="M442 154 L462 154" stroke="#1d4ed8" stroke-width="2" marker-end="url(#farrow)"/>
-              <g>
-                <circle cx="494" cy="68" r="18" fill="#0f766e"/>
-                <text x="494" y="74" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">4</text>
-                <rect x="464" y="108" width="124" height="92" rx="10" fill="#fff" stroke="#0f766e" stroke-width="2"/>
-                <text x="526" y="140" text-anchor="middle" font-size="12.5" font-weight="700" fill="#11203a"><tspan x="526" dy="0">Service</tspan><tspan x="526" dy="14">request</tspan></text>
-                <text x="526" y="186" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="10.5" fill="#0f766e">ServiceRequest</text>
-              </g><path d="M590 154 L610 154" stroke="#1d4ed8" stroke-width="2" marker-end="url(#farrow)"/>
-              <g>
-                <circle cx="642" cy="68" r="18" fill="#0f766e"/>
-                <text x="642" y="74" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">5</text>
-                <rect x="612" y="108" width="124" height="92" rx="10" fill="#fff" stroke="#0f766e" stroke-width="2"/>
-                <text x="674" y="140" text-anchor="middle" font-size="12.5" font-weight="700" fill="#11203a"><tspan x="674" dy="0">Receipt</tspan><tspan x="674" dy="14">&amp;</tspan><tspan x="674" dy="14">recourse</tspan></text>
-                <text x="674" y="186" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="10.5" fill="#0f766e">Receipt</text>
+              <text x="16" y="22" font-size="11" fill="#3c4a63">Read catalog &middot; then one session moves through status:</text>
+              <!-- main pipeline -->
+              <rect x="16" y="60" width="150" height="54" rx="10" fill="#eaf0fe" stroke="#1d4ed8" stroke-width="2"/>
+              <text x="91" y="84" text-anchor="middle" font-size="12.5" font-weight="700" fill="#14358f">gathering</text>
+              <text x="91" y="101" text-anchor="middle" font-size="10.5" fill="#3c4a63">attributes + consent</text>
+              <rect x="212" y="60" width="156" height="54" rx="10" fill="#eaf0fe" stroke="#1d4ed8" stroke-width="2"/>
+              <text x="290" y="84" text-anchor="middle" font-size="12.5" font-weight="700" fill="#14358f">ready_to_submit</text>
+              <text x="290" y="101" text-anchor="middle" font-size="10.5" fill="#3c4a63">authorization attached</text>
+              <rect x="414" y="60" width="150" height="54" rx="10" fill="#fdf3e6" stroke="#b45309" stroke-width="2"/>
+              <text x="489" y="84" text-anchor="middle" font-size="12.5" font-weight="700" fill="#b45309">in_progress</text>
+              <text x="489" y="101" text-anchor="middle" font-size="10.5" fill="#3c4a63">agency deciding</text>
+              <rect x="610" y="60" width="134" height="54" rx="10" fill="#e2f3f0" stroke="#0f766e" stroke-width="2.5"/>
+              <text x="677" y="84" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0f766e">completed</text>
+              <text x="677" y="101" text-anchor="middle" font-size="10.5" fill="#3c4a63">approved / provisioned</text>
+              <!-- transitions -->
+              <g stroke="#3c4a63" stroke-width="1.8" fill="none">
+                <path d="M166 87 L212 87" marker-end="url(#farrow)"/>
+                <path d="M368 87 L414 87" marker-end="url(#farrow)"/>
+                <path d="M564 87 L610 87" marker-end="url(#farrow)"/>
+                <path d="M489 114 L489 168" marker-end="url(#farrow)"/>
+                <path d="M540 195 C580 195 600 140 612 116" stroke-dasharray="5 4" marker-end="url(#farrow)"/>
+                <path d="M620 168 L660 120" marker-end="url(#farrow)"/>
               </g>
-              <rect x="464" y="232" width="276" height="46" rx="8" fill="#e2f3f0" stroke="#0f766e" stroke-width="1.5"/>
-              <text x="602" y="253" text-anchor="middle" font-size="12" font-weight="700" fill="#0f766e">Agency of record holds authority</text>
-              <text x="602" y="270" text-anchor="middle" font-size="11" fill="#3c4a63">determination &amp; provisioning stay here</text>
-              <path d="M380 200 L520 232" stroke="#0f766e" stroke-width="1.4" stroke-dasharray="4 3" fill="none"/>
-              <path d="M676 200 L640 232" stroke="#0f766e" stroke-width="1.4" stroke-dasharray="4 3" fill="none"/>
+              <g font-family="-apple-system, Segoe UI, Roboto, sans-serif" font-size="10.5" fill="#3c4a63">
+                <text x="189" y="80" text-anchor="middle">+auth</text>
+                <text x="391" y="80" text-anchor="middle">submit</text>
+                <text x="587" y="80" text-anchor="middle">decide</text>
+                <text x="500" y="146" text-anchor="start">needs review</text>
+                <text x="572" y="158" text-anchor="start" font-style="italic">resolved</text>
+              </g>
+              <!-- branch nodes -->
+              <rect x="372" y="172" width="170" height="52" rx="10" fill="#fff" stroke="#b45309" stroke-width="2"/>
+              <text x="457" y="194" text-anchor="middle" font-size="12" font-weight="700" fill="#b45309">requires_intervention</text>
+              <text x="457" y="211" text-anchor="middle" font-size="10" fill="#3c4a63">docs &middot; ID &middot; caseworker</text>
+              <rect x="610" y="172" width="134" height="52" rx="10" fill="#fff" stroke="#5d6b85" stroke-width="2"/>
+              <text x="677" y="194" text-anchor="middle" font-size="12" font-weight="700" fill="#5d6b85">denied</text>
+              <text x="677" y="211" text-anchor="middle" font-size="10" fill="#3c4a63">with recourse</text>
+              <!-- authority band -->
+              <rect x="414" y="246" width="330" height="40" rx="8" fill="#e2f3f0" stroke="#0f766e" stroke-width="1.5"/>
+              <text x="579" y="263" text-anchor="middle" font-size="11.5" font-weight="700" fill="#0f766e">Agency of record decides every transition from in_progress on</text>
+              <text x="579" y="278" text-anchor="middle" font-size="10.5" fill="#3c4a63">determination &amp; provisioning stay here</text>
             </g>
           </svg>
         </div>
-        <figcaption>The five AGP steps, each labeled with the core object it produces, and
-        each an exchange between the two agents. Steps&nbsp;4&ndash;5 are anchored to the agency
-        of record.</figcaption>
+        <figcaption>One <code>ServiceSession</code>, one <code>status</code> at a time. The
+        constituent agent drives it to <code>ready_to_submit</code>; from
+        <code>in_progress</code> onward, the agency of record owns every transition.</figcaption>
       </figure>
 
       <h2 class="anchored" id="steps">Step by step<a class="h-anchor" href="#steps" aria-label="Link to this section">#</a></h2>
       <ol class="steps">
         <li>
-          <h3 class="anchored" id="s1">Service discovery<a class="h-anchor" href="#s1" aria-label="Link to this section">#</a></h3>
-          <span class="step-type">reads &rarr; Service</span>
-          <p>The constituent agent queries the agency agent&rsquo;s published catalog to learn
-          which services exist, who&rsquo;s eligible, what&rsquo;s needed, and through which
-          channels. Discovery is read-only and requires no constituent data: it answers
-          <em>&ldquo;what is available and what would it take?&rdquo;</em> Because the agency
-          publishes this once, any compliant agent can read it.</p>
+          <h3 class="anchored" id="s1">Discovery<a class="h-anchor" href="#s1" aria-label="Link to this section">#</a></h3>
+          <span class="step-type">read the Catalog</span>
+          <p>The constituent agent reads the government agent&rsquo;s published
+          <a href="schema.html#catalog">catalog</a> to learn which services exist, who&rsquo;s
+          eligible, what&rsquo;s needed, through which channels, and which capabilities the agency
+          supports. Discovery is read-only and uses no constituent data &mdash; it answers
+          <em>&ldquo;what is available and what would it take?&rdquo;</em> No session exists yet.</p>
         </li>
         <li>
-          <h3 class="anchored" id="s2">Eligibility assessment<a class="h-anchor" href="#s2" aria-label="Link to this section">#</a></h3>
-          <span class="step-type">reads &rarr; EligibilityRule</span>
-          <p>With the constituent&rsquo;s consent, the constituent agent assembles the relevant
-          attributes (identity, household, income, residency&hellip;) and checks them
-          against the agency&rsquo;s eligibility rules &mdash; either evaluating the published rules
-          locally or asking the agency agent for a determination preview. AGP supports a
-          <strong>validate-after</strong> option where appropriate: provisionally proceed
-          on attested attributes and verify later. The determination itself still belongs
-          to the agency.</p>
+          <h3 class="anchored" id="s2">Start &amp; eligibility<a class="h-anchor" href="#s2" aria-label="Link to this section">#</a></h3>
+          <span class="step-type">create &rarr; ServiceSession &middot; status: gathering</span>
+          <p>The agent <strong>creates a <a href="schema.html#session">ServiceSession</a></strong>
+          for a service and, with the constituent&rsquo;s consent, assembles the relevant attributes
+          and checks them against the published <a href="schema.html#eligibility">eligibility
+          rules</a>. The session sits in <code>gathering</code>, and its
+          <a href="schema.html#messages"><code>messages</code></a> say exactly what is still
+          needed. The estimate is a preview &mdash; the determination still belongs to the agency.</p>
         </li>
         <li>
           <h3 class="anchored" id="s3">Authorization &amp; consent<a class="h-anchor" href="#s3" aria-label="Link to this section">#</a></h3>
-          <span class="step-type">produces &rarr; Authorization</span>
-          <p>The constituent authorizes <em>this</em> agent to act on their behalf and
-          consents to <em>specific, scoped</em> data use; the agency agent verifies that
-          authorization before acting. <strong>This is the named gap.</strong> v1 defines
-          the interaction points &mdash; where authorization is granted, what it scopes, how
-          it is verified, and how it is revoked &mdash; but defers the cryptographic / identity
-          mechanism to a <a href="authorization.html">companion layer</a>.</p>
+          <span class="step-type">update &rarr; ServiceSession &middot; status: ready_to_submit</span>
+          <p>The constituent authorizes <em>this</em> agent and consents to <em>specific,
+          scoped</em> data use; the agent attaches a scoped
+          <a href="schema.html#authorization-obj">Authorization</a> to the session, moving it to
+          <code>ready_to_submit</code>. <strong>This is the named gap.</strong> v1 defines where
+          authorization is granted, scoped, verified, and revoked, but defers the cryptographic /
+          identity mechanism to a <a href="authorization.html">companion layer</a>.</p>
         </li>
         <li>
-          <h3 class="anchored" id="s4">Service request &amp; delivery<a class="h-anchor" href="#s4" aria-label="Link to this section">#</a></h3>
-          <span class="step-type">produces &rarr; ServiceRequest</span>
-          <p>The constituent agent submits a standardized <code>ServiceRequest</code> &mdash;
-          referencing the <code>Service</code> and the <code>Authorization</code> &mdash; to the
-          agency agent. The <strong>agency of record</strong> processes it, automatically
-          and instantly where it can, makes the eligibility determination, and provisions
-          the service or benefit. Authority for the determination never leaves the agency;
-          the agent&rsquo;s role ends at submitting a well-formed request.</p>
+          <h3 class="anchored" id="s4">Submit &amp; delivery<a class="h-anchor" href="#s4" aria-label="Link to this section">#</a></h3>
+          <span class="step-type">submit &rarr; status: in_progress &rarr; completed</span>
+          <p>The agent <strong>submits</strong> the session to the government agent. The
+          <strong>agency of record</strong> verifies the authorization, makes the determination,
+          and &mdash; instantly where it can &mdash; provisions the benefit, driving the session to
+          <code>completed</code> (or <code>requires_intervention</code> for review, or
+          <code>denied</code>). Submit <strong>must</strong> produce an authoritative
+          <a href="schema.html#determination">Determination</a>. Authority never leaves the
+          agency; the agent&rsquo;s job ends at a well-formed submit.</p>
         </li>
         <li>
-          <h3 class="anchored" id="s5">Receipt, status &amp; recourse<a class="h-anchor" href="#s5" aria-label="Link to this section">#</a></h3>
-          <span class="step-type">produces &rarr; Receipt / StatusRecord</span>
-          <p>The agency agent returns a standardized <code>Receipt</code> and ongoing
-          <code>StatusRecord</code> to the constituent (via their agent and/or directly).
-          It includes the outcome, an <strong>audit trail</strong> of what was submitted
-          and decided, live status tracking, and an explicit <strong>correction / appeal
-          path</strong>. Recourse is part of the protocol: a constituent must always be
-          able to see, contest, and correct what was done in their name.</p>
+          <h3 class="anchored" id="s5">Determination, status &amp; recourse<a class="h-anchor" href="#s5" aria-label="Link to this section">#</a></h3>
+          <span class="step-type">read &rarr; the session's Determination</span>
+          <p>The session now carries the authoritative
+          <a href="schema.html#determination">Determination</a>: the outcome, the award
+          breakdown, an <strong>audit trail</strong>, the live <code>status</code>, and an
+          explicit <strong>correction / appeal path</strong>. Because there is one session, the
+          constituent (via their agent or directly) can always re-read it to see, contest, and
+          correct what was done in their name &mdash; recourse is part of the protocol.</p>
         </li>
       </ol>
 
@@ -229,5 +229,6 @@
     </div>
   </div>
 </footer>
+<script src="assets/app.js?v=mq9g2n1g" defer></script>
 </body>
 </html>

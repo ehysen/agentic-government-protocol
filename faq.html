@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FAQ — AGP</title>
   <meta name="description" content="Frequently asked questions about AGP: whether the agent makes decisions, who is liable, how people without agents are served, how it differs from a plain API, and how accessibility and language access work.">
-  <link rel="stylesheet" href="assets/styles.css?v=mq9d0g48">
+  <link rel="stylesheet" href="assets/styles.css?v=mq9g2n1g">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d4ed8'/%3E%3Cg fill='none' stroke='white' stroke-width='4' stroke-linecap='round'%3E%3Ccircle cx='20' cy='20' r='6'/%3E%3Ccircle cx='44' cy='20' r='6'/%3E%3Ccircle cx='32' cy='46' r='6'/%3E%3Cpath d='M24 24 28 40M40 24 36 40M26 20h12'/%3E%3C/g%3E%3C/svg%3E">
 </head>
 <body>
@@ -83,7 +83,7 @@
       consent), checks them against published rules, and submits a request. The
       <a href="actors.html#agency">agency of record</a> &mdash; the government &mdash; makes the
       actual eligibility determination and provisions the benefit, through its
-      <a href="actors.html#agency-agent">agency agent</a>. Authority <em>never</em> moves to
+      <a href="actors.html#government-agent">government agent</a>. Authority <em>never</em> moves to
       your agent.</p>
 
       <h2 class="anchored" id="liable">Who is liable if something goes wrong?<a class="h-anchor" href="#liable" aria-label="Link to this section">#</a></h2>
@@ -110,6 +110,28 @@
       transports (e.g. <a href="schema.html#transport">MCP or HTTPS+JSON</a>); it
       standardizes the <em>meaning and the flow</em> on top, not the wire.</p>
 
+      <h2 class="anchored" id="mcp-skills">Why can&rsquo;t MCP + agent skills just do this?<a class="h-anchor" href="#mcp-skills" aria-label="Link to this section">#</a></h2>
+      <p>Because they solve a different layer. <strong>MCP</strong> standardizes <em>how</em> an
+      agent connects to a tool or data source; <strong>agent skills</strong> package <em>one
+      integration&rsquo;s</em> instructions and tools for a particular agent. Both are real and
+      useful &mdash; AGP expects to <em>use</em> MCP as a <a href="schema.html#transport">transport</a>,
+      and a skill could implement the constituent-agent side. But neither defines what a
+      government interaction <em>means</em>, and that is the actual problem.</p>
+      <p>Without a shared standard you are back to bespoke integrations &mdash; just over nicer
+      plumbing. Each agency would expose its own ad-hoc MCP tools with its own shapes, and every
+      agent or skill author would hand-build against each one: an agent that can do SNAP in one
+      state still can&rsquo;t do it in the next. None of that gives you what government actually
+      requires:</p>
+      <ul>
+        <li>a <strong>publish-once</strong> <a href="schema.html#catalog">catalog</a> any compliant agent can read;</li>
+        <li>shared <a href="concepts.html">vocabulary</a> &mdash; <code>Service</code>, <code>EligibilityRule</code>, <code>Authorization</code>, <code>Determination</code>;</li>
+        <li>the <a href="schema.html#session">session lifecycle</a> and structured <a href="schema.html#messages">messages</a>, so an outcome &mdash; or &ldquo;needs proof of income&rdquo; &mdash; is machine-actionable everywhere;</li>
+        <li>the <a href="actors.html#agency">agency-of-record</a> control invariant, scoped consent, and a real recourse path.</li>
+      </ul>
+      <p>The analogy: MCP is like HTTP &mdash; how to talk. A skill is like a single app. AGP is the
+      shared <em>application standard</em> on top &mdash; what the conversation means &mdash; so any
+      compliant agent works with any compliant agency without a new skill or server per program.</p>
+
       <h2 class="anchored" id="a11y">How do accessibility and language access work?<a class="h-anchor" href="#a11y" aria-label="Link to this section">#</a></h2>
       <p>They are <a href="principles.html#p3">principles</a>, not features. Because every
       agent interaction must degrade gracefully to a human, and because accessibility
@@ -125,12 +147,14 @@
       agency &mdash; that traceability is what makes an AGP outcome trustworthy.</p>
 
       <h2 class="anchored" id="agency-how">I run an agency. What do I actually have to do?<a class="h-anchor" href="#agency-how" aria-label="Link to this section">#</a></h2>
-      <p>Five things: publish a <a href="schema.html#catalog">catalog</a> of
-      <a href="schema.html#service">services</a>, express your
-      <a href="schema.html#eligibility">eligibility rules</a>, stand up an
-      <a href="actors.html#agency-agent">agency agent</a>, choose a delivery pattern per
-      service, and return <a href="schema.html#receipt">receipts</a>. The
-      <a href="get-started.html">Get started</a> guide walks through each.</p>
+      <p>Publish a <a href="schema.html#catalog">catalog</a> of
+      <a href="schema.html#service">services</a> (with the capabilities you support), express
+      your <a href="schema.html#eligibility">eligibility rules</a>, and implement the five
+      <a href="schema.html#operations">operations</a> on a
+      <a href="schema.html#session">ServiceSession</a> on your
+      <a href="actors.html#government-agent">government agent</a> &mdash; verifying authorization on
+      <code>submit</code> and producing a <a href="schema.html#determination">Determination</a>.
+      The <a href="get-started.html">Get started</a> guide walks through each.</p>
 
       <h2 class="anchored" id="why-defer">Why doesn&rsquo;t v1 just solve the authorization problem?<a class="h-anchor" href="#why-defer" aria-label="Link to this section">#</a></h2>
       <p>Because cryptographic agent-authorization, consent encoding, and identity proofing
@@ -166,5 +190,6 @@
     </div>
   </div>
 </footer>
+<script src="assets/app.js?v=mq9g2n1g" defer></script>
 </body>
 </html>

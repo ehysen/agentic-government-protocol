@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Worked example — AGP</title>
   <meta name="description" content="A worked example: a household applies for SNAP after a job loss, walked end-to-end through all five AGP steps as an agent-to-agent exchange, showing what each actor does and which objects move.">
-  <link rel="stylesheet" href="assets/styles.css?v=mq9d0g48">
+  <link rel="stylesheet" href="assets/styles.css?v=mq9g2n1g">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d4ed8'/%3E%3Cg fill='none' stroke='white' stroke-width='4' stroke-linecap='round'%3E%3Ccircle cx='20' cy='20' r='6'/%3E%3Ccircle cx='44' cy='20' r='6'/%3E%3Ccircle cx='32' cy='46' r='6'/%3E%3Cpath d='M24 24 28 40M40 24 36 40M26 20h12'/%3E%3C/g%3E%3C/svg%3E">
 </head>
 <body>
@@ -76,105 +76,92 @@
     <div class="content wide">
       <p class="eyebrow">Specification &middot; worked example</p>
       <h1>Worked example: SNAP after a job loss</h1>
-      <p class="lede">Here is the home-page vignette opened all the way up: one concrete,
-      high-volume service walked end-to-end through all five steps, as an exchange between
-      Maria&rsquo;s agent and the state agency&rsquo;s agent. Watch which
-      <a href="schema.html">object</a> moves at each step.</p>
+      <p class="lede">The home-page vignette, opened all the way up &mdash; and shown twice at
+      each step: <strong>what Maria experiences</strong>, and <strong>what the system quietly
+      carries</strong> as one <a href="schema.html#session">ServiceSession</a> moves through
+      its statuses. The whole point of AGP lives in the gap between those two columns: the
+      person feels a short, empathetic conversation; the machinery absorbs the complexity.</p>
 
       <div class="callout callout--note">
-        <p class="callout__label">The scenario</p>
-        <p><strong>Maria</strong>, in the (fictional) State of XX, was laid off two weeks
-        ago; her household of three has lost its main income. She uses a
-        <strong>Public AI Option agent</strong> (her constituent-side agent). Her local
-        food bank, a trusted <strong>intermediary</strong>, is available if she needs a
-        human. The <strong>agency of record</strong> is the State of XX Department of Human
-        Services (DHS), reachable through its <strong>agency agent</strong>.</p>
+        <p class="callout__label">The scenario &mdash; a life event starts it</p>
+        <p><strong>Maria</strong>, in the (fictional) State of XX, was laid off two weeks ago;
+        her household of three has lost its main income. That life event is what initiates
+        engagement. She uses a <strong>Public AI Option agent</strong>; her local food bank, a
+        trusted <strong>intermediary</strong>, is on hand if she needs a human; and the
+        <strong>agency of record</strong> is the State of XX Department of Human Services (DHS),
+        reachable through its <strong>government agent</strong>.</p>
       </div>
 
       <ol class="steps">
         <li>
-          <h3 class="anchored" id="e1">Discovery — what help exists<a class="h-anchor" href="#e1" aria-label="Link to this section">#</a></h3>
-          <span class="step-type">Service</span>
-          <p>Maria&rsquo;s agent queries the DHS agency agent&rsquo;s
-          <a href="schema.html#catalog">catalog</a> and reads the
-          <a href="schema.html#service"><code>Service</code></a> object DHS published once:
-          SNAP, channels <code>agp &middot; web &middot; in-person &middot; phone</code>, requiring
-          <code>identity, householdSize, income, residency</code>, with
-          <code>deliveryPattern: validate-after</code>.</p>
-          <p><strong>Maria does:</strong> describes her situation in plain language.
-          <strong>Her agent does:</strong> finds SNAP (and flags two other programs)
-          without touching her personal data &mdash; discovery is read-only.</p>
-        </li>
-        <li>
-          <h3 class="anchored" id="e2">Eligibility — does she likely qualify<a class="h-anchor" href="#e2" aria-label="Link to this section">#</a></h3>
-          <span class="step-type">EligibilityRule</span>
-          <p>Maria&rsquo;s agent asks permission to use her household and income details, then
-          evaluates them against the
-          <a href="schema.html#eligibility"><code>EligibilityRule</code></a> DHS published:
-          household 3, near-zero current income, State&nbsp;XX residency. She very likely
-          qualifies, and because her income dropped this month, the
-          <strong>validate-after</strong> path applies.</p>
-          <p><strong>Her agent does:</strong> runs the check against DHS&rsquo;s published rules
-          and shows a plain estimate &mdash; <em>&ldquo;about $535/month; here&rsquo;s why.&rdquo;</em> No
-          determination has been made &mdash; only DHS can do that.</p>
-        </li>
-        <li>
-          <h3 class="anchored" id="e3">Authorization — Maria says yes, narrowly<a class="h-anchor" href="#e3" aria-label="Link to this section">#</a></h3>
-          <span class="step-type">Authorization</span>
-          <p>Maria authorizes <em>this</em> agent to submit a SNAP application and consents
-          to DHS using her identity, household, income, and residency data
-          <strong>for this SNAP application only</strong>. Her agent produces a scoped
-          <a href="schema.html#authorization-obj"><code>Authorization</code></a>; the DHS
-          agency agent will verify it on receipt.</p>
-          <div class="callout callout--gap" style="margin:.8rem 0 0;">
-            <p class="callout__label">Where the gap shows up</p>
-            <p>AGP v1 specifies that this scoped grant exists and that the agency agent
-            checks it. The <em>cryptographic proof</em> that it was really Maria &mdash; the
-            <code>proof</code> field &mdash; is the <a href="authorization.html">companion
-            layer</a>. With no verifiable digital identity, the food-bank
-            <a href="actors.html#intermediary">intermediary</a> could carry this step with
-            her in person.</p>
+          <h3 class="anchored" id="e1">Discovery<a class="h-anchor" href="#e1" aria-label="Link to this section">#</a></h3>
+          <span class="step-type">read the Catalog &middot; no session yet</span>
+          <div class="grid grid-2">
+            <div class="card"><p class="card__role">What Maria experiences</p><p>She says: <em>&ldquo;I lost my job and I&rsquo;m worried about groceries this month.&rdquo;</em> Seconds later: <em>&ldquo;You may qualify for food assistance &mdash; want me to check?&rdquo;</em></p></div>
+            <div class="card"><p class="card__role">What the system carries</p><p>Her agent reads the DHS <a href="schema.html#catalog">catalog</a>, finds the SNAP <a href="schema.html#service">Service</a> and that it supports <code>validate-after</code>, and flags two related programs. No personal data touched &mdash; discovery is read-only.</p></div>
           </div>
         </li>
         <li>
-          <h3 class="anchored" id="e4">Request &amp; delivery — DHS decides<a class="h-anchor" href="#e4" aria-label="Link to this section">#</a></h3>
-          <span class="step-type">ServiceRequest</span>
-          <p>Maria&rsquo;s agent submits a
-          <a href="schema.html#request"><code>ServiceRequest</code></a> to the DHS agency
-          agent, referencing the SNAP <code>Service</code> and Maria&rsquo;s
-          <code>Authorization</code>. DHS verifies the authorization, runs its own
-          determination, and &mdash; using validate-after &mdash; <strong>provisionally
-          approves</strong> Maria, issuing benefits to an EBT account while documentation is
-          confirmed.</p>
-          <p><strong>Her agent does:</strong> submits a well-formed request, then stops.
-          <strong>DHS does:</strong> makes the determination and provisions the benefit.
-          <strong>Authority never left DHS.</strong></p>
+          <h3 class="anchored" id="e2">Start &amp; eligibility<a class="h-anchor" href="#e2" aria-label="Link to this section">#</a></h3>
+          <span class="step-type">create &rarr; ServiceSession &middot; status: gathering</span>
+          <div class="grid grid-2">
+            <div class="card"><p class="card__role">What Maria experiences</p><p>The agent asks permission to use her household and income to check, then says: <em>&ldquo;You likely qualify for about $535 a month &mdash; here&rsquo;s why.&rdquo;</em></p></div>
+            <div class="card"><p class="card__role">What the system carries</p><p>The agent <strong>creates a session</strong> (<code>status: gathering</code>), assembles attributes, and evaluates the published <a href="schema.html#eligibility">EligibilityRule</a>. The session&rsquo;s <a href="schema.html#messages"><code>messages</code></a> note what&rsquo;s still needed. It&rsquo;s a preview &mdash; only DHS can determine.</p></div>
+          </div>
         </li>
         <li>
-          <h3 class="anchored" id="e5">Receipt — proof, status, and a way to fix it<a class="h-anchor" href="#e5" aria-label="Link to this section">#</a></h3>
-          <span class="step-type">Receipt / StatusRecord</span>
-          <p>The DHS agency agent returns a
-          <a href="schema.html#receipt"><code>Receipt</code></a>: provisionally approved,
-          ~$535/month to EBT, with an <strong>audit trail</strong> of what was submitted
-          and decided, a live <code>StatusRecord</code> showing &ldquo;documentation
-          pending,&rdquo; and a clear <strong>correction / appeal path</strong>. Two weeks
-          later, when DHS confirms her documents, the status updates to fully approved &mdash;
-          no new application required.</p>
-          <p><strong>Maria has:</strong> food assistance within days, a record she can
-          trust because it traces back to DHS, and recourse if it&rsquo;s wrong.</p>
+          <h3 class="anchored" id="e3">Authorization &amp; consent<a class="h-anchor" href="#e3" aria-label="Link to this section">#</a></h3>
+          <span class="step-type">update &rarr; status: ready_to_submit</span>
+          <div class="grid grid-2">
+            <div class="card"><p class="card__role">What Maria experiences</p><p>One clear question: <em>&ldquo;Okay to apply for SNAP for you, using your household, income, and address &mdash; just for this?&rdquo;</em> She says yes.</p></div>
+            <div class="card"><p class="card__role">What the system carries</p><p>The agent attaches a scoped <a href="schema.html#authorization-obj">Authorization</a> to the session, moving it to <code>ready_to_submit</code>. The DHS government agent will verify it on submit.</p></div>
+          </div>
+          <div class="callout callout--gap" style="margin:.9rem 0 0;">
+            <p class="callout__label">Where the gap shows up</p>
+            <p>AGP v1 specifies that this scoped grant exists and is verified. The
+            <em>cryptographic proof</em> it was really Maria &mdash; the <code>proof</code> field &mdash;
+            is the <a href="authorization.html">companion layer</a>. With no verifiable digital
+            identity, the food-bank <a href="actors.html#intermediary">intermediary</a> could
+            carry this step with her in person.</p>
+          </div>
+        </li>
+        <li>
+          <h3 class="anchored" id="e4">Submit &amp; delivery<a class="h-anchor" href="#e4" aria-label="Link to this section">#</a></h3>
+          <span class="step-type">submit &rarr; in_progress &rarr; completed</span>
+          <div class="grid grid-2">
+            <div class="card"><p class="card__role">What Maria experiences</p><p><em>&ldquo;You&rsquo;re approved. Benefits reach your EBT card in about 2 days.&rdquo;</em> She did nothing but answer two questions.</p></div>
+            <div class="card"><p class="card__role">What the system carries</p><p>The agent <strong>submits</strong>. DHS verifies the authorization, makes the determination, and &mdash; via <code>validate-after</code> &mdash; provisionally approves, driving the session to <code>completed</code>. Submit produced an authoritative <a href="schema.html#determination">Determination</a>. <strong>Authority never left DHS.</strong></p></div>
+          </div>
+          <div class="callout callout--note" style="margin:.9rem 0 0;">
+            <p class="callout__label">If it hadn&rsquo;t been clean</p>
+            <p>Had DHS been unable to verify identity automatically, the session would move to
+            <code>requires_intervention</code> with a message
+            (<code>identity_verification_required</code>, resolution
+            <code>requires_intervention</code>) &mdash; and the food-bank navigator could resolve it
+            in person, returning the session to <code>in_progress</code>. Nothing is dropped;
+            the one session holds the state.</p>
+          </div>
+        </li>
+        <li>
+          <h3 class="anchored" id="e5">Determination, status &amp; recourse<a class="h-anchor" href="#e5" aria-label="Link to this section">#</a></h3>
+          <span class="step-type">read &rarr; the session's Determination</span>
+          <div class="grid grid-2">
+            <div class="card"><p class="card__role">What Maria experiences</p><p>A plain receipt she can re-open anytime: approved (~$535/mo), what to upload, and how to appeal. Two weeks later it quietly updates to fully approved &mdash; no new application.</p></div>
+            <div class="card"><p class="card__role">What the system carries</p><p>The session now holds the <a href="schema.html#determination">Determination</a>: award breakdown, audit trail, a <code>provisional_pending_verification</code> warning, and recourse URLs. When DHS confirms her documents, the status reconciles &mdash; same session.</p></div>
+          </div>
         </li>
       </ol>
 
       <h2 class="anchored" id="mapping">How it maps back<a class="h-anchor" href="#mapping" aria-label="Link to this section">#</a></h2>
       <div class="table-wrap">
       <table>
-        <thead><tr><th>Step</th><th>Object</th><th>Who acts</th><th>Authority</th></tr></thead>
+        <thead><tr><th>Step</th><th>Operation</th><th>Session status</th><th>Authority</th></tr></thead>
         <tbody>
-          <tr><td>1 &middot; Discovery</td><td><code>Service</code></td><td>Constituent agent reads</td><td>Published by DHS</td></tr>
-          <tr><td>2 &middot; Eligibility</td><td><code>EligibilityRule</code></td><td>Constituent agent evaluates</td><td>Rules owned by DHS</td></tr>
-          <tr><td>3 &middot; Authorization</td><td><code>Authorization</code></td><td>Constituent grants</td><td>Verified by agency agent</td></tr>
-          <tr><td>4 &middot; Request</td><td><code>ServiceRequest</code></td><td>Constituent agent submits</td><td><strong>DHS decides &amp; provisions</strong></td></tr>
-          <tr><td>5 &middot; Receipt</td><td><code>Receipt</code> / <code>StatusRecord</code></td><td>Constituent receives</td><td>Issued by DHS</td></tr>
+          <tr><td>1 &middot; Discovery</td><td>read <code>Catalog</code></td><td><em>(no session)</em></td><td>Published by DHS</td></tr>
+          <tr><td>2 &middot; Eligibility</td><td><code>create</code></td><td><code>gathering</code></td><td>Rules owned by DHS</td></tr>
+          <tr><td>3 &middot; Authorization</td><td><code>update</code></td><td><code>ready_to_submit</code></td><td>Verified by government agent</td></tr>
+          <tr><td>4 &middot; Submit</td><td><code>submit</code></td><td><code>in_progress</code> &rarr; <code>completed</code></td><td><strong>DHS decides &amp; provisions</strong></td></tr>
+          <tr><td>5 &middot; Determination</td><td><code>read</code></td><td><code>completed</code> (provisional)</td><td>Issued by DHS</td></tr>
         </tbody>
       </table>
       </div>
@@ -202,5 +189,6 @@
     </div>
   </div>
 </footer>
+<script src="assets/app.js?v=mq9g2n1g" defer></script>
 </body>
 </html>

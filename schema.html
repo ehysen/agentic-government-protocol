@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The schema — AGP</title>
   <meta name="description" content="The concrete AGP schema: draft JSON shapes for the agency catalog, Service, EligibilityRule, Authorization, ServiceRequest, and Receipt — plus how AGP reuses existing government data definitions and rides existing agent transports.">
-  <link rel="stylesheet" href="assets/styles.css?v=mq9d0g48">
+  <link rel="stylesheet" href="assets/styles.css?v=mq9g2n1g">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d4ed8'/%3E%3Cg fill='none' stroke='white' stroke-width='4' stroke-linecap='round'%3E%3Ccircle cx='20' cy='20' r='6'/%3E%3Ccircle cx='44' cy='20' r='6'/%3E%3Ccircle cx='32' cy='46' r='6'/%3E%3Cpath d='M24 24 28 40M40 24 36 40M26 20h12'/%3E%3C/g%3E%3C/svg%3E">
 </head>
 <body>
@@ -76,10 +76,11 @@
     <div class="content wide">
       <p class="eyebrow">Specification</p>
       <h1>The schema</h1>
-      <p class="lede">This is the concrete shape of AGP. The objects below are the
-      <a href="concepts.html">core types</a> rendered as draft JSON. They are
-      <strong>v0.1 illustrative</strong> &mdash; deliberately small, meant to be co-authored
-      with agencies against real systems, not a frozen specification.</p>
+      <p class="lede">This is the concrete shape of AGP, and it is small on purpose: a
+      published <strong>catalog</strong>, one <strong>ServiceSession</strong> that carries the
+      whole interaction, and an authoritative <strong>Determination</strong>. The JSON below
+      is <strong>v0.1 illustrative</strong> &mdash; meant to be co-authored with agencies against
+      real systems, not frozen.</p>
 
       <div class="callout callout--note">
         <p class="callout__label">Reuse over reinvention</p>
@@ -91,47 +92,34 @@
         agency&rsquo;s side.</p>
       </div>
 
-      <h2 class="anchored" id="catalog">The discovery document<a class="h-anchor" href="#catalog" aria-label="Link to this section">#</a></h2>
-      <p>An agency agent advertises itself and its services with a single, published
-      <strong>catalog</strong>. This is the entry point of step&nbsp;1 &mdash; the
-      &ldquo;publish once, read everywhere&rdquo; artifact.</p>
+      <h2 class="anchored" id="catalog">The catalog (discovery + capabilities)<a class="h-anchor" href="#catalog" aria-label="Link to this section">#</a></h2>
+      <p>An government agent advertises itself, its services, and <strong>what it supports</strong>
+      with a single published <strong>catalog</strong> &mdash; the &ldquo;publish once, read
+      everywhere&rdquo; artifact. The <code>capabilities</code> block lets agents negotiate rather
+      than guess.</p>
 <pre><code><span class="c-com">// GET https://agency.example.gov/.well-known/agp/catalog.json</span>
 {
-  <span class="c-key">"agp"</span>: <span class="c-str">"0.1"</span>,
-  <span class="c-key">"agencyOfRecord"</span>: {
-    <span class="c-key">"id"</span>: <span class="c-str">"us-xx-dhs"</span>,
-    <span class="c-key">"name"</span>: <span class="c-str">"State of XX, Department of Human Services"</span>,
-    <span class="c-key">"jurisdiction"</span>: <span class="c-str">"us-xx"</span>
-  },
-  <span class="c-key">"agencyAgent"</span>: {
-    <span class="c-key">"endpoint"</span>: <span class="c-str">"https://agency.example.gov/agp"</span>,
-    <span class="c-key">"transports"</span>: [<span class="c-str">"mcp"</span>, <span class="c-str">"https+json"</span>],
-    <span class="c-key">"authorization"</span>: <span class="c-str">"ref:companion-layer"</span>
+  <span class="c-key">"agp"</span>: <span class="c-str">"2026-06-01"</span>,                  <span class="c-com">// date-based version</span>
+  <span class="c-key">"agencyOfRecord"</span>: { <span class="c-key">"id"</span>: <span class="c-str">"us-xx-dhs"</span>,
+    <span class="c-key">"name"</span>: <span class="c-str">"State of XX, Department of Human Services"</span>, <span class="c-key">"jurisdiction"</span>: <span class="c-str">"us-xx"</span> },
+  <span class="c-key">"governmentAgent"</span>: { <span class="c-key">"endpoint"</span>: <span class="c-str">"https://agency.example.gov/agp"</span>,
+    <span class="c-key">"transports"</span>: [<span class="c-str">"mcp"</span>, <span class="c-str">"https+json"</span>], <span class="c-key">"authorization"</span>: <span class="c-str">"ref:companion-layer"</span> },
+  <span class="c-key">"capabilities"</span>: {
+    <span class="c-key">"channels"</span>: [<span class="c-str">"agp"</span>, <span class="c-str">"web"</span>, <span class="c-str">"in-person"</span>, <span class="c-str">"phone"</span>],
+    <span class="c-key">"deliveryPatterns"</span>: [<span class="c-str">"instant"</span>, <span class="c-str">"validate-after"</span>, <span class="c-str">"manual"</span>],
+    <span class="c-key">"interventions"</span>: [<span class="c-str">"document_upload"</span>, <span class="c-str">"identity_verification"</span>, <span class="c-str">"caseworker_review"</span>],
+    <span class="c-key">"extensions"</span>: [<span class="c-str">"snap"</span>]
   },
   <span class="c-key">"services"</span>: [<span class="c-str">"ref:us-xx-snap"</span>, <span class="c-str">"ref:us-xx-medicaid"</span>]
 }</code></pre>
 
       <h2 class="anchored" id="service">Service<a class="h-anchor" href="#service" aria-label="Link to this section">#</a></h2>
-      <p>A service or benefit and what it takes to get it. Read during discovery.</p>
-      <div class="table-wrap"><table>
-        <thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead>
-        <tbody>
-          <tr><td><code>id</code></td><td>string</td><td>Required. Globally unique service id.</td></tr>
-          <tr><td><code>agencyOfRecord</code></td><td>string</td><td>Required. The authority behind this service.</td></tr>
-          <tr><td><code>name</code> / <code>summary</code></td><td>string</td><td>Human-readable, plain-language.</td></tr>
-          <tr><td><code>channels</code></td><td>string[]</td><td>e.g. <code>agp</code>, <code>web</code>, <code>in-person</code>, <code>phone</code>.</td></tr>
-          <tr><td><code>requires</code></td><td>attr[]</td><td>Attribute refs into existing data models.</td></tr>
-          <tr><td><code>eligibility</code></td><td>ref</td><td>Reference to an EligibilityRule.</td></tr>
-          <tr><td><code>deliveryPattern</code></td><td>enum</td><td><code>instant</code> | <code>validate-after</code> | <code>manual</code>.</td></tr>
-        </tbody>
-      </table></div>
+      <p>A service or benefit and what it takes to get it. Point <code>requires</code> at
+      existing data definitions rather than inventing new ones.</p>
 <pre><code>{
-  <span class="c-key">"type"</span>: <span class="c-str">"Service"</span>,
-  <span class="c-key">"id"</span>: <span class="c-str">"us-xx-snap"</span>,
-  <span class="c-key">"agencyOfRecord"</span>: <span class="c-str">"us-xx-dhs"</span>,
+  <span class="c-key">"type"</span>: <span class="c-str">"Service"</span>, <span class="c-key">"id"</span>: <span class="c-str">"us-xx-snap"</span>, <span class="c-key">"agencyOfRecord"</span>: <span class="c-str">"us-xx-dhs"</span>,
   <span class="c-key">"name"</span>: <span class="c-str">"Supplemental Nutrition Assistance Program (SNAP)"</span>,
   <span class="c-key">"summary"</span>: <span class="c-str">"Monthly help buying groceries for eligible households."</span>,
-  <span class="c-key">"channels"</span>: [<span class="c-str">"agp"</span>, <span class="c-str">"web"</span>, <span class="c-str">"in-person"</span>, <span class="c-str">"phone"</span>],
   <span class="c-key">"requires"</span>: [
     { <span class="c-key">"attr"</span>: <span class="c-str">"identity"</span>,      <span class="c-key">"model"</span>: <span class="c-str">"niem:PersonName"</span> },
     { <span class="c-key">"attr"</span>: <span class="c-str">"householdSize"</span>, <span class="c-key">"model"</span>: <span class="c-str">"niem:HouseholdSize"</span> },
@@ -143,96 +131,159 @@
 }</code></pre>
 
       <h2 class="anchored" id="eligibility">EligibilityRule<a class="h-anchor" href="#eligibility" aria-label="Link to this section">#</a></h2>
-      <p>Machine-readable conditions, expressed over the attributes a Service declares.
-      Published by the agency so agents can preview eligibility before applying.</p>
+      <p>Machine-readable conditions over the attributes a Service declares, published so
+      agents can preview eligibility before submitting.</p>
 <pre><code>{
-  <span class="c-key">"type"</span>: <span class="c-str">"EligibilityRule"</span>,
-  <span class="c-key">"id"</span>: <span class="c-str">"us-xx-snap-rules"</span>,
-  <span class="c-key">"service"</span>: <span class="c-str">"us-xx-snap"</span>,
+  <span class="c-key">"type"</span>: <span class="c-str">"EligibilityRule"</span>, <span class="c-key">"id"</span>: <span class="c-str">"us-xx-snap-rules"</span>, <span class="c-key">"service"</span>: <span class="c-str">"us-xx-snap"</span>,
   <span class="c-key">"effective"</span>: <span class="c-str">"2026-01-01"</span>,
   <span class="c-key">"allOf"</span>: [
     { <span class="c-key">"attr"</span>: <span class="c-str">"residency"</span>, <span class="c-key">"equals"</span>: <span class="c-str">"us-xx"</span> },
-    { <span class="c-key">"attr"</span>: <span class="c-str">"income.monthlyGross"</span>,
-      <span class="c-key">"atMostPctFPL"</span>: <span class="c-num">130</span>, <span class="c-key">"byHousehold"</span>: <span class="c-str">"householdSize"</span> }
+    { <span class="c-key">"attr"</span>: <span class="c-str">"income.monthlyGross"</span>, <span class="c-key">"atMostPctFPL"</span>: <span class="c-num">130</span>, <span class="c-key">"byHousehold"</span>: <span class="c-str">"householdSize"</span> }
   ],
   <span class="c-key">"provisionalIf"</span>: { <span class="c-key">"attr"</span>: <span class="c-str">"income.recentLoss"</span>, <span class="c-key">"equals"</span>: <span class="c-num">true</span> }
 }</code></pre>
 
-      <h2 class="anchored" id="authorization-obj">Authorization<a class="h-anchor" href="#authorization-obj" aria-label="Link to this section">#</a></h2>
-      <p>A scoped grant from the constituent. v0.1 specifies the <em>shape and scope</em>;
-      the cryptographic proof in <code>proof</code> is supplied by the
-      <a href="authorization.html">companion layer</a>.</p>
-<pre><code>{
-  <span class="c-key">"type"</span>: <span class="c-str">"Authorization"</span>,
-  <span class="c-key">"id"</span>: <span class="c-str">"auth_9f2c..."</span>,
-  <span class="c-key">"constituent"</span>: <span class="c-str">"did:example:maria"</span>,        <span class="c-com">// identity ref</span>
-  <span class="c-key">"agent"</span>: <span class="c-str">"agent:public-ai-option"</span>,
-  <span class="c-key">"purpose"</span>: <span class="c-str">"Apply for SNAP"</span>,
-  <span class="c-key">"scope"</span>: {
-    <span class="c-key">"services"</span>: [<span class="c-str">"us-xx-snap"</span>],
-    <span class="c-key">"data"</span>: [<span class="c-str">"identity"</span>, <span class="c-str">"householdSize"</span>, <span class="c-str">"income"</span>, <span class="c-str">"residency"</span>],
-    <span class="c-key">"expires"</span>: <span class="c-str">"2026-07-01T00:00:00Z"</span>
-  },
-  <span class="c-key">"revocable"</span>: <span class="c-num">true</span>,
-  <span class="c-key">"proof"</span>: <span class="c-str">"ref:companion-layer"</span>           <span class="c-com">// deferred mechanism</span>
+      <h2 class="anchored" id="session">ServiceSession — the spine<a class="h-anchor" href="#session" aria-label="Link to this section">#</a></h2>
+      <p>The single living record of one interaction. The constituent agent creates it,
+      updates it, and submits it; <strong>every response is the full authoritative snapshot</strong>,
+      so the agent never has to assume prior state. One session, one <code>status</code> at a
+      time.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code>id</code></td><td>string</td><td>Required. The session.</td></tr>
+          <tr><td><code>service</code></td><td>ref</td><td>Required. The Service being sought.</td></tr>
+          <tr><td><code>status</code></td><td>enum</td><td>Required. See lifecycle below.</td></tr>
+          <tr><td><code>attributes</code></td><td>object</td><td>The assembled, consented data.</td></tr>
+          <tr><td><code>eligibility</code></td><td>object</td><td>Preview: <code>likely</code> / <code>eligible</code> / <code>ineligible</code> / <code>unknown</code>.</td></tr>
+          <tr><td><code>authorization</code></td><td>ref</td><td>The scoped grant (proof deferred).</td></tr>
+          <tr><td><code>messages</code></td><td>Message[]</td><td>Actionable guidance &mdash; see below.</td></tr>
+          <tr><td><code>determination</code></td><td>Determination</td><td><code>null</code> until submit; authoritative after.</td></tr>
+          <tr><td><code>links</code></td><td>Link[]</td><td>Program rules, privacy notice, appeal rights.</td></tr>
+          <tr><td><code>expires_at</code></td><td>date-time</td><td>When the session lapses.</td></tr>
+        </tbody>
+      </table></div>
+      <p><strong>Status lifecycle:</strong>
+        <code>gathering</code> &rarr; <code>ready_to_submit</code> &rarr; <code>in_progress</code>
+        &rarr; <code>completed</code> &mdash; with branches to <code>requires_intervention</code>
+        (returns to <code>in_progress</code> once resolved), <code>denied</code>,
+        <code>canceled</code>, and <code>expired</code>.</p>
+<pre><code><span class="c-com">// the session in 'gathering' — note messages tell the agent what's missing</span>
+{
+  <span class="c-key">"type"</span>: <span class="c-str">"ServiceSession"</span>, <span class="c-key">"id"</span>: <span class="c-str">"ses_4a17..."</span>, <span class="c-key">"service"</span>: <span class="c-str">"us-xx-snap"</span>,
+  <span class="c-key">"status"</span>: <span class="c-str">"gathering"</span>,
+  <span class="c-key">"attributes"</span>: { <span class="c-key">"householdSize"</span>: <span class="c-num">3</span>,
+    <span class="c-key">"income"</span>: { <span class="c-key">"monthlyGross"</span>: <span class="c-num">0</span>, <span class="c-key">"recentLoss"</span>: <span class="c-num">true</span> }, <span class="c-key">"residency"</span>: <span class="c-str">"us-xx"</span> },
+  <span class="c-key">"eligibility"</span>: { <span class="c-key">"result"</span>: <span class="c-str">"likely"</span>, <span class="c-key">"estimateMonthly"</span>: <span class="c-num">535</span>, <span class="c-key">"currency"</span>: <span class="c-str">"USD"</span> },
+  <span class="c-key">"authorization"</span>: <span class="c-num">null</span>,
+  <span class="c-key">"messages"</span>: [
+    { <span class="c-key">"type"</span>: <span class="c-str">"error"</span>, <span class="c-key">"code"</span>: <span class="c-str">"authorization_required"</span>,
+      <span class="c-key">"resolution"</span>: <span class="c-str">"requires_constituent_input"</span>, <span class="c-key">"param"</span>: <span class="c-str">"$.authorization"</span>,
+      <span class="c-key">"content"</span>: <span class="c-str">"Maria needs to authorize this agent before we can submit."</span> }
+  ],
+  <span class="c-key">"determination"</span>: <span class="c-num">null</span>,
+  <span class="c-key">"expires_at"</span>: <span class="c-str">"2026-06-12T15:04:00Z"</span>
 }</code></pre>
 
-      <h2 class="anchored" id="request">ServiceRequest<a class="h-anchor" href="#request" aria-label="Link to this section">#</a></h2>
-      <p>What the constituent agent sends to the agency agent. It references a Service and
-      an Authorization, and carries (or points to) the required attributes.</p>
-<pre><code>{
-  <span class="c-key">"type"</span>: <span class="c-str">"ServiceRequest"</span>,
-  <span class="c-key">"id"</span>: <span class="c-str">"req_4a17..."</span>,
-  <span class="c-key">"service"</span>: <span class="c-str">"us-xx-snap"</span>,
-  <span class="c-key">"authorization"</span>: <span class="c-str">"auth_9f2c..."</span>,
-  <span class="c-key">"attributes"</span>: {
-    <span class="c-key">"householdSize"</span>: <span class="c-num">3</span>,
-    <span class="c-key">"income"</span>: { <span class="c-key">"monthlyGross"</span>: <span class="c-num">0</span>, <span class="c-key">"recentLoss"</span>: <span class="c-num">true</span> },
-    <span class="c-key">"residency"</span>: <span class="c-str">"us-xx"</span>
-  },
-  <span class="c-key">"attestation"</span>: <span class="c-str">"self-attested"</span>,        <span class="c-com">// or "verified"</span>
-  <span class="c-key">"submittedAt"</span>: <span class="c-str">"2026-06-11T15:04:00Z"</span>
-}</code></pre>
+      <h2 class="anchored" id="operations">Operations<a class="h-anchor" href="#operations" aria-label="Link to this section">#</a></h2>
+      <p>Five operations on the session &mdash; create, read, update, submit, cancel &mdash; mirror
+      its lifecycle. <code>submit</code> <strong>must</strong> produce an authoritative
+      <a href="#determination">Determination</a> on the agency of record&rsquo;s system, the way the
+      agency&rsquo;s authority is made structural rather than promised.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Operation</th><th>Call</th><th>Effect</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Create</strong></td><td><code>POST /sessions</code></td><td>Start a session for a service with initial attributes/consent.</td></tr>
+          <tr><td><strong>Read</strong></td><td><code>GET /sessions/{id}</code></td><td>Fetch the authoritative current state.</td></tr>
+          <tr><td><strong>Update</strong></td><td><code>POST /sessions/{id}</code></td><td>Add attributes, attach the authorization, change channel.</td></tr>
+          <tr><td><strong>Submit</strong></td><td><code>POST /sessions/{id}/submit</code></td><td>Hand to the agency of record; <strong>must</strong> yield a Determination.</td></tr>
+          <tr><td><strong>Cancel</strong></td><td><code>POST /sessions/{id}/cancel</code></td><td>Terminate unless already completed.</td></tr>
+        </tbody>
+      </table></div>
+      <p class="meta" style="border:none;padding:0;margin:.4rem 0 0;">Conventions: every
+      <code>POST</code> carries an <code>Idempotency-Key</code> (no duplicate applications on
+      retry) and an <code>API-Version</code> (date-based, e.g. <code>2026-06-01</code>); every
+      response returns the full session snapshot.</p>
 
-      <h2 class="anchored" id="receipt">Receipt / StatusRecord<a class="h-anchor" href="#receipt" aria-label="Link to this section">#</a></h2>
-      <p>The agency&rsquo;s authoritative response &mdash; outcome, audit trail, live status, and
-      recourse. This is what makes an AGP outcome trustworthy and contestable.</p>
+      <h2 class="anchored" id="messages">messages[] — actionable guidance<a class="h-anchor" href="#messages" aria-label="Link to this section">#</a></h2>
+      <p>The array that does the unglamorous, essential work: telling the agent (and the
+      person) exactly what is needed or what happened. Each message is an <code>info</code>,
+      <code>warning</code>, or <code>error</code> with a <code>resolution</code> and a
+      <code>param</code> pointing at the field at issue. Government leans on this far more than
+      commerce &mdash; it is how &ldquo;we need proof of income&rdquo; or &ldquo;sent for caseworker review&rdquo;
+      travels machine-actionably.</p>
+<pre><code><span class="c-key">"messages"</span>: [
+  { <span class="c-key">"type"</span>: <span class="c-str">"warning"</span>, <span class="c-key">"code"</span>: <span class="c-str">"provisional_pending_verification"</span>,
+    <span class="c-key">"resolution"</span>: <span class="c-str">"requires_constituent_review"</span>,
+    <span class="c-key">"content"</span>: <span class="c-str">"Approved provisionally; please upload proof of income within 30 days."</span> },
+  { <span class="c-key">"type"</span>: <span class="c-str">"error"</span>, <span class="c-key">"code"</span>: <span class="c-str">"identity_verification_required"</span>,
+    <span class="c-key">"resolution"</span>: <span class="c-str">"requires_intervention"</span>, <span class="c-key">"param"</span>: <span class="c-str">"$.attributes.identity"</span>,
+    <span class="c-key">"content"</span>: <span class="c-str">"We could not verify identity automatically; a navigator can help in person."</span> }
+]
+<span class="c-com">// resolution: recoverable | requires_constituent_input</span>
+<span class="c-com">//           | requires_constituent_review | requires_intervention</span></code></pre>
+
+      <h2 class="anchored" id="determination">Determination — the authoritative outcome<a class="h-anchor" href="#determination" aria-label="Link to this section">#</a></h2>
+      <p>What <code>submit</code> produces on the agency&rsquo;s system. It carries the outcome, a
+      typed <strong>award breakdown</strong>, the audit trail, and recourse. This is what makes
+      an AGP outcome trustworthy and contestable &mdash; and it lives on the session, so there is
+      one record, not a scattered request and receipt.</p>
 <pre><code>{
-  <span class="c-key">"type"</span>: <span class="c-str">"Receipt"</span>,
-  <span class="c-key">"id"</span>: <span class="c-str">"rcpt_77b0..."</span>,
-  <span class="c-key">"request"</span>: <span class="c-str">"req_4a17..."</span>,
-  <span class="c-key">"agencyOfRecord"</span>: <span class="c-str">"us-xx-dhs"</span>,
-  <span class="c-key">"outcome"</span>: <span class="c-str">"approved-provisional"</span>,
-  <span class="c-key">"benefit"</span>: { <span class="c-key">"amountMonthly"</span>: <span class="c-num">535</span>, <span class="c-key">"currency"</span>: <span class="c-str">"USD"</span>,
-               <span class="c-key">"delivery"</span>: <span class="c-str">"EBT"</span>, <span class="c-key">"startsBy"</span>: <span class="c-str">"2026-06-13"</span> },
-  <span class="c-key">"status"</span>: <span class="c-str">"documentation-pending"</span>,
+  <span class="c-key">"type"</span>: <span class="c-str">"Determination"</span>, <span class="c-key">"id"</span>: <span class="c-str">"det_77b0..."</span>, <span class="c-key">"session"</span>: <span class="c-str">"ses_4a17..."</span>,
+  <span class="c-key">"agencyOfRecord"</span>: <span class="c-str">"us-xx-dhs"</span>, <span class="c-key">"outcome"</span>: <span class="c-str">"approved_provisional"</span>,
+  <span class="c-key">"award"</span>: [
+    { <span class="c-key">"type"</span>: <span class="c-str">"base_allotment"</span>, <span class="c-key">"amountMonthly"</span>: <span class="c-num">740</span> },
+    { <span class="c-key">"type"</span>: <span class="c-str">"income_deduction"</span>, <span class="c-key">"amountMonthly"</span>: <span class="c-num">-205</span> },
+    { <span class="c-key">"type"</span>: <span class="c-str">"final_award"</span>, <span class="c-key">"amountMonthly"</span>: <span class="c-num">535</span>, <span class="c-key">"currency"</span>: <span class="c-str">"USD"</span> }
+  ],
+  <span class="c-key">"delivery"</span>: { <span class="c-key">"method"</span>: <span class="c-str">"EBT"</span>, <span class="c-key">"startsBy"</span>: <span class="c-str">"2026-06-13"</span> },
   <span class="c-key">"audit"</span>: [
-    { <span class="c-key">"at"</span>: <span class="c-str">"2026-06-11T15:04:01Z"</span>, <span class="c-key">"event"</span>: <span class="c-str">"request-received"</span> },
-    { <span class="c-key">"at"</span>: <span class="c-str">"2026-06-11T15:04:02Z"</span>, <span class="c-key">"event"</span>: <span class="c-str">"authorization-verified"</span> },
+    { <span class="c-key">"at"</span>: <span class="c-str">"2026-06-11T15:04:02Z"</span>, <span class="c-key">"event"</span>: <span class="c-str">"authorization_verified"</span> },
     { <span class="c-key">"at"</span>: <span class="c-str">"2026-06-11T15:04:03Z"</span>, <span class="c-key">"event"</span>: <span class="c-str">"determination"</span>, <span class="c-key">"by"</span>: <span class="c-str">"us-xx-dhs"</span> }
   ],
   <span class="c-key">"recourse"</span>: { <span class="c-key">"appealUrl"</span>: <span class="c-str">"https://agency.example.gov/appeal/77b0"</span>,
                <span class="c-key">"correctUrl"</span>: <span class="c-str">"https://agency.example.gov/correct/77b0"</span> }
 }</code></pre>
 
-      <h2 class="anchored" id="validate-after">Delivery patterns &amp; validate-after<a class="h-anchor" href="#validate-after" aria-label="Link to this section">#</a></h2>
-      <p>A <code>Service</code> declares its <code>deliveryPattern</code>. Where law and
-      program rules permit, <strong>validate-after</strong> lets the agency provision
-      provisionally on attested attributes and verify afterward &mdash; so a household in need
-      isn&rsquo;t blocked waiting on a slow check. The receipt reflects the provisional status
-      and any later reconciliation. It is an <em>allowed</em> pattern, never required; the
-      agency of record decides whether a program can safely use it.</p>
+      <h2 class="anchored" id="authorization-obj">Authorization — the deferred trust layer<a class="h-anchor" href="#authorization-obj" aria-label="Link to this section">#</a></h2>
+      <p>A scoped grant the agent attaches to the session before submit; the government agent
+      verifies it. AGP carves the <em>proof</em> out into a separate companion layer &mdash; the
+      same move agentic commerce makes with delegated payment (see
+      <a href="related-work.html#acp">Related work</a>). v0.1 specifies the shape and scope;
+      the cryptographic <code>proof</code> is supplied later.</p>
+<pre><code>{
+  <span class="c-key">"type"</span>: <span class="c-str">"Authorization"</span>, <span class="c-key">"id"</span>: <span class="c-str">"auth_9f2c..."</span>,
+  <span class="c-key">"constituent"</span>: <span class="c-str">"did:example:maria"</span>, <span class="c-key">"agent"</span>: <span class="c-str">"agent:public-ai-option"</span>,
+  <span class="c-key">"purpose"</span>: <span class="c-str">"Apply for SNAP"</span>,
+  <span class="c-key">"scope"</span>: { <span class="c-key">"services"</span>: [<span class="c-str">"us-xx-snap"</span>],
+    <span class="c-key">"data"</span>: [<span class="c-str">"identity"</span>, <span class="c-str">"householdSize"</span>, <span class="c-str">"income"</span>, <span class="c-str">"residency"</span>],
+    <span class="c-key">"expires"</span>: <span class="c-str">"2026-07-01T00:00:00Z"</span> },
+  <span class="c-key">"revocable"</span>: <span class="c-num">true</span>,
+  <span class="c-key">"proof"</span>: <span class="c-str">"ref:companion-layer"</span>   <span class="c-com">// deferred mechanism</span>
+}</code></pre>
 
-      <h2 class="anchored" id="transport">Transport<a class="h-anchor" href="#transport" aria-label="Link to this section">#</a></h2>
-      <p>AGP defines <em>what</em> moves, not a new wire protocol. Agency agents advertise
-      their <code>transports</code> &mdash; typically an existing agent transport such as
-      <abbr title="Model Context Protocol">MCP</abbr> or plain HTTPS+JSON &mdash; so AGP rides
-      infrastructure agents already speak. See <a href="related-work.html">Related work</a>.</p>
+      <h2 class="anchored" id="validate-after">Delivery patterns &amp; validate-after<a class="h-anchor" href="#validate-after" aria-label="Link to this section">#</a></h2>
+      <p>A <code>Service</code> declares its <code>deliveryPattern</code>, and the agency
+      declares which patterns it supports in the catalog <code>capabilities</code>. Where law
+      and program rules permit, <strong>validate-after</strong> lets the agency provision
+      provisionally on attested attributes and verify afterward &mdash; the session sits in
+      <code>completed</code> with a <code>provisional_pending_verification</code> warning until
+      reconciled. It is an <em>allowed</em> pattern, never required; the agency of record
+      decides whether a program can safely use it.</p>
+
+      <h2 class="anchored" id="transport">Transport &amp; versioning<a class="h-anchor" href="#transport" aria-label="Link to this section">#</a></h2>
+      <p>AGP defines <em>what</em> moves, not a new wire protocol. Government agents advertise
+      their <code>transports</code> &mdash; an existing agent transport such as
+      <abbr title="Model Context Protocol">MCP</abbr> or plain HTTPS+JSON. The whole spec is
+      <strong>date-versioned</strong> (<code>YYYY-MM-DD</code>), sent as <code>API-Version</code>
+      on every call, so agencies and agents can evolve without breakage. See
+      <a href="related-work.html">Related work</a>.</p>
 
       <h2 class="anchored" id="out">What is intentionally not here yet<a class="h-anchor" href="#out" aria-label="Link to this section">#</a></h2>
       <p>Full normative JSON Schema / OpenAPI for every object, a formal eligibility-rule
-      language, and signed-envelope formats are <a href="roadmap.html">deferred</a>. v0.1
-      names the shapes; formalizing them is co-authorship work to be done with agencies.</p>
+      language, webhooks for status changes, and signed-envelope formats are
+      <a href="roadmap.html">deferred</a>. v0.1 names the shapes; formalizing them is
+      co-authorship work to be done with agencies.</p>
 
       <nav class="pagenav" aria-label="Pagination">
         <a class="prev" href="flow.html"><small>Previous</small> ← The canonical flow</a>
@@ -257,5 +308,6 @@
     </div>
   </div>
 </footer>
+<script src="assets/app.js?v=mq9g2n1g" defer></script>
 </body>
 </html>

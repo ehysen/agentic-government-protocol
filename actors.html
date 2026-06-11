@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Actors & roles — AGP</title>
-  <meta name="description" content="AGP is agent-to-agent: a constituent-side agent (the person’s own or an intermediary’s) speaks to a government agency agent that represents the agency of record. The four actors are Constituent, Agent, Intermediary, and Government agency.">
-  <link rel="stylesheet" href="assets/styles.css?v=mq9d0g48">
+  <meta name="description" content="AGP is agent-to-agent: a constituent-side agent (the person’s own or an intermediary’s) speaks to a government agent that represents the agency of record. The four actors are Constituent, Agent, Intermediary, and Government agency.">
+  <link rel="stylesheet" href="assets/styles.css?v=mq9g2n1g">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d4ed8'/%3E%3Cg fill='none' stroke='white' stroke-width='4' stroke-linecap='round'%3E%3Ccircle cx='20' cy='20' r='6'/%3E%3Ccircle cx='44' cy='20' r='6'/%3E%3Ccircle cx='32' cy='46' r='6'/%3E%3Cpath d='M24 24 28 40M40 24 36 40M26 20h12'/%3E%3C/g%3E%3C/svg%3E">
 </head>
 <body>
@@ -78,7 +78,7 @@
       <h1>Actors &amp; roles</h1>
       <p class="lede">AGP is an <strong>agent-to-agent</strong> protocol. Its core
       interaction is between a <strong>constituent-side agent</strong> and a
-      <strong>government agency agent</strong>. Behind those agents stand the people and
+      <strong>government agent</strong>. Behind those agents stand the people and
       institutions they represent: four actors, one of which &mdash; the intermediary &mdash; is
       distinctive to the government context.</p>
 
@@ -86,7 +86,7 @@
         <div class="figure-box">
           <svg viewBox="0 0 760 360" role="img" aria-labelledby="actorsDiagTitle actorsDiagDesc" width="760" height="360">
             <title id="actorsDiagTitle">AGP agent-to-agent actor diagram</title>
-            <desc id="actorsDiagDesc">A constituent (and an intermediary who can act for them) is represented by a constituent-side agent on the left. A government agency, the agency of record, is represented by a government agency agent on the right. The two agents exchange AGP messages: the constituent agent sends requests, the agency agent returns receipts. Authority over eligibility and provisioning stays with the agency of record.</desc>
+            <desc id="actorsDiagDesc">A constituent (and an intermediary who can act for them) is represented by a constituent-side agent on the left. A government agency, the agency of record, is represented by a government agent on the right. The two agents exchange AGP messages: the constituent agent sends requests, the government agent returns receipts. Authority over eligibility and provisioning stays with the agency of record.</desc>
             <defs>
               <marker id="aarrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#3c4a63"/></marker>
             </defs>
@@ -104,7 +104,7 @@
               <text x="330" y="176" text-anchor="middle" font-size="15" font-weight="700" fill="#14358f">agent</text>
               <text x="330" y="206" text-anchor="middle" font-size="11.5" fill="#3c4a63">acts on behalf of</text>
               <text x="330" y="221" text-anchor="middle" font-size="11.5" fill="#3c4a63">the constituent</text>
-              <!-- agency agent -->
+              <!-- government agent -->
               <rect x="470" y="120" width="160" height="120" rx="14" fill="#fff" stroke="#0f766e" stroke-width="2.5"/>
               <text x="550" y="158" text-anchor="middle" font-size="15" font-weight="700" fill="#0f766e">Agency</text>
               <text x="550" y="176" text-anchor="middle" font-size="15" font-weight="700" fill="#0f766e">agent</text>
@@ -146,7 +146,7 @@
           <tr><td><strong>Constituent</strong></td><td>The person or household seeking a service or benefit. The source of authority.</td><td>&mdash; (is represented)</td></tr>
           <tr><td><strong>Agent</strong></td><td>Software acting on the constituent&rsquo;s behalf &mdash; the Public AI Option, a state agent, or a trusted third-party / NGO agent.</td><td>Constituent-side agent</td></tr>
           <tr><td><strong>Intermediary</strong></td><td>NGOs, navigators, caseworkers, trusted orgs (and data intermediaries) that assist constituents &mdash; including by running an agent for them.</td><td>Constituent-side agent (for others)</td></tr>
-          <tr><td><strong>Government agency</strong></td><td>The service provider &mdash; the <strong>agency of record</strong> that retains authority over eligibility and provisioning.</td><td>Agency agent</td></tr>
+          <tr><td><strong>Government agency</strong></td><td>The service provider &mdash; the <strong>agency of record</strong> that retains authority over eligibility and provisioning.</td><td>Government agent</td></tr>
         </tbody>
       </table>
       </div>
@@ -159,17 +159,18 @@
       <h2 class="anchored" id="agent">Constituent-side agent<a class="h-anchor" href="#agent" aria-label="Link to this section">#</a></h2>
       <p>Software acting on the constituent&rsquo;s behalf &mdash; discovering services, assembling
       attributes, checking eligibility, submitting requests, and relaying receipts by
-      speaking to agency agents. It may be the shared &ldquo;Public AI Option,&rdquo; a
+      speaking to government agents. It may be the shared &ldquo;Public AI Option,&rdquo; a
       state-operated agent, or a trusted third-party or NGO agent. It is a fiduciary of
       <em>action</em>, never a decision-maker of record.</p>
 
-      <h2 class="anchored" id="agency-agent">Government agency agent<a class="h-anchor" href="#agency-agent" aria-label="Link to this section">#</a></h2>
+      <h2 class="anchored" id="government-agent">Government agent<a class="h-anchor" href="#government-agent" aria-label="Link to this section">#</a></h2>
       <p>The agency&rsquo;s machine endpoint and counterpart in every exchange. The agency
       agent advertises the agency&rsquo;s services, answers eligibility queries, verifies
-      authorization, accepts <code>ServiceRequest</code>s, and returns
-      <code>Receipt</code>s &mdash; all strictly within the authority delegated to it by the
-      agency of record. It is how an agency becomes reachable by any compliant agent
-      without bespoke, agent-by-agent integration.</p>
+      authorization, advances <a href="schema.html#session"><code>ServiceSession</code></a>s,
+      and returns authoritative <a href="schema.html#determination"><code>Determination</code></a>s
+      &mdash; all strictly within the authority delegated to it by the agency of record. It is how
+      an agency becomes reachable by any compliant agent without bespoke, agent-by-agent
+      integration.</p>
 
       <h2 class="anchored" id="intermediary">Intermediary<a class="h-anchor" href="#intermediary" aria-label="Link to this section">#</a></h2>
       <p>The actor with no clean commercial analog, and the one that makes AGP a
@@ -193,10 +194,10 @@
       <div class="callout callout--note">
         <p class="callout__label">Trust relationships in one line</p>
         <p>The <strong>constituent</strong> authorizes a <strong>constituent-side agent</strong>
-        (possibly run by an <strong>intermediary</strong>) to carry a standardized request,
-        agent-to-agent, to the <strong>agency agent</strong> of the
-        <strong>agency of record</strong>, which alone decides and provisions, then returns
-        a receipt along the same chain.</p>
+        (possibly run by an <strong>intermediary</strong>) to advance a standardized
+        <strong>session</strong>, agent-to-agent, with the <strong>government agent</strong> of the
+        <strong>agency of record</strong>, which alone decides and provisions, then returns an
+        authoritative determination along the same chain.</p>
       </div>
 
       <nav class="pagenav" aria-label="Pagination">
@@ -222,5 +223,6 @@
     </div>
   </div>
 </footer>
+<script src="assets/app.js?v=mq9g2n1g" defer></script>
 </body>
 </html>

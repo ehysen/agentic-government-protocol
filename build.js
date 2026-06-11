@@ -161,6 +161,7 @@ ${pagination(slug)}    </div>
     </div>
   </div>
 </footer>
+<script src="assets/app.js?v=${ASSET_VER}" defer></script>
 </body>
 </html>
 `;

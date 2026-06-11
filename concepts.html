@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Core concepts & vocabulary — AGP</title>
   <meta name="description" content="AGP defines a small core vocabulary — Service, EligibilityRule, Authorization, ServiceRequest, Receipt/StatusRecord, and the actor types — plus an extension mechanism for the long tail. The concrete schema is on the Schema page.">
-  <link rel="stylesheet" href="assets/styles.css?v=mq9d0g48">
+  <link rel="stylesheet" href="assets/styles.css?v=mq9g2n1g">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d4ed8'/%3E%3Cg fill='none' stroke='white' stroke-width='4' stroke-linecap='round'%3E%3Ccircle cx='20' cy='20' r='6'/%3E%3Ccircle cx='44' cy='20' r='6'/%3E%3Ccircle cx='32' cy='46' r='6'/%3E%3Cpath d='M24 24 28 40M40 24 36 40M26 20h12'/%3E%3C/g%3E%3C/svg%3E">
 </head>
 <body>
@@ -76,30 +76,55 @@
     <div class="content">
       <p class="eyebrow">Specification</p>
       <h1>Core concepts &amp; vocabulary</h1>
-      <p class="lede">AGP keeps a deliberately small core of common types and pushes the
-      long tail to extensions. The core is the set of objects that move between agents in
-      the <a href="flow.html">canonical flow</a>; every flow step maps to one of these
-      types. The concrete field-level definitions live on <a href="schema.html">The
-      schema</a>.</p>
+      <p class="lede">AGP keeps a deliberately small core &mdash; and it is smaller than it
+      looks. Rather than a long pipeline of separate objects, the protocol turns on
+      <strong>one living record, the <code>ServiceSession</code></strong>, that a constituent
+      agent and a government agent advance together: a published <strong>catalog</strong> on one
+      end, an authoritative <strong>determination</strong> on the other. Concrete shapes live
+      on <a href="schema.html">The schema</a>.</p>
 
       <h2 class="anchored" id="core">The core types<a class="h-anchor" href="#core" aria-label="Link to this section">#</a></h2>
       <div class="table-wrap">
       <table>
-        <thead><tr><th>Type</th><th>One-line definition</th><th>Flow step</th></tr></thead>
+        <thead><tr><th>Type</th><th>One-line definition</th><th>Role</th></tr></thead>
         <tbody>
-          <tr><td><code>Service</code></td><td>A government service or benefit, with the channels it&rsquo;s offered through and what it requires. Published once by the agency agent.</td><td>1 &middot; Discovery</td></tr>
-          <tr><td><code>EligibilityRule</code></td><td>A machine-readable condition (or set of conditions) the agency uses to determine who qualifies, expressed over named attributes.</td><td>2 &middot; Eligibility</td></tr>
-          <tr><td><code>Authorization</code></td><td>A scoped grant from a constituent letting a specific agent act on their behalf and use specific data for a specific purpose.</td><td>3 &middot; Authorization</td></tr>
-          <tr><td><code>ServiceRequest</code></td><td>A standardized request an agent submits to the agency agent, referencing a Service and an Authorization.</td><td>4 &middot; Request</td></tr>
-          <tr><td><code>Receipt</code> / <code>StatusRecord</code></td><td>The agency&rsquo;s standardized response: outcome, audit trail, current status, and the path to correction or appeal.</td><td>5 &middot; Receipt</td></tr>
+          <tr><td><code>Catalog</code></td><td>What an agency publishes once: its <code>Service</code>s, their <code>EligibilityRule</code>s, and the capabilities it supports.</td><td>Discovery</td></tr>
+          <tr><td><code>ServiceSession</code></td><td>The single living record of one interaction. Created, updated, and submitted; carries the attributes, the authorization, messages, and the determination, and moves through a <code>status</code>.</td><td>The spine</td></tr>
+          <tr><td><code>Determination</code></td><td>The authoritative outcome the agency of record produces on submit &mdash; award breakdown, audit trail, status, and recourse.</td><td>Outcome</td></tr>
+          <tr><td><code>Authorization</code></td><td>A scoped grant letting a specific agent act for a constituent. Its cryptographic proof is deferred to the companion layer.</td><td>Consent</td></tr>
         </tbody>
       </table>
       </div>
-      <p>Alongside these five process types, the core names the actor types &mdash;
-      <code>Constituent</code>, <code>Agent</code>, <code>Intermediary</code>, and
-      <code>Agency</code> &mdash; and the two agent roles (<code>constituent-agent</code>,
-      <code>agency-agent</code>) that produce and consume the objects above. That is the
-      entire core. Everything else is an extension.</p>
+      <p>That is the whole core: a catalog you read, a session you advance, a determination
+      the agency returns, and an authorization that rides alongside. The core also names the
+      actor types &mdash; <code>Constituent</code>, <code>Agent</code>, <code>Intermediary</code>,
+      <code>Agency</code> &mdash; and the two agent roles. Everything else is an extension.</p>
+
+      <div class="callout callout--note">
+        <p class="callout__label">Why one session instead of five objects</p>
+        <p>An earlier sketch modelled each step of the flow as its own object (request,
+        receipt, status record&hellip;). Collapsing them into a single status-driven
+        <code>ServiceSession</code> is simpler to implement and reason about: there is always
+        exactly one authoritative record of where an interaction stands. This is the biggest
+        lesson AGP took from agentic commerce &mdash; see <a href="related-work.html#acp">Related
+        work</a>.</p>
+      </div>
+
+      <h2 class="anchored" id="crosscutting">Three things every session carries<a class="h-anchor" href="#crosscutting" aria-label="Link to this section">#</a></h2>
+      <p>Adopted because government needs them even more than commerce does:</p>
+      <ul>
+        <li><strong><code>status</code> &mdash; a lifecycle, not a pipeline.</strong> A session is
+        always in exactly one state (<code>gathering</code>, <code>ready_to_submit</code>,
+        <code>in_progress</code>, <code>requires_intervention</code>, <code>completed</code>,
+        <code>denied</code>&hellip;). The agent reads <code>status</code> to know what to do next.</li>
+        <li><strong><code>messages[]</code> &mdash; actionable, structured guidance.</strong> Each
+        message is an <code>info</code>, <code>warning</code>, or <code>error</code> with a
+        <code>resolution</code> (&ldquo;needs your input,&rdquo; &ldquo;sent for review&rdquo;) and a pointer to the
+        field at issue &mdash; e.g. &ldquo;proof of income required&rdquo; or &ldquo;identity check needed.&rdquo;</li>
+        <li><strong><code>capabilities</code> &mdash; declared, not assumed.</strong> An agency
+        states which channels, delivery patterns, and intervention types it supports, so agents
+        negotiate rather than guess.</li>
+      </ul>
 
       <h2 class="anchored" id="extensions">The extension mechanism<a class="h-anchor" href="#extensions" aria-label="Link to this section">#</a></h2>
       <p>The core cannot anticipate every program, state, or category of benefit &mdash; nor
@@ -150,5 +175,6 @@
     </div>
   </div>
 </footer>
+<script src="assets/app.js?v=mq9g2n1g" defer></script>
 </body>
 </html>
