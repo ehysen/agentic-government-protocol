@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Actors & roles — AGP</title>
   <meta name="description" content="AGP is agent-to-agent: a constituent-side agent (the person’s own or an intermediary’s) speaks to a government agency agent that represents the agency of record. The four actors are Constituent, Agent, Intermediary, and Government agency.">
-  <link rel="stylesheet" href="assets/styles.css?v=mq9d0g48">
+  <link rel="stylesheet" href="assets/styles.css?v=mq9e72ov">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d4ed8'/%3E%3Cg fill='none' stroke='white' stroke-width='4' stroke-linecap='round'%3E%3Ccircle cx='20' cy='20' r='6'/%3E%3Ccircle cx='44' cy='20' r='6'/%3E%3Ccircle cx='32' cy='46' r='6'/%3E%3Cpath d='M24 24 28 40M40 24 36 40M26 20h12'/%3E%3C/g%3E%3C/svg%3E">
 </head>
 <body>
@@ -166,10 +166,11 @@
       <h2 class="anchored" id="agency-agent">Government agency agent<a class="h-anchor" href="#agency-agent" aria-label="Link to this section">#</a></h2>
       <p>The agency&rsquo;s machine endpoint and counterpart in every exchange. The agency
       agent advertises the agency&rsquo;s services, answers eligibility queries, verifies
-      authorization, accepts <code>ServiceRequest</code>s, and returns
-      <code>Receipt</code>s &mdash; all strictly within the authority delegated to it by the
-      agency of record. It is how an agency becomes reachable by any compliant agent
-      without bespoke, agent-by-agent integration.</p>
+      authorization, advances <a href="schema.html#session"><code>ServiceSession</code></a>s,
+      and returns authoritative <a href="schema.html#determination"><code>Determination</code></a>s
+      &mdash; all strictly within the authority delegated to it by the agency of record. It is how
+      an agency becomes reachable by any compliant agent without bespoke, agent-by-agent
+      integration.</p>
 
       <h2 class="anchored" id="intermediary">Intermediary<a class="h-anchor" href="#intermediary" aria-label="Link to this section">#</a></h2>
       <p>The actor with no clean commercial analog, and the one that makes AGP a
@@ -193,10 +194,10 @@
       <div class="callout callout--note">
         <p class="callout__label">Trust relationships in one line</p>
         <p>The <strong>constituent</strong> authorizes a <strong>constituent-side agent</strong>
-        (possibly run by an <strong>intermediary</strong>) to carry a standardized request,
-        agent-to-agent, to the <strong>agency agent</strong> of the
-        <strong>agency of record</strong>, which alone decides and provisions, then returns
-        a receipt along the same chain.</p>
+        (possibly run by an <strong>intermediary</strong>) to advance a standardized
+        <strong>session</strong>, agent-to-agent, with the <strong>agency agent</strong> of the
+        <strong>agency of record</strong>, which alone decides and provisions, then returns an
+        authoritative determination along the same chain.</p>
       </div>
 
       <nav class="pagenav" aria-label="Pagination">
