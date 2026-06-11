@@ -18,6 +18,9 @@ const SITE = {
   repo: 'https://github.com/ehysen/agentic-government-protocol',
 };
 
+/* Bumped whenever CSS changes, to bust any cached stylesheet. */
+const ASSET_VER = Date.now().toString(36);
+
 /* Sidebar groups: [groupLabel|null, [ [slug, label], ... ] ] ------------- */
 const NAV = [
   [null, [['index', 'Overview']]],
@@ -98,7 +101,7 @@ function layout(page) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${fullTitle}</title>
   <meta name="description" content="${desc}">
-  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="stylesheet" href="assets/styles.css?v=${ASSET_VER}">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d4ed8'/%3E%3Cg fill='none' stroke='white' stroke-width='4' stroke-linecap='round'%3E%3Ccircle cx='20' cy='20' r='6'/%3E%3Ccircle cx='44' cy='20' r='6'/%3E%3Ccircle cx='32' cy='46' r='6'/%3E%3Cpath d='M24 24 28 40M40 24 36 40M26 20h12'/%3E%3C/g%3E%3C/svg%3E">
 </head>
 <body>
