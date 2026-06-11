@@ -3,18 +3,41 @@
  * a fully readable, stacked walkthrough. No dependencies. */
 (function () {
   'use strict';
+  /* Per-channel copy. The protocol (right column) never changes — only how the
+   * person on the left reaches it. */
+  var CHANNELS = {
+    agent: 'Through <strong>Maria’s own consumer AI agent</strong> — the assistant she already uses. It speaks AGP to the government agent for her. The exchange on the right is identical on every channel.',
+    app:   'Through a <strong>free government-offered agent app</strong> — no third-party account needed. Same AGP exchange on the right.',
+    sms:   'By <strong>texting 1‑800‑GOVERNMENT</strong> — a text-only agent carries the very same exchange for anyone without a smartphone or data plan.',
+    phone: 'By <strong>calling 1‑800‑GOVERNMENT</strong> and talking to a voice agent — full access with no app at all. The protocol on the right is unchanged.'
+  };
+
   var demos = document.querySelectorAll('[data-demo]');
   Array.prototype.forEach.call(demos, function (demo) {
     var tabs    = Array.prototype.slice.call(demo.querySelectorAll('.demo__tab'));
     var bubbles = Array.prototype.slice.call(demo.querySelectorAll('.bubble'));
     var panels  = Array.prototype.slice.call(demo.querySelectorAll('.demo__bts'));
     var dots    = Array.prototype.slice.call(demo.querySelectorAll('.demo__dot'));
+    var chans   = Array.prototype.slice.call(demo.querySelectorAll('.demo__chan'));
+    var note    = demo.querySelector('[data-channel-note]');
+    var stream  = demo.querySelector('[data-stream]');
     var prev    = demo.querySelector('.demo__prev');
     var next    = demo.querySelector('.demo__next');
-    var chans   = Array.prototype.slice.call(demo.querySelectorAll('.demo__chan'));
-    var chanLbl = demo.querySelector('.demo__chanlabel');
-    var chatBox = demo.querySelector('[data-chatscroll]');
     if (!tabs.length) return;
+
+    chans.forEach(function (c) {
+      c.addEventListener('click', function () { setChannel(c.getAttribute('data-channel')); });
+    });
+    function setChannel(key) {
+      if (!CHANNELS[key]) return;
+      demo.setAttribute('data-channel', key);
+      chans.forEach(function (c) {
+        var on = c.getAttribute('data-channel') === key;
+        c.classList.toggle('is-active', on);
+        c.setAttribute('aria-checked', on ? 'true' : 'false');
+      });
+      if (note) note.innerHTML = CHANNELS[key];
+    }
 
     var n = tabs.length, i = 0;
     demo.setAttribute('data-enhanced', '');
@@ -34,35 +57,9 @@
       dots.forEach(function (d, idx) { d.classList.toggle('is-on', idx === i); });
       if (prev) prev.disabled = i === 0;
       if (next) next.textContent = i === n - 1 ? 'Start over ↻' : 'Next step →';
-      if (chatBox) {
-        requestAnimationFrame(function () { chatBox.scrollTop = chatBox.scrollHeight; });
-      }
+      // Keep the latest message in view within the fixed-height stream.
+      if (stream) stream.scrollTop = stream.scrollHeight;
     }
-
-    // Channel toggle: same flow, different surface.
-    function setChannel(btn) {
-      chans.forEach(function (c) {
-        var on = c === btn;
-        c.classList.toggle('is-active', on);
-        c.setAttribute('aria-checked', on ? 'true' : 'false');
-        c.tabIndex = on ? 0 : -1;
-      });
-      demo.setAttribute('data-channel', btn.getAttribute('data-channel'));
-      if (chanLbl) chanLbl.textContent = btn.getAttribute('data-caption');
-    }
-    chans.forEach(function (c, idx) {
-      c.tabIndex = c.classList.contains('is-active') ? 0 : -1;
-      c.addEventListener('click', function () { setChannel(c); });
-      c.addEventListener('keydown', function (e) {
-        var k = e.key, j;
-        if (k === 'ArrowRight' || k === 'ArrowDown') j = (idx + 1) % chans.length;
-        else if (k === 'ArrowLeft' || k === 'ArrowUp') j = (idx - 1 + chans.length) % chans.length;
-        else return;
-        e.preventDefault();
-        setChannel(chans[j]);
-        chans[j].focus();
-      });
-    });
 
     function go(to) { i = Math.max(0, Math.min(n - 1, to)); render(); }
 
