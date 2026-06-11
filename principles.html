@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Principles — AGP</title>
+  <meta name="description" content="The design principles that govern AGP: agency-of-record authority, human-centered and accessible by default, consent-first, publish-once read-everywhere, reuse over reinvention, and replicability across jurisdictions.">
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d4ed8'/%3E%3Cg fill='none' stroke='white' stroke-width='4' stroke-linecap='round'%3E%3Ccircle cx='20' cy='20' r='6'/%3E%3Ccircle cx='44' cy='20' r='6'/%3E%3Ccircle cx='32' cy='46' r='6'/%3E%3Cpath d='M24 24 28 40M40 24 36 40M26 20h12'/%3E%3C/g%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="index.html">
+      <svg class="brand__mark" viewBox="0 0 64 64" role="img" aria-label="AGP logo">
+        <rect width="64" height="64" rx="14" fill="#1d4ed8"/>
+        <g fill="none" stroke="white" stroke-width="4" stroke-linecap="round">
+          <circle cx="20" cy="20" r="6"/><circle cx="44" cy="20" r="6"/><circle cx="32" cy="46" r="6"/>
+          <path d="M24 24 28 40M40 24 36 40M26 20h12"/>
+        </g>
+      </svg>
+      <span>
+        <span class="brand__name">Agentic Government Protocol</span><br>
+        <span class="brand__sub">An open standard for agent-mediated public service delivery</span>
+      </span>
+    </a>
+    <span class="header-spacer"></span>
+    <span class="status-badge" title="Early strawman; conceptual, not yet machine-readable">v0.1 · Beta</span>
+    <nav class="header-links" aria-label="External">
+      <a href="https://github.com/ehysen/agentic-government-protocol">GitHub</a>
+      <a href="governance.html">Governance</a>
+    </nav>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" hidden>
+    <label for="nav-toggle" class="nav-toggle-label">Spec contents</label>
+    <nav aria-label="Specification contents">
+      <ul>
+        <li><a href="index.html">Overview</a></li>
+      </ul>
+      <p>Specification</p>
+      <ul>
+        <li><a href="principles.html" aria-current="page">Principles</a></li>
+        <li><a href="actors.html">Actors &amp; roles</a></li>
+        <li><a href="concepts.html">Core concepts &amp; vocabulary</a></li>
+        <li><a href="flow.html">The canonical flow</a></li>
+        <li><a href="authorization.html">Authorization, consent &amp; identity</a></li>
+        <li><a href="data-model.html">Data model approach</a></li>
+        <li><a href="example.html">Worked example</a></li>
+      </ul>
+      <p>Governance</p>
+      <ul>
+        <li><a href="governance.html">Governance &amp; contribution</a></li>
+        <li><a href="roadmap.html">Status &amp; roadmap</a></li>
+        <li><a href="open-questions.html">Open questions</a></li>
+      </ul>
+      <p>Reference</p>
+      <ul>
+        <li><a href="glossary.html">Glossary</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main id="main">
+    <div class="content">
+      <p class="eyebrow">Specification</p>
+      <h1>Principles</h1>
+      <p class="lede">These principles are the tie-breakers. When a design decision is
+      unclear, AGP asks which choice best honors the principles below &mdash; and, failing
+      that, what ACP, VIP, or schema.org did and why.</p>
+
+      <h2 class="anchored" id="p1">1. Agency-of-record authority<a class="h-anchor" href="#p1" aria-label="Link to this section">#</a></h2>
+      <p>The government agency remains the <strong>agency of record</strong>: it retains
+      authority over eligibility determination and over provisioning the service or
+      benefit. AGP moves <em>requests</em> and <em>receipts</em>; it never moves
+      <em>authority</em>. An agent assembles, asks, and reports back &mdash; it does not
+      <em>become</em> the government, and a compliant agency can always decline or
+      override. (This is AGP&rsquo;s analog to ACP&rsquo;s &ldquo;merchant of record&rdquo; principle.)</p>
+
+      <h2 class="anchored" id="p2">2. Human-centered and accessible by default<a class="h-anchor" href="#p2" aria-label="Link to this section">#</a></h2>
+      <p>This is a government-context artifact, so the medium must model the message.
+      Flows must degrade gracefully to a human: every interaction an agent can perform
+      must have a humane fallback for a constituent acting directly or through an
+      <a href="actors.html">intermediary</a>. Accessibility (WCAG 2.1 AA), plain language,
+      and language access are first-class requirements, not later add-ons.</p>
+
+      <h2 class="anchored" id="p3">3. Consent-first<a class="h-anchor" href="#p3" aria-label="Link to this section">#</a></h2>
+      <p>Nothing happens on a constituent&rsquo;s behalf without their authorization, and data
+      is used only for the <strong>specific, scoped purpose</strong> the constituent
+      consented to. Consent is legible, revocable, and auditable. Where the law allows
+      opt-out defaults, AGP makes the default explicit rather than implicit.</p>
+
+      <h2 class="anchored" id="p4">4. Publish once, read everywhere<a class="h-anchor" href="#p4" aria-label="Link to this section">#</a></h2>
+      <p>Agencies publish service metadata and eligibility rules <strong>once</strong>, in
+      a standardized form, and any compliant agent or surface can read them. This is the
+      VIP pattern: authoritative data flows from the agency that owns it to many
+      consumers, without each consumer re-integrating. It preserves a clear chain back to
+      the authoritative source.</p>
+
+      <h2 class="anchored" id="p5">5. Reuse over reinvention<a class="h-anchor" href="#p5" aria-label="Link to this section">#</a></h2>
+      <p>AGP leans on existing standards rather than minting a parallel universe: existing
+      government data schemas and program data models for <em>meaning</em>, and
+      established mechanisms (e.g. <a href="data-model.html">MCP</a> for tool/data access)
+      for <em>transport</em>. AGP is the thin connective layer, not a new data dictionary.
+      This mirrors schema.org expressing itself on top of JSON-LD, RDFa, and Microdata
+      rather than inventing new infrastructure.</p>
+
+      <h2 class="anchored" id="p6">6. Small core, additive extensions<a class="h-anchor" href="#p6" aria-label="Link to this section">#</a></h2>
+      <p>AGP defines a deliberately small <a href="concepts.html">core vocabulary</a> and
+      handles the long tail through extensions. Program- and jurisdiction-specific terms
+      live in extensions and can graduate into core by consensus. Bias is always toward
+      the simplest thing an agency can actually implement &mdash; schema.org repeatedly
+      <em>simplified</em> its extension mechanism because complexity hurt adoption.</p>
+
+      <h2 class="anchored" id="p7">7. Replicable across jurisdictions<a class="h-anchor" href="#p7" aria-label="Link to this section">#</a></h2>
+      <p>A flow designed for one state or program should transfer to the next with
+      configuration, not rewriting. AGP&rsquo;s value compounds only if a navigator, an NGO,
+      or a state lab can adopt a templatized protocol instead of hand-rolling an
+      integration. Replicability is a feature of the standard, not an afterthought of
+      implementations.</p>
+
+      <h2 class="anchored" id="p8">8. Name the gaps<a class="h-anchor" href="#p8" aria-label="Link to this section">#</a></h2>
+      <p>AGP states plainly what it does <em>not</em> yet solve &mdash; most importantly the
+      <a href="authorization.html">authorization, consent, and identity</a> mechanism &mdash;
+      and positions those as companion concerns with defined interaction points. A
+      standard earns trust by being precise about its own edges.</p>
+
+      <div class="callout callout--official">
+        <p class="callout__label">Trust comes from co-authorship</p>
+        <p>VIP&rsquo;s data is valuable because it is official &mdash; co-developed with the state
+        and local officials who run the systems. AGP adopts the same stance: the standard
+        is credible to the extent it is authored <em>with</em> agencies, not imposed on
+        them. See <a href="governance.html">Governance &amp; contribution</a>.</p>
+      </div>
+
+      <nav class="pagenav" aria-label="Pagination">
+        <a class="prev" href="index.html"><small>Previous</small> ← Overview</a>
+        <a class="next" href="actors.html"><small>Next</small> Actors &amp; roles →</a>
+      </nav>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div>
+      <strong>Agentic Government Protocol</strong> — v0.1 (strawman).<br>
+      An open standard for agent-mediated public service delivery.
+    </div>
+    <div>
+      <a href="governance.html">Governance</a> ·
+      <a href="https://github.com/ehysen/agentic-government-protocol">GitHub</a> ·
+      <a href="glossary.html">Glossary</a> ·
+      <a href="faq.html">FAQ</a><br>
+      Licensed under Apache 2.0 (proposed). Conceptual specification.
+    </div>
+  </div>
+</footer>
+</body>
+</html>

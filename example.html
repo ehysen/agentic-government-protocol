@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Worked example — AGP</title>
+  <meta name="description" content="A worked example: a household applies for SNAP food assistance after a job loss, walked end-to-end through all five AGP flow steps, showing what each actor does and what objects move.">
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d4ed8'/%3E%3Cg fill='none' stroke='white' stroke-width='4' stroke-linecap='round'%3E%3Ccircle cx='20' cy='20' r='6'/%3E%3Ccircle cx='44' cy='20' r='6'/%3E%3Ccircle cx='32' cy='46' r='6'/%3E%3Cpath d='M24 24 28 40M40 24 36 40M26 20h12'/%3E%3C/g%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="index.html">
+      <svg class="brand__mark" viewBox="0 0 64 64" role="img" aria-label="AGP logo">
+        <rect width="64" height="64" rx="14" fill="#1d4ed8"/>
+        <g fill="none" stroke="white" stroke-width="4" stroke-linecap="round">
+          <circle cx="20" cy="20" r="6"/><circle cx="44" cy="20" r="6"/><circle cx="32" cy="46" r="6"/>
+          <path d="M24 24 28 40M40 24 36 40M26 20h12"/>
+        </g>
+      </svg>
+      <span>
+        <span class="brand__name">Agentic Government Protocol</span><br>
+        <span class="brand__sub">An open standard for agent-mediated public service delivery</span>
+      </span>
+    </a>
+    <span class="header-spacer"></span>
+    <span class="status-badge" title="Early strawman; conceptual, not yet machine-readable">v0.1 · Beta</span>
+    <nav class="header-links" aria-label="External">
+      <a href="https://github.com/ehysen/agentic-government-protocol">GitHub</a>
+      <a href="governance.html">Governance</a>
+    </nav>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" hidden>
+    <label for="nav-toggle" class="nav-toggle-label">Spec contents</label>
+    <nav aria-label="Specification contents">
+      <ul>
+        <li><a href="index.html">Overview</a></li>
+      </ul>
+      <p>Specification</p>
+      <ul>
+        <li><a href="principles.html">Principles</a></li>
+        <li><a href="actors.html">Actors &amp; roles</a></li>
+        <li><a href="concepts.html">Core concepts &amp; vocabulary</a></li>
+        <li><a href="flow.html">The canonical flow</a></li>
+        <li><a href="authorization.html">Authorization, consent &amp; identity</a></li>
+        <li><a href="data-model.html">Data model approach</a></li>
+        <li><a href="example.html" aria-current="page">Worked example</a></li>
+      </ul>
+      <p>Governance</p>
+      <ul>
+        <li><a href="governance.html">Governance &amp; contribution</a></li>
+        <li><a href="roadmap.html">Status &amp; roadmap</a></li>
+        <li><a href="open-questions.html">Open questions</a></li>
+      </ul>
+      <p>Reference</p>
+      <ul>
+        <li><a href="glossary.html">Glossary</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main id="main">
+    <div class="content wide">
+      <p class="eyebrow">Specification · worked example</p>
+      <h1>Worked example: SNAP after a job loss</h1>
+      <p class="lede">Abstract specs are hard to trust. So here is one concrete,
+      high-volume service walked end-to-end through all five steps &mdash; ACP&rsquo;s
+      &ldquo;t-shirt under USD&nbsp;40&rdquo; style, but for food assistance. Watch what each actor
+      does and which <a href="concepts.html">object</a> moves at each step.</p>
+
+      <div class="callout callout--note">
+        <p class="callout__label">The scenario</p>
+        <p><strong>Maria</strong> is a constituent in the (fictional) State of XX. She was
+        laid off two weeks ago; her household of three (Maria and two children) has lost
+        its main income. She wants to apply for <strong>SNAP</strong> (food assistance).
+        She uses a <strong>Public AI Option agent</strong>. Her local food bank, a
+        trusted <strong>intermediary</strong>, is available if she needs a human. The
+        <strong>agency of record</strong> is the State of XX Department of Human Services
+        (DHS).</p>
+      </div>
+
+      <ol class="steps">
+        <li>
+          <h3 class="anchored" id="e1">Discovery — what help exists<a class="h-anchor" href="#e1" aria-label="Link to this section">#</a></h3>
+          <span class="step-type">Service</span>
+          <p>Maria tells her agent she lost her job and is worried about groceries. The
+          agent queries the AGP service catalog and reads the <code>Service</code> object
+          DHS <em>published once</em>: SNAP, offered through channels
+          <code>agp · web · in-person · phone</code>, requiring
+          <code>identity, householdSize, income, residency</code>, with
+          <code>deliveryPattern: validate-after</code> supported for households with a
+          recent income loss.</p>
+          <p><strong>Maria does:</strong> describes her situation in plain language.
+          <strong>Agent does:</strong> finds SNAP (and flags two other programs) without
+          touching her personal data yet &mdash; discovery is read-only.</p>
+        </li>
+        <li>
+          <h3 class="anchored" id="e2">Eligibility — does she likely qualify<a class="h-anchor" href="#e2" aria-label="Link to this section">#</a></h3>
+          <span class="step-type">EligibilityRule</span>
+          <p>The agent asks Maria for permission to use her household and income details
+          to check eligibility. It assembles her attributes &mdash; household size 3, near-zero
+          current income, State&nbsp;XX residency &mdash; and evaluates them against the
+          machine-readable <code>EligibilityRule</code> DHS published. The rule indicates
+          she very likely qualifies, and because her income dropped this month, the
+          <strong>validate-after</strong> path applies: she can be provisionally approved
+          while documentation is verified.</p>
+          <p><strong>Maria does:</strong> confirms household size and income. <strong>Agent
+          does:</strong> runs the check locally against DHS&rsquo;s rules; shows Maria a plain
+          estimate &mdash; <em>&ldquo;you likely qualify for about USD&nbsp;535/month; here&rsquo;s why.&rdquo;</em>
+          No determination has been made &mdash; only the agency can do that.</p>
+        </li>
+        <li>
+          <h3 class="anchored" id="e3">Authorization — Maria says yes, narrowly<a class="h-anchor" href="#e3" aria-label="Link to this section">#</a></h3>
+          <span class="step-type">Authorization</span>
+          <p>Maria authorizes <em>this</em> agent to submit a SNAP application on her
+          behalf and consents to DHS using her identity, household, income, and residency
+          data <strong>for the purpose of this SNAP application only</strong>. The agent
+          produces a scoped <code>Authorization</code>; DHS will verify it on receipt.</p>
+          <div class="callout callout--gap" style="margin:.8rem 0 0;">
+            <p class="callout__label">Where the gap shows up</p>
+            <p>AGP v1 specifies that this scoped grant exists and that DHS checks it. The
+            <em>cryptographic proof</em> that it was really Maria, encoded so DHS can
+            verify it and so Maria can revoke it, is the <a href="authorization.html">companion
+            layer</a>. If Maria had no verifiable digital identity, the food-bank
+            <a href="actors.html#intermediary">intermediary</a> could carry this step with her in person.</p>
+          </div>
+        </li>
+        <li>
+          <h3 class="anchored" id="e4">Request &amp; delivery — DHS decides<a class="h-anchor" href="#e4" aria-label="Link to this section">#</a></h3>
+          <span class="step-type">ServiceRequest</span>
+          <p>The agent submits a standardized <code>ServiceRequest</code> to DHS &mdash; the
+          agency of record &mdash; referencing the SNAP <code>Service</code> and Maria&rsquo;s
+          <code>Authorization</code>. DHS verifies the authorization, runs its own
+          determination, and &mdash; using validate-after &mdash; <strong>provisionally approves</strong>
+          Maria for SNAP, issuing benefits to an EBT account while documentation is
+          confirmed over the following weeks.</p>
+          <p><strong>Agent does:</strong> submits a well-formed request, then stops.
+          <strong>DHS does:</strong> makes the actual eligibility determination and
+          provisions the benefit. <strong>Authority never left DHS</strong> &mdash; the agent
+          only carried the request.</p>
+        </li>
+        <li>
+          <h3 class="anchored" id="e5">Receipt — proof, status, and a way to fix it<a class="h-anchor" href="#e5" aria-label="Link to this section">#</a></h3>
+          <span class="step-type">Receipt / StatusRecord</span>
+          <p>DHS returns a standardized <code>Receipt</code> to Maria (through her agent
+          and to her DHS account): provisionally approved, ~USD&nbsp;535/month, with an
+          <strong>audit trail</strong> of exactly what was submitted and decided, a live
+          <code>StatusRecord</code> showing &ldquo;documentation pending,&rdquo; and a clear
+          <strong>correction / appeal path</strong> if anything is wrong. Two weeks later,
+          when DHS confirms her income documents, the status updates to fully approved &mdash;
+          no new application required.</p>
+          <p><strong>Maria has:</strong> food assistance within days, a record she can
+          trust because it traces back to DHS, and recourse if it&rsquo;s wrong.</p>
+        </li>
+      </ol>
+
+      <h2 class="anchored" id="mapping">How it maps back<a class="h-anchor" href="#mapping" aria-label="Link to this section">#</a></h2>
+      <p>Every step above used exactly one core object and preserved the control
+      invariant. That consistency &mdash; flow, vocabulary, and example all telling the same
+      story &mdash; is the point.</p>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Step</th><th>Object</th><th>Who acts</th><th>Authority</th></tr></thead>
+        <tbody>
+          <tr><td>1 · Discovery</td><td><code>Service</code></td><td>Agent reads</td><td>Published by DHS</td></tr>
+          <tr><td>2 · Eligibility</td><td><code>EligibilityRule</code></td><td>Agent evaluates</td><td>Rules owned by DHS</td></tr>
+          <tr><td>3 · Authorization</td><td><code>Authorization</code></td><td>Constituent grants</td><td>Verified by DHS</td></tr>
+          <tr><td>4 · Request</td><td><code>ServiceRequest</code></td><td>Agent submits</td><td><strong>DHS decides &amp; provisions</strong></td></tr>
+          <tr><td>5 · Receipt</td><td><code>Receipt</code> / <code>StatusRecord</code></td><td>Constituent receives</td><td>Issued by DHS</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <nav class="pagenav" aria-label="Pagination">
+        <a class="prev" href="data-model.html"><small>Previous</small> ← Data model approach</a>
+        <a class="next" href="governance.html"><small>Next</small> Governance &amp; contribution →</a>
+      </nav>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div>
+      <strong>Agentic Government Protocol</strong> — v0.1 (strawman).<br>
+      An open standard for agent-mediated public service delivery.
+    </div>
+    <div>
+      <a href="governance.html">Governance</a> ·
+      <a href="https://github.com/ehysen/agentic-government-protocol">GitHub</a> ·
+      <a href="glossary.html">Glossary</a> ·
+      <a href="faq.html">FAQ</a><br>
+      Licensed under Apache 2.0 (proposed). Conceptual specification.
+    </div>
+  </div>
+</footer>
+</body>
+</html>

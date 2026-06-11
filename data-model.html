@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data model approach — AGP</title>
+  <meta name="description" content="AGP is an overlay and connector over existing government data schemas, not a new data dictionary. It expects MCP as the likely access mechanism for tools and data, and allows a validate-after delivery pattern.">
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d4ed8'/%3E%3Cg fill='none' stroke='white' stroke-width='4' stroke-linecap='round'%3E%3Ccircle cx='20' cy='20' r='6'/%3E%3Ccircle cx='44' cy='20' r='6'/%3E%3Ccircle cx='32' cy='46' r='6'/%3E%3Cpath d='M24 24 28 40M40 24 36 40M26 20h12'/%3E%3C/g%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="index.html">
+      <svg class="brand__mark" viewBox="0 0 64 64" role="img" aria-label="AGP logo">
+        <rect width="64" height="64" rx="14" fill="#1d4ed8"/>
+        <g fill="none" stroke="white" stroke-width="4" stroke-linecap="round">
+          <circle cx="20" cy="20" r="6"/><circle cx="44" cy="20" r="6"/><circle cx="32" cy="46" r="6"/>
+          <path d="M24 24 28 40M40 24 36 40M26 20h12"/>
+        </g>
+      </svg>
+      <span>
+        <span class="brand__name">Agentic Government Protocol</span><br>
+        <span class="brand__sub">An open standard for agent-mediated public service delivery</span>
+      </span>
+    </a>
+    <span class="header-spacer"></span>
+    <span class="status-badge" title="Early strawman; conceptual, not yet machine-readable">v0.1 · Beta</span>
+    <nav class="header-links" aria-label="External">
+      <a href="https://github.com/ehysen/agentic-government-protocol">GitHub</a>
+      <a href="governance.html">Governance</a>
+    </nav>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" hidden>
+    <label for="nav-toggle" class="nav-toggle-label">Spec contents</label>
+    <nav aria-label="Specification contents">
+      <ul>
+        <li><a href="index.html">Overview</a></li>
+      </ul>
+      <p>Specification</p>
+      <ul>
+        <li><a href="principles.html">Principles</a></li>
+        <li><a href="actors.html">Actors &amp; roles</a></li>
+        <li><a href="concepts.html">Core concepts &amp; vocabulary</a></li>
+        <li><a href="flow.html">The canonical flow</a></li>
+        <li><a href="authorization.html">Authorization, consent &amp; identity</a></li>
+        <li><a href="data-model.html" aria-current="page">Data model approach</a></li>
+        <li><a href="example.html">Worked example</a></li>
+      </ul>
+      <p>Governance</p>
+      <ul>
+        <li><a href="governance.html">Governance &amp; contribution</a></li>
+        <li><a href="roadmap.html">Status &amp; roadmap</a></li>
+        <li><a href="open-questions.html">Open questions</a></li>
+      </ul>
+      <p>Reference</p>
+      <ul>
+        <li><a href="glossary.html">Glossary</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main id="main">
+    <div class="content">
+      <p class="eyebrow">Specification</p>
+      <h1>Data model approach</h1>
+      <p class="lede">AGP is an <strong>overlay and connector</strong>, not a new data
+      dictionary. The meaning of &ldquo;income,&rdquo; &ldquo;household,&rdquo; or &ldquo;residency&rdquo; already exists
+      in mature government data models; AGP&rsquo;s job is to reference and connect them, not to
+      redefine them.</p>
+
+      <h2 class="anchored" id="reuse">Reuse over reinvention<a class="h-anchor" href="#reuse" aria-label="Link to this section">#</a></h2>
+      <p>This is <a href="principles.html#p5">Principle&nbsp;5</a> applied concretely, and
+      it mirrors schema.org expressing itself on top of existing web standards (JSON-LD,
+      RDFa, Microdata) rather than inventing new infrastructure. AGP&rsquo;s analog: lean on
+      existing government data schemas and standards rather than minting a parallel
+      universe.</p>
+      <ul>
+        <li><strong>National Information Exchange Model (NIEM)</strong> and established
+        program data models supply the <em>meaning</em> of attributes. AGP references
+        them; it does not re-specify them.</li>
+        <li><strong>Existing program schemas</strong> (SNAP, Medicaid, UI, etc.) define
+        the fields a given <code>Service</code> needs. AGP&rsquo;s <code>requires</code> list
+        points at those, rather than enumerating a universal set.</li>
+        <li>AGP&rsquo;s <a href="concepts.html">core types</a> are the thin connective tissue:
+        envelopes that carry references to existing definitions through the flow.</li>
+      </ul>
+
+      <h2 class="anchored" id="mcp">MCP as the access mechanism<a class="h-anchor" href="#mcp" aria-label="Link to this section">#</a></h2>
+      <p>AGP describes <em>what</em> moves; it expects the <strong>Model Context Protocol
+      (MCP)</strong> to be the likely mechanism for <em>how</em> an agent actually reaches
+      tools and data &mdash; querying a service catalog, fetching an eligibility ruleset,
+      submitting a request, reading status. Reusing MCP keeps AGP out of the transport
+      business and lets agencies expose AGP-shaped capabilities through an interface
+      agents already speak. Reference MCP servers that states could adopt are an explicit
+      <a href="roadmap.html">future deliverable</a>, not part of v1.</p>
+
+      <div class="callout">
+        <p class="callout__label">Layering</p>
+        <p><strong>NIEM / program schemas</strong> give the <em>vocabulary of attributes</em>.
+        <strong>AGP</strong> gives the <em>process objects</em> (Service, EligibilityRule,
+        Authorization, ServiceRequest, Receipt) that reference them.
+        <strong>MCP</strong> gives the <em>access channel</em> agents use to move those
+        objects. The <a href="authorization.html">companion layer</a> gives the
+        <em>proof</em> that the constituent authorized it.</p>
+      </div>
+
+      <h2 class="anchored" id="validate-after">The validate-after pattern<a class="h-anchor" href="#validate-after" aria-label="Link to this section">#</a></h2>
+      <p>Some benefits are time-critical: a household that lost income this week cannot
+      wait weeks for every attribute to be cross-verified. Where law and program rules
+      permit, AGP allows a <strong>validate-after</strong> delivery pattern: the agency
+      provisions provisionally on attested attributes and completes verification
+      afterward, with the receipt reflecting the provisional status and any later
+      reconciliation. A <code>Service</code> declares whether it supports this. It is an
+      <em>allowed</em> pattern, never a required one &mdash; the agency of record decides
+      whether a given program can safely use it.</p>
+
+      <h2 class="anchored" id="boundaries">What AGP deliberately leaves out<a class="h-anchor" href="#boundaries" aria-label="Link to this section">#</a></h2>
+      <p>Consistent with the <a href="index.html#non-goals">non-goals</a>, the data-model
+      work that is <strong>out of scope for v1</strong> includes full machine-readable
+      JSON Schemas or OpenAPI specs for every object, and the canonical encoding of
+      eligibility rules. v1 names the types and their roles; formalizing them is roadmap
+      work to be done <em>with</em> agencies so the schemas reflect real systems.</p>
+
+      <nav class="pagenav" aria-label="Pagination">
+        <a class="prev" href="authorization.html"><small>Previous</small> ← Authorization, consent &amp; identity</a>
+        <a class="next" href="example.html"><small>Next</small> Worked example →</a>
+      </nav>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div>
+      <strong>Agentic Government Protocol</strong> — v0.1 (strawman).<br>
+      An open standard for agent-mediated public service delivery.
+    </div>
+    <div>
+      <a href="governance.html">Governance</a> ·
+      <a href="https://github.com/ehysen/agentic-government-protocol">GitHub</a> ·
+      <a href="glossary.html">Glossary</a> ·
+      <a href="faq.html">FAQ</a><br>
+      Licensed under Apache 2.0 (proposed). Conceptual specification.
+    </div>
+  </div>
+</footer>
+</body>
+</html>

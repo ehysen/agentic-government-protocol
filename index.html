@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentic Government Protocol (AGP) — An open standard for agent-mediated government service delivery</title>
+  <meta name="description" content="AGP is an open standard for the service-delivery flow between constituents, their agents, intermediaries, and government — a shared language for discovering services, checking eligibility, authorizing an agent, requesting delivery, and returning a receipt.">
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d4ed8'/%3E%3Cg fill='none' stroke='white' stroke-width='4' stroke-linecap='round'%3E%3Ccircle cx='20' cy='20' r='6'/%3E%3Ccircle cx='44' cy='20' r='6'/%3E%3Ccircle cx='32' cy='46' r='6'/%3E%3Cpath d='M24 24 28 40M40 24 36 40M26 20h12'/%3E%3C/g%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="index.html">
+      <svg class="brand__mark" viewBox="0 0 64 64" role="img" aria-label="AGP logo">
+        <rect width="64" height="64" rx="14" fill="#1d4ed8"/>
+        <g fill="none" stroke="white" stroke-width="4" stroke-linecap="round">
+          <circle cx="20" cy="20" r="6"/><circle cx="44" cy="20" r="6"/><circle cx="32" cy="46" r="6"/>
+          <path d="M24 24 28 40M40 24 36 40M26 20h12"/>
+        </g>
+      </svg>
+      <span>
+        <span class="brand__name">Agentic Government Protocol</span><br>
+        <span class="brand__sub">An open standard for agent-mediated public service delivery</span>
+      </span>
+    </a>
+    <span class="header-spacer"></span>
+    <span class="status-badge" title="Early strawman; conceptual, not yet machine-readable">v0.1 · Beta</span>
+    <nav class="header-links" aria-label="External">
+      <a href="https://github.com/ehysen/agentic-government-protocol">GitHub</a>
+      <a href="governance.html">Governance</a>
+    </nav>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" hidden>
+    <label for="nav-toggle" class="nav-toggle-label">Spec contents</label>
+    <nav aria-label="Specification contents">
+      <ul>
+        <li><a href="index.html" aria-current="page">Overview</a></li>
+      </ul>
+      <p>Specification</p>
+      <ul>
+        <li><a href="principles.html">Principles</a></li>
+        <li><a href="actors.html">Actors &amp; roles</a></li>
+        <li><a href="concepts.html">Core concepts &amp; vocabulary</a></li>
+        <li><a href="flow.html">The canonical flow</a></li>
+        <li><a href="authorization.html">Authorization, consent &amp; identity</a></li>
+        <li><a href="data-model.html">Data model approach</a></li>
+        <li><a href="example.html">Worked example</a></li>
+      </ul>
+      <p>Governance</p>
+      <ul>
+        <li><a href="governance.html">Governance &amp; contribution</a></li>
+        <li><a href="roadmap.html">Status &amp; roadmap</a></li>
+        <li><a href="open-questions.html">Open questions</a></li>
+      </ul>
+      <p>Reference</p>
+      <ul>
+        <li><a href="glossary.html">Glossary</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main id="main">
+    <div class="content wide">
+      <section class="hero">
+        <p class="eyebrow">Agentic Government Protocol · v0.1</p>
+        <h1>A shared language for delivering government services through agents.</h1>
+        <p class="lede">
+          AGP is an open standard for the service-delivery flow between
+          <strong>constituents</strong>, their <strong>agents</strong>,
+          <strong>intermediaries</strong>, and <strong>government agencies</strong>.
+          It replaces one-off, agency-by-agency integrations with a common way to
+          discover services, check eligibility, authorize an agent to act, request
+          delivery, and return a receipt &mdash; so any compliant agent can work with any
+          compliant agency.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn--primary" href="flow.html">Read the canonical flow &rarr;</a>
+          <a class="btn btn--ghost" href="example.html">See a worked example</a>
+          <a class="btn btn--ghost" href="actors.html">Meet the four actors</a>
+        </div>
+      </section>
+
+      <div class="callout callout--note">
+        <p class="callout__label">Status</p>
+        <p>AGP is an early <strong>v0.1 strawman</strong>: a narrative and conceptual
+        specification, not yet a machine-readable schema or reference implementation.
+        It is published to invite scrutiny and co-authorship from the agencies and
+        organizations that would run it. Expect breaking changes.</p>
+      </div>
+
+      <h2 class="anchored" id="problem">The problem<a class="h-anchor" href="#problem" aria-label="Link to this section">#</a></h2>
+      <p>
+        Today, every AI agent or application that wants to help someone interact with
+        government has to build a <strong>custom integration with each agency, program,
+        and data system</strong>. The work does not transfer: an agent that can renew a
+        benefit in one state cannot do it in the next, and each new program means
+        starting over. That bespoke-integration cost falls hardest on exactly the people
+        and small organizations least able to absorb it &mdash; and it leaves constituents
+        navigating fragmented, repetitive processes one form at a time.
+      </p>
+      <p>
+        AGP proposes the missing <strong>&ldquo;rails&rdquo;</strong> layer: a shared protocol so the
+        integration is written once and reused everywhere, while the government agency
+        keeps full authority over who is eligible and what gets provisioned.
+      </p>
+
+      <h2 class="anchored" id="at-a-glance">The flow at a glance<a class="h-anchor" href="#at-a-glance" aria-label="Link to this section">#</a></h2>
+      <p>AGP decomposes service delivery into five steps. Each maps to a core
+      vocabulary type and is illustrated end-to-end in the <a href="example.html">worked example</a>.</p>
+      <div class="grid grid-3">
+        <div class="card"><p class="card__role">Step 1</p><h3>Service discovery</h3><p>The agent discovers available services and their requirements from standardized, machine-readable metadata the agency <em>publishes once</em>.</p></div>
+        <div class="card"><p class="card__role">Step 2</p><h3>Eligibility assessment</h3><p>With consent, the agent assembles the constituent&rsquo;s attributes and checks them against the agency&rsquo;s eligibility rules.</p></div>
+        <div class="card"><p class="card__role">Step 3</p><h3>Authorization &amp; consent</h3><p>The constituent authorizes the agent to act and consents to scoped data use; the agency verifies that authorization.</p></div>
+        <div class="card"><p class="card__role">Step 4</p><h3>Service request &amp; delivery</h3><p>The agent submits a standardized request to the <em>agency of record</em>, which determines and provisions the service.</p></div>
+        <div class="card"><p class="card__role">Step 5</p><h3>Receipt, status &amp; recourse</h3><p>A standardized receipt and status record returns to the constituent, with an audit trail and a correction/appeal path.</p></div>
+        <div class="card" style="background:var(--paper-soft);"><p class="card__role" style="color:var(--brand-ink)">Read next</p><h3>The canonical flow</h3><p><a href="flow.html">Full step-by-step specification &rarr;</a></p></div>
+      </div>
+
+      <h2 class="anchored" id="why">Why a standard, and why now<a class="h-anchor" href="#why" aria-label="Link to this section">#</a></h2>
+      <p>
+        AGP is one of three initiatives from a June 2026 convening on human-centered
+        government in the AI era. It is the <strong>rails layer</strong> the other two
+        depend on &mdash; a shared &ldquo;Public AI Option&rdquo; agent, and instant-delivery state
+        pilots. It deliberately stands on the shoulders of three working precedents
+        rather than starting cold:
+      </p>
+      <div class="grid grid-3">
+        <div class="card"><h3>ACP</h3><p><strong>Agentic Commerce Protocol.</strong> Gives AGP its flow decomposition and the <em>agency-of-record</em> control model &mdash; the agent never <em>becomes</em> the government.</p></div>
+        <div class="card"><h3>VIP</h3><p><strong>Voting Information Project.</strong> Gives AGP the <em>publish-once, read-everywhere</em> government-data pattern and official co-authorship as the source of trust.</p></div>
+        <div class="card"><h3>schema.org</h3><p>Gives AGP the <em>small core plus extensions</em> vocabulary and lightweight, additive, adoption-driven governance.</p></div>
+      </div>
+
+      <h2 class="anchored" id="non-goals">Non-goals<a class="h-anchor" href="#non-goals" aria-label="Link to this section">#</a></h2>
+      <p>To keep v1 honest about what it is, AGP explicitly does <strong>not</strong> attempt to:</p>
+      <ul>
+        <li>Replace agencies&rsquo; authority over eligibility determination or provisioning. AGP carries requests and receipts; the <strong>agency of record</strong> decides.</li>
+        <li>Mint a new data dictionary. AGP is an <strong>overlay and connector</strong> over existing government schemas, not a parallel universe of definitions.</li>
+        <li>Solve cryptographic proof that a user authorized an agent. That gap is <a href="authorization.html">named explicitly</a> and deferred to a companion identity/authorization layer.</li>
+        <li>Specify a consumer frontend, a language-access layer, or scaling/adoption tooling in v1. These are on the <a href="roadmap.html">roadmap</a>.</li>
+        <li>Make decisions <em>for</em> a constituent without scoped consent, or route around the people &mdash; caseworkers, navigators, NGOs &mdash; who serve constituents without agents.</li>
+      </ul>
+
+      <div class="callout callout--gap">
+        <p class="callout__label">The named gap</p>
+        <p>Like ACP, AGP standardizes the <em>flow</em> but does not, in v1, solve
+        cryptographic proof of agent authorization, scoped consent, and liability.
+        We treat this as a <strong>companion concern</strong> with defined interaction
+        points &mdash; not an afterthought and not an over-claim.
+        <a href="authorization.html">Read how AGP frames it &rarr;</a></p>
+      </div>
+
+      <nav class="pagenav" aria-label="Pagination">
+        <a class="next" href="principles.html"><small>Next</small> Principles →</a>
+      </nav>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div>
+      <strong>Agentic Government Protocol</strong> — v0.1 (strawman).<br>
+      An open standard for agent-mediated public service delivery.
+    </div>
+    <div>
+      <a href="governance.html">Governance</a> ·
+      <a href="https://github.com/ehysen/agentic-government-protocol">GitHub</a> ·
+      <a href="glossary.html">Glossary</a> ·
+      <a href="faq.html">FAQ</a><br>
+      Licensed under Apache 2.0 (proposed). Conceptual specification.
+    </div>
+  </div>
+</footer>
+</body>
+</html>

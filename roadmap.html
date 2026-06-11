@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Status & roadmap — AGP</title>
+  <meta name="description" content="What is in AGP v1, what is deferred to future versions (machine-readable schemas, reference MCP servers, the authorization mechanism, multilingual and frontend work, scaling and international content), and how to get involved.">
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d4ed8'/%3E%3Cg fill='none' stroke='white' stroke-width='4' stroke-linecap='round'%3E%3Ccircle cx='20' cy='20' r='6'/%3E%3Ccircle cx='44' cy='20' r='6'/%3E%3Ccircle cx='32' cy='46' r='6'/%3E%3Cpath d='M24 24 28 40M40 24 36 40M26 20h12'/%3E%3C/g%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="index.html">
+      <svg class="brand__mark" viewBox="0 0 64 64" role="img" aria-label="AGP logo">
+        <rect width="64" height="64" rx="14" fill="#1d4ed8"/>
+        <g fill="none" stroke="white" stroke-width="4" stroke-linecap="round">
+          <circle cx="20" cy="20" r="6"/><circle cx="44" cy="20" r="6"/><circle cx="32" cy="46" r="6"/>
+          <path d="M24 24 28 40M40 24 36 40M26 20h12"/>
+        </g>
+      </svg>
+      <span>
+        <span class="brand__name">Agentic Government Protocol</span><br>
+        <span class="brand__sub">An open standard for agent-mediated public service delivery</span>
+      </span>
+    </a>
+    <span class="header-spacer"></span>
+    <span class="status-badge" title="Early strawman; conceptual, not yet machine-readable">v0.1 · Beta</span>
+    <nav class="header-links" aria-label="External">
+      <a href="https://github.com/ehysen/agentic-government-protocol">GitHub</a>
+      <a href="governance.html">Governance</a>
+    </nav>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" hidden>
+    <label for="nav-toggle" class="nav-toggle-label">Spec contents</label>
+    <nav aria-label="Specification contents">
+      <ul>
+        <li><a href="index.html">Overview</a></li>
+      </ul>
+      <p>Specification</p>
+      <ul>
+        <li><a href="principles.html">Principles</a></li>
+        <li><a href="actors.html">Actors &amp; roles</a></li>
+        <li><a href="concepts.html">Core concepts &amp; vocabulary</a></li>
+        <li><a href="flow.html">The canonical flow</a></li>
+        <li><a href="authorization.html">Authorization, consent &amp; identity</a></li>
+        <li><a href="data-model.html">Data model approach</a></li>
+        <li><a href="example.html">Worked example</a></li>
+      </ul>
+      <p>Governance</p>
+      <ul>
+        <li><a href="governance.html">Governance &amp; contribution</a></li>
+        <li><a href="roadmap.html" aria-current="page">Status &amp; roadmap</a></li>
+        <li><a href="open-questions.html">Open questions</a></li>
+      </ul>
+      <p>Reference</p>
+      <ul>
+        <li><a href="glossary.html">Glossary</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main id="main">
+    <div class="content">
+      <p class="eyebrow">Governance</p>
+      <h1>Status &amp; roadmap</h1>
+      <p class="lede">AGP is at <strong>v0.1</strong>: a narrative, conceptual
+      specification. This page is explicit about what v1 includes and what is deliberately
+      deferred, so no one mistakes the strawman for a finished standard.</p>
+
+      <h2 class="anchored" id="in">In scope for v1<a class="h-anchor" href="#in" aria-label="Link to this section">#</a></h2>
+      <ul>
+        <li><span class="pill pill--in">In v1</span> The narrative specification: overview, <a href="principles.html">principles</a>, and <a href="actors.html">actors</a>.</li>
+        <li><span class="pill pill--in">In v1</span> The <a href="flow.html">canonical five-step flow</a>, diagrammed and documented.</li>
+        <li><span class="pill pill--in">In v1</span> A named, defined <a href="concepts.html">core vocabulary</a> and the extension mechanism.</li>
+        <li><span class="pill pill--in">In v1</span> The <a href="authorization.html">authorization &amp; consent requirements and interaction points</a> (mechanism deferred).</li>
+        <li><span class="pill pill--in">In v1</span> The <a href="data-model.html">data-model approach</a> (overlay/connector, MCP, validate-after).</li>
+        <li><span class="pill pill--in">In v1</span> One end-to-end <a href="example.html">worked example</a>.</li>
+        <li><span class="pill pill--in">In v1</span> A <a href="governance.html">governance model</a>, <a href="glossary.html">glossary</a>, <a href="faq.html">FAQ</a>, and <a href="open-questions.html">open questions</a>.</li>
+      </ul>
+
+      <h2 class="anchored" id="future">Deferred to future versions<a class="h-anchor" href="#future" aria-label="Link to this section">#</a></h2>
+      <ul>
+        <li><span class="pill pill--future">Future</span> Full machine-readable <strong>JSON Schemas / OpenAPI</strong> for every object, and a canonical encoding for eligibility rules.</li>
+        <li><span class="pill pill--future">Future</span> <strong>Reference MCP server implementations</strong> that states can adopt instead of hand-rolling integrations.</li>
+        <li><span class="pill pill--future">Future</span> The <strong>cryptographic authorization / identity mechanism</strong> itself &mdash; possibly as a sibling standard.</li>
+        <li><span class="pill pill--future">Future</span> <strong>Multi-language content</strong> and the consumer-facing <strong>frontend</strong>.</li>
+        <li><span class="pill pill--future">Future</span> <strong>Scaling / adoption tooling</strong> and <strong>international-comparison</strong> content.</li>
+      </ul>
+
+      <h2 class="anchored" id="shape">The likely path<a class="h-anchor" href="#shape" aria-label="Link to this section">#</a></h2>
+      <ol class="steps">
+        <li><h3 style="margin-top:-.2rem">v0.1 — this strawman</h3><p>Narrative spec published for scrutiny and co-authorship. Goal: agreement on actors, flow, and vocabulary.</p></li>
+        <li><h3>v0.x — co-authored core</h3><p>Work <em>with</em> agencies to formalize the core types into machine-readable schemas against real program data. Pilot one service in one jurisdiction.</p></li>
+        <li><h3>Companion — authorization layer</h3><p>Advance the authorization / consent / identity mechanism in parallel, likely as its own standard, against AGP&rsquo;s defined interaction points.</p></li>
+        <li><h3>v1.0 — reference implementations</h3><p>Reference MCP servers and templatized protocols states can adopt; broaden to more services and jurisdictions.</p></li>
+      </ol>
+
+      <div class="callout">
+        <p class="callout__label">Get involved</p>
+        <p>The fastest way to improve AGP is to tell us where it breaks against a real
+        program. Agencies, intermediaries, and builders &mdash; open an issue or proposal on
+        <a href="https://github.com/ehysen/agentic-government-protocol">GitHub</a>, and see <a href="governance.html#contribute">how
+        to get involved</a>.</p>
+      </div>
+
+      <nav class="pagenav" aria-label="Pagination">
+        <a class="prev" href="governance.html"><small>Previous</small> ← Governance &amp; contribution</a>
+        <a class="next" href="open-questions.html"><small>Next</small> Open questions →</a>
+      </nav>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div>
+      <strong>Agentic Government Protocol</strong> — v0.1 (strawman).<br>
+      An open standard for agent-mediated public service delivery.
+    </div>
+    <div>
+      <a href="governance.html">Governance</a> ·
+      <a href="https://github.com/ehysen/agentic-government-protocol">GitHub</a> ·
+      <a href="glossary.html">Glossary</a> ·
+      <a href="faq.html">FAQ</a><br>
+      Licensed under Apache 2.0 (proposed). Conceptual specification.
+    </div>
+  </div>
+</footer>
+</body>
+</html>

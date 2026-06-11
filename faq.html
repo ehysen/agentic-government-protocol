@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ — AGP</title>
+  <meta name="description" content="Frequently asked questions about AGP: whether the agent makes decisions, who is liable, how people without agents are served, how it differs from a plain API, and how accessibility and language access work.">
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d4ed8'/%3E%3Cg fill='none' stroke='white' stroke-width='4' stroke-linecap='round'%3E%3Ccircle cx='20' cy='20' r='6'/%3E%3Ccircle cx='44' cy='20' r='6'/%3E%3Ccircle cx='32' cy='46' r='6'/%3E%3Cpath d='M24 24 28 40M40 24 36 40M26 20h12'/%3E%3C/g%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="index.html">
+      <svg class="brand__mark" viewBox="0 0 64 64" role="img" aria-label="AGP logo">
+        <rect width="64" height="64" rx="14" fill="#1d4ed8"/>
+        <g fill="none" stroke="white" stroke-width="4" stroke-linecap="round">
+          <circle cx="20" cy="20" r="6"/><circle cx="44" cy="20" r="6"/><circle cx="32" cy="46" r="6"/>
+          <path d="M24 24 28 40M40 24 36 40M26 20h12"/>
+        </g>
+      </svg>
+      <span>
+        <span class="brand__name">Agentic Government Protocol</span><br>
+        <span class="brand__sub">An open standard for agent-mediated public service delivery</span>
+      </span>
+    </a>
+    <span class="header-spacer"></span>
+    <span class="status-badge" title="Early strawman; conceptual, not yet machine-readable">v0.1 · Beta</span>
+    <nav class="header-links" aria-label="External">
+      <a href="https://github.com/ehysen/agentic-government-protocol">GitHub</a>
+      <a href="governance.html">Governance</a>
+    </nav>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" hidden>
+    <label for="nav-toggle" class="nav-toggle-label">Spec contents</label>
+    <nav aria-label="Specification contents">
+      <ul>
+        <li><a href="index.html">Overview</a></li>
+      </ul>
+      <p>Specification</p>
+      <ul>
+        <li><a href="principles.html">Principles</a></li>
+        <li><a href="actors.html">Actors &amp; roles</a></li>
+        <li><a href="concepts.html">Core concepts &amp; vocabulary</a></li>
+        <li><a href="flow.html">The canonical flow</a></li>
+        <li><a href="authorization.html">Authorization, consent &amp; identity</a></li>
+        <li><a href="data-model.html">Data model approach</a></li>
+        <li><a href="example.html">Worked example</a></li>
+      </ul>
+      <p>Governance</p>
+      <ul>
+        <li><a href="governance.html">Governance &amp; contribution</a></li>
+        <li><a href="roadmap.html">Status &amp; roadmap</a></li>
+        <li><a href="open-questions.html">Open questions</a></li>
+      </ul>
+      <p>Reference</p>
+      <ul>
+        <li><a href="glossary.html">Glossary</a></li>
+        <li><a href="faq.html" aria-current="page">FAQ</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main id="main">
+    <div class="content">
+      <p class="eyebrow">Reference</p>
+      <h1>FAQ</h1>
+      <p class="lede">The questions AGP gets asked first.</p>
+
+      <h2 class="anchored" id="decides">Is the agent making decisions about my benefits?<a class="h-anchor" href="#decides" aria-label="Link to this section">#</a></h2>
+      <p><strong>No.</strong> The agent discovers services, assembles your attributes (with
+      consent), checks them against published rules, and submits a request. The
+      <a href="actors.html#agency">agency of record</a> &mdash; the government &mdash; makes the
+      actual eligibility determination and provisions the benefit. AGP is built so
+      authority <em>never</em> moves to the agent. (See the
+      <a href="flow.html#steps">control invariant</a>.)</p>
+
+      <h2 class="anchored" id="liable">Who is liable if something goes wrong?<a class="h-anchor" href="#liable" aria-label="Link to this section">#</a></h2>
+      <p>Liability is an <a href="open-questions.html#q3">open question</a> AGP v1 does not
+      resolve, because it is inseparable from the deferred
+      <a href="authorization.html#liability">authorization mechanism</a>. What v1 does
+      guarantee is <a href="flow.html#s5">recourse</a>: every outcome comes with an audit
+      trail and an explicit correction/appeal path, so a constituent can always see,
+      contest, and fix what was done in their name.</p>
+
+      <h2 class="anchored" id="no-agent">What about people without an agent or device?<a class="h-anchor" href="#no-agent" aria-label="Link to this section">#</a></h2>
+      <p>This is exactly why the <a href="actors.html#intermediary">intermediary</a> is a
+      first-class actor. A caseworker, navigator, library, or NGO can operate an agent
+      <em>for</em> a constituent, or carry the same standardized flow through a
+      human-staffed channel. Ensuring parity between agent-equipped and
+      intermediary-served constituents is an explicit
+      <a href="open-questions.html#q4">open question</a> &mdash; AGP names it rather than
+      pretending everyone has an agent.</p>
+
+      <h2 class="anchored" id="vs-api">How is this different from just building an API?<a class="h-anchor" href="#vs-api" aria-label="Link to this section">#</a></h2>
+      <p>An API is a point-to-point integration: each agency exposes its own, and every
+      agent re-integrates with each one. AGP is a <strong>shared standard</strong> &mdash; a
+      common vocabulary and flow &mdash; so the integration is written once and reused across
+      agencies and jurisdictions (the <a href="principles.html#p4">publish-once,
+      read-everywhere</a> model). AGP also expects to <em>use</em> APIs and
+      <a href="data-model.html#mcp">MCP</a> as the transport; it standardizes the
+      <em>meaning and the flow</em> on top, not the wire.</p>
+
+      <h2 class="anchored" id="a11y">How do accessibility and language access work?<a class="h-anchor" href="#a11y" aria-label="Link to this section">#</a></h2>
+      <p>They are <a href="principles.html#p2">principles</a>, not features. Because every
+      agent interaction must degrade gracefully to a human, and because accessibility
+      (WCAG&nbsp;2.1&nbsp;AA) and plain language are first-class requirements, AGP is
+      designed so the standardized flow can be delivered through accessible and
+      multilingual surfaces. The consumer-facing frontend and multi-language content
+      themselves are <a href="roadmap.html#future">roadmap</a> items; the requirement that
+      they be possible is baked into the spec now &mdash; including this documentation site.</p>
+
+      <h2 class="anchored" id="govt-takeover">Does an agent get to act <em>as</em> the government?<a class="h-anchor" href="#govt-takeover" aria-label="Link to this section">#</a></h2>
+      <p>No. An agent can <em>ask</em> on a constituent&rsquo;s behalf; only the agency of
+      record can <em>decide</em> and provision. Every AGP message traces back to an
+      authoritative agency &mdash; that traceability is what makes an AGP outcome trustworthy
+      to a constituent (and to a court).</p>
+
+      <h2 class="anchored" id="why-defer">Why doesn&rsquo;t v1 just solve the authorization problem?<a class="h-anchor" href="#why-defer" aria-label="Link to this section">#</a></h2>
+      <p>Because solving cryptographic agent-authorization, consent encoding, and identity
+      proofing is a hard, partly-unsolved problem &mdash; the same wall ACP hit and deferred
+      to a separate layer. Coupling AGP&rsquo;s adoption to it would stall both. AGP instead
+      <a href="authorization.html">names the gap</a>, defines clean interaction points, and
+      lets the flow ship while the authorization layer matures (possibly as its own
+      standard).</p>
+
+      <h2 class="anchored" id="ready">Is AGP ready to build against?<a class="h-anchor" href="#ready" aria-label="Link to this section">#</a></h2>
+      <p>Not yet. v0.1 is a <strong>conceptual strawman</strong> to align on actors, flow,
+      and vocabulary. Machine-readable schemas and reference implementations are
+      <a href="roadmap.html">deferred</a>. The most useful thing to do now is
+      <a href="governance.html#contribute">co-author and critique it</a>.</p>
+
+      <nav class="pagenav" aria-label="Pagination">
+        <a class="prev" href="glossary.html"><small>Previous</small> ← Glossary</a>
+      </nav>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div>
+      <strong>Agentic Government Protocol</strong> — v0.1 (strawman).<br>
+      An open standard for agent-mediated public service delivery.
+    </div>
+    <div>
+      <a href="governance.html">Governance</a> ·
+      <a href="https://github.com/ehysen/agentic-government-protocol">GitHub</a> ·
+      <a href="glossary.html">Glossary</a> ·
+      <a href="faq.html">FAQ</a><br>
+      Licensed under Apache 2.0 (proposed). Conceptual specification.
+    </div>
+  </div>
+</footer>
+</body>
+</html>
