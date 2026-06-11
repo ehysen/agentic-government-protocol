@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Agentic Government Protocol (AGP) — An open standard for agent-mediated government service delivery</title>
   <meta name="description" content="AGP gives every constituent instant, personalized access to the public services they need — through an agent that carries the complexity, so people don’t have to. An open agent-to-agent standard for government service delivery.">
-  <link rel="stylesheet" href="assets/styles.css?v=mq9g2n1g">
+  <link rel="stylesheet" href="assets/styles.css?v=mq9icaef">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d4ed8'/%3E%3Cg fill='none' stroke='white' stroke-width='4' stroke-linecap='round'%3E%3Ccircle cx='20' cy='20' r='6'/%3E%3Ccircle cx='44' cy='20' r='6'/%3E%3Ccircle cx='32' cy='46' r='6'/%3E%3Cpath d='M24 24 28 40M40 24 36 40M26 20h12'/%3E%3C/g%3E%3C/svg%3E">
 </head>
 <body>
@@ -130,7 +130,14 @@
       and <strong>what the government agent and the session do behind the scenes</strong> on
       the right.</p>
 
-      <div class="demo" data-demo aria-label="Interactive walkthrough: Maria applies for food assistance through an agent">
+      <div class="demo" data-demo data-channel="agent" aria-label="Interactive walkthrough: Maria gets food assistance through an agent">
+        <div class="demo__channels" role="radiogroup" aria-label="Channel Maria uses">
+          <span class="demo__channels-label">Same flow, any channel:</span>
+          <button class="demo__chan is-active" type="button" role="radio" aria-checked="true" data-channel="agent" data-caption="in a consumer AI assistant she already uses"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.5A8 8 0 1 1 21 12z"/></svg> AI assistant</button>
+          <button class="demo__chan" type="button" role="radio" aria-checked="false" data-channel="app" data-caption="in the free government agent app"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="6" y="3" width="12" height="18" rx="2"/><line x1="10.5" y1="18" x2="13.5" y2="18"/></svg> Gov agent app</button>
+          <button class="demo__chan" type="button" role="radio" aria-checked="false" data-channel="sms" data-caption="by text message to a state shortcode"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 11.5a7.5 7.5 0 0 1-10.8 6.7L4 19l1-4.2A7.5 7.5 0 1 1 21 11.5z"/></svg> SMS</button>
+          <button class="demo__chan" type="button" role="radio" aria-checked="false" data-channel="phone" data-caption="by calling 1-800-GOVERNMENT"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.2 1z"/></svg> 1-800-GOVERNMENT</button>
+        </div>
         <div class="demo__bar" role="tablist" aria-label="Stages of the interaction">
           <button class="demo__tab is-active" type="button" role="tab" id="d-tab-0" aria-controls="d-bts-0" aria-selected="true" data-i="0"><span class="demo__tabnum">1</span><span class="demo__tablabel">Discovery</span></button>
           <button class="demo__tab" type="button" role="tab" id="d-tab-1" aria-controls="d-bts-1" aria-selected="false" data-i="1"><span class="demo__tabnum">2</span><span class="demo__tablabel">Eligibility</span></button>
@@ -140,48 +147,52 @@
         </div>
         <div class="demo__body">
           <div class="demo__chat">
-            <p class="demo__col-label">What Maria experiences</p>
-            <div class="bubble bubble--system is-shown" data-stage="0"><small>Context</small> Maria, household of 3, just lost her job.</div>
-            <div class="bubble bubble--person is-shown" data-stage="0"><small>Maria</small> I&rsquo;m really worried about groceries this month.</div>
-            <div class="bubble bubble--agent is-shown" data-stage="0"><small>Agent</small> You may qualify for food assistance. Want me to check?</div>
-            <div class="bubble bubble--agent" data-stage="1"><small>Agent</small> You likely qualify for <strong>SNAP &mdash; about $535/month</strong>. Here&rsquo;s how I worked that out.</div>
-            <div class="bubble bubble--agent" data-stage="2"><small>Agent</small> Okay to apply for you &mdash; using your household, income, and address, just for this?</div>
-            <div class="bubble bubble--person" data-stage="2"><small>Maria</small> Yes, please go ahead.</div>
-            <div class="bubble bubble--agent" data-stage="3"><small>Agent</small> You&rsquo;re approved. Benefits reach your EBT card in <strong>about 2 days</strong>.</div>
-            <div class="bubble bubble--agent" data-stage="4"><small>Agent</small> Here&rsquo;s your receipt, and how to appeal if anything looks wrong.</div>
-            <div class="bubble bubble--system" data-stage="4"><small>Elapsed</small> Under 5 minutes &middot; no forms &middot; no office visit</div>
+            <p class="demo__col-label">What Maria experiences <span class="demo__chanlabel">in a consumer AI assistant she already uses</span></p>
+            <div class="demo__scroll" data-chatscroll>
+              <div class="bubble bubble--system is-shown" data-stage="0"><small>Context</small> Maria, household of 3, just lost her job.</div>
+              <div class="bubble bubble--person is-shown" data-stage="0"><small>Maria</small> I&rsquo;m really worried about groceries this month.</div>
+              <div class="bubble bubble--agent is-shown" data-stage="0"><small>Agent</small> You may qualify for food assistance. Want me to check?</div>
+              <div class="bubble bubble--agent" data-stage="1"><small>Agent</small> You likely qualify for <strong>SNAP &mdash; about $535/month</strong>. Here&rsquo;s how I worked that out.</div>
+              <div class="bubble bubble--agent" data-stage="2"><small>Agent</small> Okay to apply for you &mdash; using your household, income, and address, just for this?</div>
+              <div class="bubble bubble--person" data-stage="2"><small>Maria</small> Yes, please go ahead.</div>
+              <div class="bubble bubble--agent" data-stage="3"><small>Agent</small> You&rsquo;re approved. Benefits reach your EBT card in <strong>about 2 days</strong>.</div>
+              <div class="bubble bubble--agent" data-stage="4"><small>Agent</small> Here&rsquo;s your receipt, and how to appeal if anything looks wrong.</div>
+              <div class="bubble bubble--system" data-stage="4"><small>Elapsed</small> Under 5 minutes &middot; no forms &middot; no office visit</div>
+            </div>
           </div>
           <aside class="demo__behind">
-            <p class="demo__col-label">Behind the scenes</p>
-            <div class="demo__bts is-active" id="d-bts-0" role="tabpanel" aria-labelledby="d-tab-0" data-i="0">
-              <span class="pill pill--ghost">read-only &middot; no session yet</span>
-              <h4>Discovery</h4>
-              <p>Her agent reads the government agent&rsquo;s published <a href="schema.html#catalog">catalog</a> and finds SNAP &mdash; its requirements, channels, and that it supports validate-after. None of Maria&rsquo;s data is touched.</p>
-              <p class="demo__obj"><span>reads &rarr;</span> Catalog</p>
-            </div>
-            <div class="demo__bts" id="d-bts-1" role="tabpanel" aria-labelledby="d-tab-1" data-i="1">
-              <span class="pill pill--blue">status: gathering</span>
-              <h4>Eligibility</h4>
-              <p>With consent, the agent <strong>creates a <a href="schema.html#session">ServiceSession</a></strong> and checks her attributes against the published <a href="schema.html#eligibility">EligibilityRule</a>. Its <code>messages</code> flag anything still missing &mdash; this is only a preview.</p>
-              <p class="demo__obj"><span>create &rarr;</span> ServiceSession</p>
-            </div>
-            <div class="demo__bts" id="d-bts-2" role="tabpanel" aria-labelledby="d-tab-2" data-i="2">
-              <span class="pill pill--blue">status: ready_to_submit</span>
-              <h4>Authorization &amp; consent</h4>
-              <p>Maria grants a scoped <a href="schema.html#authorization-obj">Authorization</a>; the agent attaches it to the session. The government agent will verify it on submit. The cryptographic proof is the deferred <a href="authorization.html">companion layer</a>.</p>
-              <p class="demo__obj"><span>update &rarr;</span> Authorization</p>
-            </div>
-            <div class="demo__bts" id="d-bts-3" role="tabpanel" aria-labelledby="d-tab-3" data-i="3">
-              <span class="pill pill--amber">status: in_progress &rarr; completed</span>
-              <h4>Submit &amp; delivery</h4>
-              <p>The agent submits. The government agent verifies the authorization and the <a href="actors.html#agency">agency of record</a> makes the determination &mdash; provisioning via validate-after. Authority never leaves the agency.</p>
-              <p class="demo__obj"><span>submit &rarr;</span> Determination</p>
-            </div>
-            <div class="demo__bts" id="d-bts-4" role="tabpanel" aria-labelledby="d-tab-4" data-i="4">
-              <span class="pill pill--teal">status: completed</span>
-              <h4>Determination &amp; recourse</h4>
-              <p>The session now holds the authoritative <a href="schema.html#determination">Determination</a>: award breakdown, audit trail, and a real appeal path. Two weeks later it reconciles to fully approved &mdash; the same session.</p>
-              <p class="demo__obj"><span>read &rarr;</span> Determination</p>
+            <p class="demo__col-label">Behind the scenes <span class="demo__same">&mdash; identical on every channel</span></p>
+            <div class="demo__scroll">
+              <div class="demo__bts is-active" id="d-bts-0" role="tabpanel" aria-labelledby="d-tab-0" data-i="0">
+                <span class="pill pill--ghost">read-only &middot; no session yet</span>
+                <h4>Discovery</h4>
+                <p>Her agent reads the government agent&rsquo;s published <a href="schema.html#catalog">catalog</a> and finds SNAP &mdash; its requirements, channels, and that it supports validate-after. None of Maria&rsquo;s data is touched.</p>
+                <p class="demo__obj"><span>reads &rarr;</span> Catalog</p>
+              </div>
+              <div class="demo__bts" id="d-bts-1" role="tabpanel" aria-labelledby="d-tab-1" data-i="1">
+                <span class="pill pill--blue">status: gathering</span>
+                <h4>Eligibility</h4>
+                <p>With consent, the agent <strong>creates a <a href="schema.html#session">ServiceSession</a></strong> and checks her attributes against the published <a href="schema.html#eligibility">EligibilityRule</a>. Its <code>messages</code> flag anything still missing &mdash; this is only a preview.</p>
+                <p class="demo__obj"><span>create &rarr;</span> ServiceSession</p>
+              </div>
+              <div class="demo__bts" id="d-bts-2" role="tabpanel" aria-labelledby="d-tab-2" data-i="2">
+                <span class="pill pill--blue">status: ready_to_submit</span>
+                <h4>Authorization &amp; consent</h4>
+                <p>Maria grants a scoped <a href="schema.html#authorization-obj">Authorization</a>; the agent attaches it to the session. The government agent will verify it on submit. The cryptographic proof is the deferred <a href="authorization.html">companion layer</a>.</p>
+                <p class="demo__obj"><span>update &rarr;</span> Authorization</p>
+              </div>
+              <div class="demo__bts" id="d-bts-3" role="tabpanel" aria-labelledby="d-tab-3" data-i="3">
+                <span class="pill pill--amber">status: in_progress &rarr; completed</span>
+                <h4>Submit &amp; delivery</h4>
+                <p>The agent submits. The government agent verifies the authorization and the <a href="actors.html#agency">agency of record</a> makes the determination &mdash; provisioning via validate-after. Authority never leaves the agency.</p>
+                <p class="demo__obj"><span>submit &rarr;</span> Determination</p>
+              </div>
+              <div class="demo__bts" id="d-bts-4" role="tabpanel" aria-labelledby="d-tab-4" data-i="4">
+                <span class="pill pill--teal">status: completed</span>
+                <h4>Determination &amp; recourse</h4>
+                <p>The session now holds the authoritative <a href="schema.html#determination">Determination</a>: award breakdown, audit trail, and a real appeal path. Two weeks later it reconciles to fully approved &mdash; the same session.</p>
+                <p class="demo__obj"><span>read &rarr;</span> Determination</p>
+              </div>
             </div>
           </aside>
         </div>
@@ -193,8 +204,9 @@
           <button class="btn btn--primary demo__next" type="button">Next step &rarr;</button>
         </div>
       </div>
-      <p>That whole exchange ran a precise, auditable protocol between two agents. The
-      <a href="example.html">worked example</a> opens it up step by step.</p>
+      <p>Whatever the channel &mdash; a consumer assistant, a free government app, a text, or a
+      call to 1-800-GOVERNMENT &mdash; the same auditable protocol runs between two agents
+      underneath. The <a href="example.html">worked example</a> opens it up step by step.</p>
 
       <h2 class="anchored" id="how">How it works underneath<a class="h-anchor" href="#how" aria-label="Link to this section">#</a></h2>
       <p>AGP is fundamentally <strong>agent-to-agent</strong>. A
@@ -267,6 +279,6 @@
     </div>
   </div>
 </footer>
-<script src="assets/app.js?v=mq9g2n1g" defer></script>
+<script src="assets/app.js?v=mq9icaef" defer></script>
 </body>
 </html>

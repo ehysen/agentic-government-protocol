@@ -668,3 +668,37 @@ figcaption {
 .pill--amber { background: var(--amber-soft); color: var(--amber); border-color: #f0d9b5; }
 .pill--teal  { background: var(--accent-soft); color: var(--accent); border-color: #b8e0d9; }
 .pill--ghost { background: var(--paper-sink); color: var(--ink-soft); border-color: var(--line); }
+
+/* Demo: channel toggle + fixed-height scroll (added) ---------------------- */
+.demo__channels {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .45rem;
+  padding: .7rem 1rem; background: var(--paper); border-bottom: 1px solid var(--line);
+}
+.demo__channels-label { font-size: .78rem; font-weight: 700; color: var(--ink-soft); margin-right: .15rem; }
+.demo__chan {
+  display: inline-flex; align-items: center; gap: .35rem;
+  padding: .32rem .62rem; border: 1px solid var(--line); border-radius: 999px;
+  background: var(--paper); font: inherit; font-size: .8rem; font-weight: 600;
+  color: var(--ink-soft); cursor: pointer; white-space: nowrap;
+}
+.demo__chan svg { flex: 0 0 14px; }
+.demo__chan:hover { background: var(--paper-soft); color: var(--ink); }
+.demo[data-enhanced] .demo__chan.is-active { background: var(--brand); color: #fff; border-color: var(--brand); }
+
+.demo__chanlabel { font-weight: 500; text-transform: none; letter-spacing: 0; color: var(--brand-ink); font-style: italic; }
+.demo__same { font-weight: 500; text-transform: none; letter-spacing: 0; color: var(--ink-mute); }
+
+/* Fixed height with internal scroll (only when enhanced) so the box doesn't grow */
+.demo__scroll { }
+.demo[data-enhanced] .demo__scroll {
+  height: 290px; overflow-y: auto; overscroll-behavior: contain;
+  scroll-behavior: smooth; padding-right: .2rem;
+}
+@media (prefers-reduced-motion: reduce) { .demo[data-enhanced] .demo__scroll { scroll-behavior: auto; } }
+@media (max-width: 740px) { .demo[data-enhanced] .demo__scroll { height: 240px; } }
+.demo__scroll::-webkit-scrollbar { width: 9px; }
+.demo__scroll::-webkit-scrollbar-thumb { background: var(--line); border-radius: 6px; }
+
+/* Per-channel cue on the chat column */
+.demo[data-channel="sms"]   .demo__chat,
+.demo[data-channel="phone"] .demo__chat { background: linear-gradient(180deg, var(--paper-soft), var(--paper) 40px); }
