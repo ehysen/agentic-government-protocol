@@ -27,16 +27,18 @@ Everything renders fully offline. There are no external CDNs, fonts, or scripts.
 
 ```
 .
-├── index.html              # Overview / mission (entry point)
+├── index.html              # Overview — citizen experience, vignette, partners (entry point)
 ├── principles.html         # Design principles
-├── actors.html             # The four actors + actor-relationship SVG
+├── actors.html             # The four actors + agent-to-agent SVG diagram
 ├── concepts.html           # Core vocabulary + extension mechanism
-├── flow.html               # The canonical 5-step flow + flow SVG  ← the heart
+├── flow.html               # The canonical 5-step A2A flow + flow SVG  ← the heart
+├── schema.html             # The actual draft schema (JSON for each core type)
 ├── authorization.html      # Authorization / consent / identity (the named gap)
-├── data-model.html         # Overlay-not-dictionary; NIEM / MCP / validate-after
 ├── example.html            # Worked example: SNAP after a job loss
+├── get-started.html        # For agencies: how to make services agent-accessible
 ├── governance.html         # Nonprofit home, license, RFC process, co-authorship
 ├── roadmap.html            # Status & roadmap (what's in v1 / deferred)
+├── related-work.html       # Precedents AGP builds on (ACP, A2A, VIP, schema.org, NIEM, MCP)
 ├── open-questions.html     # Genuinely open questions (surfaced, not resolved)
 ├── glossary.html           # Definitions
 ├── faq.html                # Frequently asked questions

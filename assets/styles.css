@@ -497,6 +497,95 @@ figcaption {
   main { padding-top: 1.5rem; }
 }
 
+/* Vision hero (home) ------------------------------------------------------ */
+.vision {
+  background: linear-gradient(180deg, #0f1b30 0%, #14224a 100%);
+  color: #eef2fb;
+  border-radius: var(--radius-lg);
+  padding: 2.6rem 2.2rem;
+  margin: 1.6rem 0 2rem;
+}
+.vision .eyebrow { color: #8fb4ff; }
+.vision h1 { color: #fff; font-size: 2.5rem; }
+.vision .lede { color: #c7d3ea; }
+.vision strong { color: #fff; }
+@media (max-width: 600px){ .vision { padding: 1.8rem 1.3rem; } .vision h1 { font-size: 1.9rem; } }
+
+/* Pull quote -------------------------------------------------------------- */
+.pullquote {
+  font-size: 1.45rem;
+  line-height: 1.4;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  color: var(--ink);
+  border-left: 4px solid var(--brand);
+  padding: .2rem 0 .2rem 1.2rem;
+  margin: 2rem 0;
+}
+.pullquote span { color: var(--brand-ink); }
+
+/* Citizen vignette (chat) ------------------------------------------------- */
+.vignette {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper-soft);
+  padding: 1.2rem 1.2rem .4rem;
+  margin: 1.6rem 0;
+  max-width: 640px;
+}
+.vignette__head {
+  display: flex; align-items: center; gap: .6rem;
+  font-size: .8rem; color: var(--ink-soft); font-weight: 600;
+  padding: 0 .2rem .9rem; border-bottom: 1px solid var(--line-soft); margin-bottom: 1rem;
+}
+.vignette__head .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); }
+.bubble {
+  max-width: 82%;
+  padding: .6rem .85rem;
+  border-radius: 14px;
+  margin: 0 0 .85rem;
+  font-size: .96rem;
+  line-height: 1.5;
+}
+.bubble small { display: block; font-size: .68rem; text-transform: uppercase; letter-spacing: .05em; opacity: .75; margin-bottom: .2rem; font-weight: 700; }
+.bubble--person { background: var(--brand); color: #fff; margin-left: auto; border-bottom-right-radius: 4px; }
+.bubble--person small { color: #cfe0ff; }
+.bubble--agent { background: #fff; border: 1px solid var(--line); color: var(--ink); border-bottom-left-radius: 4px; }
+.bubble--agent small { color: var(--brand-ink); }
+.bubble--system { background: var(--accent-soft); border: 1px solid #b8e0d9; color: #0c5750; margin: 0 auto 1rem; text-align: center; font-size: .85rem; max-width: 92%; }
+.bubble--system small { color: var(--accent); }
+
+/* Partner / logo wall ----------------------------------------------------- */
+.partners { margin: 2.2rem 0 1rem; }
+.partners h2 { font-size: 1.05rem; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); margin-bottom: .3rem; }
+.logo-wall {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: .8rem;
+  margin: 1.1rem 0 .6rem;
+}
+@media (max-width: 760px){ .logo-wall { grid-template-columns: repeat(2, 1fr); } }
+.logo {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .5rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  padding: 1rem .6rem;
+  min-height: 90px;
+  text-align: center;
+}
+.logo svg { display: block; }
+.logo__name { font-size: .82rem; font-weight: 650; color: var(--ink-soft); letter-spacing: -.01em; line-height: 1.2; }
+.logo__sub { font-size: .68rem; color: var(--ink-mute); font-weight: 500; }
+.partners .note { font-size: .8rem; color: var(--ink-mute); font-style: italic; margin-top: .3rem; }
+
+/* Feature row ------------------------------------------------------------- */
+.features { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.1rem; margin: 1.6rem 0; }
+@media (max-width: 760px){ .features { grid-template-columns: 1fr; } }
+.feature__icon { width: 34px; height: 34px; color: var(--brand); margin-bottom: .4rem; }
+.feature h3 { margin: 0 0 .3rem; font-size: 1.05rem; }
+.feature p { margin: 0; color: var(--ink-soft); font-size: .95rem; }
+
 /* Print ------------------------------------------------------------------- */
 @media print {
   .sidebar, .site-header, .pagenav, .cta-row { display: none; }

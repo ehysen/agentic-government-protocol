@@ -26,13 +26,17 @@ const NAV = [
     ['actors', 'Actors &amp; roles'],
     ['concepts', 'Core concepts &amp; vocabulary'],
     ['flow', 'The canonical flow'],
+    ['schema', 'The schema'],
     ['authorization', 'Authorization, consent &amp; identity'],
-    ['data-model', 'Data model approach'],
     ['example', 'Worked example'],
   ]],
-  ['Governance', [
+  ['For agencies', [
+    ['get-started', 'Get started'],
+  ]],
+  ['Project', [
     ['governance', 'Governance &amp; contribution'],
     ['roadmap', 'Status &amp; roadmap'],
+    ['related-work', 'Related work'],
     ['open-questions', 'Open questions'],
   ]],
   ['Reference', [
@@ -42,8 +46,9 @@ const NAV = [
 ];
 
 /* Linear order for prev/next pagination --------------------------------- */
-const ORDER = ['index','principles','actors','concepts','flow','authorization',
-  'data-model','example','governance','roadmap','open-questions','glossary','faq'];
+const ORDER = ['index','principles','actors','concepts','flow','schema',
+  'authorization','example','get-started','governance','roadmap',
+  'related-work','open-questions','glossary','faq'];
 
 const LABELS = {};
 for (const [, items] of NAV) for (const [slug, label] of items) LABELS[slug] = label;

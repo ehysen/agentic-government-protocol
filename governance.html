@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Governance & contribution — AGP</title>
-  <meta name="description" content="AGP proposes a neutral nonprofit home, an open license, a lightweight public RFC/proposal process, and an explicit co-author role for state and local agencies and labs — modeled on VIP and schema.org.">
+  <meta name="description" content="AGP proposes a neutral nonprofit home, an open license, a lightweight public proposal process, and an explicit co-author role for state and local agencies, intermediaries, and labs.">
   <link rel="stylesheet" href="assets/styles.css">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d4ed8'/%3E%3Cg fill='none' stroke='white' stroke-width='4' stroke-linecap='round'%3E%3Ccircle cx='20' cy='20' r='6'/%3E%3Ccircle cx='44' cy='20' r='6'/%3E%3Ccircle cx='32' cy='46' r='6'/%3E%3Cpath d='M24 24 28 40M40 24 36 40M26 20h12'/%3E%3C/g%3E%3C/svg%3E">
 </head>
@@ -49,14 +49,19 @@
         <li><a href="actors.html">Actors &amp; roles</a></li>
         <li><a href="concepts.html">Core concepts &amp; vocabulary</a></li>
         <li><a href="flow.html">The canonical flow</a></li>
+        <li><a href="schema.html">The schema</a></li>
         <li><a href="authorization.html">Authorization, consent &amp; identity</a></li>
-        <li><a href="data-model.html">Data model approach</a></li>
         <li><a href="example.html">Worked example</a></li>
       </ul>
-      <p>Governance</p>
+      <p>For agencies</p>
+      <ul>
+        <li><a href="get-started.html">Get started</a></li>
+      </ul>
+      <p>Project</p>
       <ul>
         <li><a href="governance.html" aria-current="page">Governance &amp; contribution</a></li>
         <li><a href="roadmap.html">Status &amp; roadmap</a></li>
+        <li><a href="related-work.html">Related work</a></li>
         <li><a href="open-questions.html">Open questions</a></li>
       </ul>
       <p>Reference</p>
@@ -69,73 +74,68 @@
 
   <main id="main">
     <div class="content">
-      <p class="eyebrow">Governance</p>
+      <p class="eyebrow">Project</p>
       <h1>Governance &amp; contribution</h1>
       <p class="lede">A standard is only as credible as its governance. AGP proposes a
-      shape that borrows ACP&rsquo;s named-stewards-plus-open-license structure, VIP&rsquo;s
-      official co-authorship as the source of trust, and schema.org&rsquo;s lightweight,
-      additive, GitHub-driven process.</p>
+      lightweight, additive, openly-run process &mdash; with the agencies that operate public
+      services as co-authors, not consumers.</p>
 
       <h2 class="anchored" id="home">A neutral nonprofit home<a class="h-anchor" href="#home" aria-label="Link to this section">#</a></h2>
-      <p>AGP should be stewarded by a <strong>named, neutral nonprofit</strong> &mdash; the way
-      VIP lives at Democracy Works and schema.org runs as an independent project hosted in
-      W3C Community Groups but <em>not</em> governed by W3C. A neutral home keeps the
-      standard from being captured by any single vendor or agency, and gives agencies a
-      trustworthy counterparty to co-author with. (The specific organization is an
-      <a href="open-questions.html">open question</a>; the requirement that it be neutral
+      <p>AGP should be stewarded by a <strong>named, neutral nonprofit</strong>. A neutral
+      home keeps the standard from being captured by any single vendor or agency, and gives
+      agencies a trustworthy counterparty to co-author with. (The specific organization is
+      an <a href="open-questions.html">open question</a>; the requirement that it be neutral
       and nonprofit is not.)</p>
 
       <h2 class="anchored" id="license">Open license<a class="h-anchor" href="#license" aria-label="Link to this section">#</a></h2>
-      <p>AGP is published under an <strong>open license (Apache&nbsp;2.0 proposed)</strong>,
-      matching ACP&rsquo;s posture, so any agency, vendor, or NGO can implement it without
-      permission and reference implementations can be shared freely.</p>
+      <p>AGP is published under an <strong>open license (Apache&nbsp;2.0 proposed)</strong>
+      so any agency, vendor, or NGO can implement it without permission, and reference
+      implementations can be shared freely.</p>
 
       <h2 class="anchored" id="process">A lightweight, public change process<a class="h-anchor" href="#process" aria-label="Link to this section">#</a></h2>
-      <p>Following schema.org, the day-to-day work runs on a <strong>public GitHub issue
-      list</strong>, and changes are <strong>additive</strong> &mdash; the core grows slowly
-      and never breaks existing extensions. Concretely:</p>
+      <p>The day-to-day work runs on a <strong>public issue tracker</strong>, and changes
+      are <strong>additive</strong> &mdash; the core grows slowly and never breaks existing
+      extensions:</p>
       <ul>
         <li><strong>Proposals as AGP-RFCs.</strong> Substantive changes enter as a written
-        proposal (an &ldquo;AGP-RFC,&rdquo; analogous to ACP&rsquo;s SEP process) discussed in the open.</li>
-        <li><strong>A <code>pending</code> melting pot.</strong> New terms can be used and
-        seen together in <code>pending</code> &mdash; explicitly marked as subject to change &mdash;
+        proposal discussed in the open.</li>
+        <li><strong>A <code>pending</code> staging area.</strong> New terms can be used and
+        seen together in <code>pending</code> &mdash; explicitly marked subject to change &mdash;
         before graduating into core.</li>
-        <li><strong>Consensus, not unilateral edits.</strong> Like schema.org, no release
-        ships without the agreement of the stewarding group; proposals graduate by
-        demonstrated use and consensus, not by fiat.</li>
+        <li><strong>Consensus, not unilateral edits.</strong> No release ships without the
+        agreement of the stewarding group; proposals graduate by demonstrated use and
+        consensus.</li>
         <li><strong>Reference implementations live separately.</strong> The spec and its
-        reference MCP servers are versioned independently, as ACP separates spec from
-        implementation.</li>
+        reference agency agents are versioned independently.</li>
       </ul>
 
       <div class="callout callout--official">
         <p class="callout__label">Agencies are co-authors, not consumers</p>
-        <p>VIP earns trust because it was built <em>with</em> the state and local election
-        officials who run the systems &mdash; not handed to them. AGP&rsquo;s governance must
-        center <strong>state and local agencies, caseworker organizations, and government
-        innovation labs as co-authors</strong>. The standard has to come from, and work
-        for, the people who operate public services, or it will not (and should not) be
-        adopted.</p>
+        <p>AGP&rsquo;s governance centers <strong>state and local agencies, caseworker
+        organizations, and government innovation labs as co-authors</strong>. The standard
+        has to come from, and work for, the people who operate public services &mdash; their
+        adoption is the success metric. (For the lineage of this stance, see
+        <a href="related-work.html">Related work</a>.)</p>
       </div>
 
       <h2 class="anchored" id="roles">Who participates<a class="h-anchor" href="#roles" aria-label="Link to this section">#</a></h2>
       <div class="grid grid-2">
-        <div class="card"><h3>Stewarding nonprofit</h3><p>Hosts the spec, runs the process, keeps the standard neutral, and convenes releases by consensus.</p></div>
-        <div class="card"><h3>State &amp; local agencies</h3><p>Co-author the vocabulary and flow against real systems; their adoption is the success metric.</p></div>
-        <div class="card"><h3>Intermediaries &amp; labs</h3><p>NGOs, navigators, legal-aid orgs, and government innovation labs surface equity and real-world constraints.</p></div>
-        <div class="card"><h3>Agent &amp; tool builders</h3><p>Implement compliant agents and MCP servers, and stress-test the spec through use.</p></div>
+        <div class="card"><h3>Stewarding nonprofit</h3><p>Hosts the spec, runs the process, keeps it neutral, and convenes releases by consensus.</p></div>
+        <div class="card"><h3>State &amp; local agencies</h3><p>Co-author the vocabulary and flow against real systems and run agency agents.</p></div>
+        <div class="card"><h3>Intermediaries &amp; labs</h3><p>NGOs, navigators, legal-aid orgs, and innovation labs surface equity and real-world constraints.</p></div>
+        <div class="card"><h3>Agent &amp; tool builders</h3><p>Implement compliant agents and reference agency agents, and stress-test the spec through use.</p></div>
       </div>
 
       <h2 class="anchored" id="contribute">How to get involved<a class="h-anchor" href="#contribute" aria-label="Link to this section">#</a></h2>
       <p>AGP v0.1 is a strawman published to be argued with. The most useful contributions
-      right now are: agencies describing where the flow does or doesn&rsquo;t fit their
-      systems; intermediaries pressure-testing the equity story; and reviewers poking at
-      the <a href="authorization.html">authorization gap</a> and the
+      now: agencies describing where the flow or <a href="schema.html">schema</a> doesn&rsquo;t
+      fit their systems; intermediaries pressure-testing the equity story; and reviewers
+      poking at the <a href="authorization.html">authorization gap</a> and the
       <a href="open-questions.html">open questions</a>. Open an issue or proposal on
       <a href="https://github.com/ehysen/agentic-government-protocol">GitHub</a>.</p>
 
       <nav class="pagenav" aria-label="Pagination">
-        <a class="prev" href="example.html"><small>Previous</small> ← Worked example</a>
+        <a class="prev" href="get-started.html"><small>Previous</small> ← Get started</a>
         <a class="next" href="roadmap.html"><small>Next</small> Status &amp; roadmap →</a>
       </nav>
     </div>
