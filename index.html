@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Agentic Government Protocol (AGP) — An open standard for agent-mediated government service delivery</title>
   <meta name="description" content="AGP gives every constituent instant, personalized access to the public services they need — through an agent that carries the complexity, so people don’t have to. An open agent-to-agent standard for government service delivery.">
-  <link rel="stylesheet" href="assets/styles.css?v=mq9ic2d0">
+  <link rel="stylesheet" href="assets/styles.css?v=mq9in7qr">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d4ed8'/%3E%3Cg fill='none' stroke='white' stroke-width='4' stroke-linecap='round'%3E%3Ccircle cx='20' cy='20' r='6'/%3E%3Ccircle cx='44' cy='20' r='6'/%3E%3Ccircle cx='32' cy='46' r='6'/%3E%3Cpath d='M24 24 28 40M40 24 36 40M26 20h12'/%3E%3C/g%3E%3C/svg%3E">
 </head>
 <body>
@@ -162,17 +162,50 @@
           <button class="demo__tab" type="button" role="tab" id="d-tab-4" aria-controls="d-bts-4" aria-selected="false" data-i="4"><span class="demo__tabnum">5</span><span class="demo__tablabel">Outcome</span></button>
         </div>
         <div class="demo__body">
-          <div class="demo__chat" data-chat>
+          <div class="demo__chat">
             <p class="demo__col-label">What Maria experiences</p>
-            <div class="bubble bubble--system is-shown" data-stage="0"><small>Context</small> Maria, household of 3, just lost her job.</div>
-            <div class="bubble bubble--person is-shown" data-stage="0"><small>Maria</small> I&rsquo;m really worried about groceries this month.</div>
-            <div class="bubble bubble--agent is-shown" data-stage="0"><small>Agent</small> You may qualify for food assistance. Want me to check?</div>
-            <div class="bubble bubble--agent" data-stage="1"><small>Agent</small> You likely qualify for <strong>SNAP &mdash; about $535/month</strong>. Here&rsquo;s how I worked that out.</div>
-            <div class="bubble bubble--agent" data-stage="2"><small>Agent</small> Okay to apply for you &mdash; using your household, income, and address, just for this?</div>
-            <div class="bubble bubble--person" data-stage="2"><small>Maria</small> Yes, please go ahead.</div>
-            <div class="bubble bubble--agent" data-stage="3"><small>Agent</small> You&rsquo;re approved. Benefits reach your EBT card in <strong>about 2 days</strong>.</div>
-            <div class="bubble bubble--agent" data-stage="4"><small>Agent</small> Here&rsquo;s your receipt, and how to appeal if anything looks wrong.</div>
-            <div class="bubble bubble--system" data-stage="4"><small>Elapsed</small> Under 5 minutes &middot; no forms &middot; no office visit</div>
+            <div class="demo__device" data-device>
+              <div class="demo__screen">
+                <div class="demo__statusbar" aria-hidden="true"><span class="demo__statusbar-time">9:41</span><span class="demo__statusbar-glyphs"><i></i><i></i><i></i></span></div>
+
+                <div class="demo__chrome demo__chrome--agent" aria-hidden="true">
+                  <span class="demo__chrome-ava demo__chrome-ava--spark"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l1.8 5.6L19 9l-5.2 1.4L12 16l-1.8-5.6L5 9l5.2-1.4z"/></svg></span>
+                  <span class="demo__chrome-title">AI assistant<small>Maria&rsquo;s own app</small></span>
+                  <span class="demo__chrome-tag">Chat</span>
+                </div>
+
+                <div class="demo__chrome demo__chrome--app" aria-hidden="true">
+                  <span class="demo__chrome-ava demo__chrome-ava--seal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2l8 3v6c0 4.5-3.2 7.6-8 9-4.8-1.4-8-4.5-8-9V5z" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                  <span class="demo__chrome-title">MyGov Assistant<small>Official state app</small></span>
+                  <span class="demo__chrome-tag">Verified</span>
+                </div>
+
+                <div class="demo__chrome demo__chrome--sms" aria-hidden="true">
+                  <span class="demo__sms-back">&lsaquo;</span>
+                  <span class="demo__chrome-ava demo__chrome-ava--sms">GA</span>
+                  <span class="demo__chrome-title">1‑800‑GOVERNMENT<small>Text message &middot; SMS/MMS</small></span>
+                </div>
+
+                <div class="demo__chrome demo__chrome--phone" aria-hidden="true">
+                  <span class="demo__call-ava"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 3h3l2 5-2 1.5a11 11 0 0 0 5 5L17 17l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 4 6 2 2 0 0 1 6 3z" stroke-linejoin="round"/></svg></span>
+                  <span class="demo__chrome-title">1‑800‑GOVERNMENT<small>Voice agent &middot; on call</small></span>
+                  <span class="demo__call-timer">00:14</span>
+                  <span class="demo__wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+                </div>
+
+                <div class="demo__stream" data-stream>
+                  <div class="bubble bubble--system is-shown" data-stage="0"><small>Context</small> Maria, household of 3, just lost her job.</div>
+                  <div class="bubble bubble--person is-shown" data-stage="0"><small>Maria</small> I&rsquo;m really worried about groceries this month.</div>
+                  <div class="bubble bubble--agent is-shown" data-stage="0"><small>Agent</small> You may qualify for food assistance. Want me to check?</div>
+                  <div class="bubble bubble--agent" data-stage="1"><small>Agent</small> You likely qualify for <strong>SNAP &mdash; about $535/month</strong>. Here&rsquo;s how I worked that out.</div>
+                  <div class="bubble bubble--agent" data-stage="2"><small>Agent</small> Okay to apply for you &mdash; using your household, income, and address, just for this?</div>
+                  <div class="bubble bubble--person" data-stage="2"><small>Maria</small> Yes, please go ahead.</div>
+                  <div class="bubble bubble--agent" data-stage="3"><small>Agent</small> You&rsquo;re approved. Benefits reach your EBT card in <strong>about 2 days</strong>.</div>
+                  <div class="bubble bubble--agent" data-stage="4"><small>Agent</small> Here&rsquo;s your receipt, and how to appeal if anything looks wrong.</div>
+                  <div class="bubble bubble--system" data-stage="4"><small>Elapsed</small> Under 5 minutes &middot; no forms &middot; no office visit</div>
+                </div>
+              </div>
+            </div>
           </div>
           <aside class="demo__behind">
             <p class="demo__col-label">Behind the scenes</p>
@@ -290,6 +323,6 @@
     </div>
   </div>
 </footer>
-<script src="assets/app.js?v=mq9ic2d0" defer></script>
+<script src="assets/app.js?v=mq9in7qr" defer></script>
 </body>
 </html>

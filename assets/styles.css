@@ -555,6 +555,27 @@ figcaption {
 .bubble--system { background: var(--accent-soft); border: 1px solid #b8e0d9; color: #0c5750; margin: 0 auto 1rem; text-align: center; font-size: .85rem; max-width: 92%; }
 .bubble--system small { color: var(--accent); }
 
+/* Per-channel message styling (see channel surfaces below). ---------------- */
+/* SMS: iMessage-style thread — green sent, grey received, no speaker labels. */
+.demo[data-channel="sms"] .bubble small { display: none; }
+.demo[data-channel="sms"] .bubble { font-size: .9rem; padding: .5rem .75rem; border-radius: 18px; margin-bottom: .4rem; }
+.demo[data-channel="sms"] .bubble--agent { background: #e9e9eb; border: none; color: #111; border-bottom-left-radius: 5px; }
+.demo[data-channel="sms"] .bubble--person { background: #34c759; color: #fff; border-bottom-right-radius: 5px; }
+.demo[data-channel="sms"] .bubble--system { background: none; border: none; color: var(--ink-soft); font-size: .72rem; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; margin: .6rem auto; max-width: 100%; }
+
+/* Phone: live-call transcript — full-width caption lines on the dark screen. */
+.demo[data-channel="phone"] .bubble { max-width: 100%; background: none; border: none; padding: .4rem 0; margin-bottom: .15rem; border-radius: 0; font-size: .9rem; color: #efeafc; }
+.demo[data-channel="phone"] .bubble + .bubble { border-top: 1px solid rgba(255,255,255,.08); }
+.demo[data-channel="phone"] .bubble small { display: inline-block; color: #b3a6e6; opacity: 1; margin: 0 .5rem 0 0; }
+.demo[data-channel="phone"] .bubble--person { margin-left: 0; }
+.demo[data-channel="phone"] .bubble--person small { color: #7fd1ff; }
+.demo[data-channel="phone"] .bubble strong { color: #fff; }
+.demo[data-channel="phone"] .bubble--system { background: rgba(255,255,255,.08); border: none; color: #d8cffb; max-width: 100%; border-radius: 8px; padding: .45rem .7rem; margin: .5rem 0 0; font-size: .78rem; }
+
+/* App: messaging on a soft canvas; person picks up the official blue. */
+.demo[data-channel="app"] .bubble--person { background: var(--accent); }
+.demo[data-channel="app"] .bubble--person small { color: #cdeae4; }
+
 /* Partner / logo wall ----------------------------------------------------- */
 .partners { margin: 2.2rem 0 1rem; }
 .partners h2 { font-size: 1.05rem; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); margin-bottom: .3rem; }
@@ -639,6 +660,82 @@ figcaption {
 }
 .demo__channel-note strong { color: var(--ink); }
 
+/* ----- Channel surfaces: the left column is restyled to look like the
+   medium Maria is actually using (desktop assistant, phone app, SMS thread,
+   or a live voice call). Chrome blocks below are shown one at a time. ------ */
+.demo__device { flex: 1 1 auto; min-height: 0; display: flex; }
+.demo__screen { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; overflow: hidden; background: var(--paper); }
+.demo__stream { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: .2rem; scroll-behavior: smooth; }
+
+/* Only the active channel's chrome is shown. */
+.demo__chrome, .demo__statusbar { display: none; }
+.demo[data-channel="agent"] .demo__chrome--agent,
+.demo[data-channel="app"]   .demo__chrome--app,
+.demo[data-channel="sms"]   .demo__chrome--sms,
+.demo[data-channel="phone"] .demo__chrome--phone { display: flex; }
+.demo[data-channel="app"] .demo__statusbar,
+.demo[data-channel="sms"] .demo__statusbar { display: flex; }
+
+.demo__chrome { align-items: center; gap: .6rem; padding: .6rem .8rem; flex: 0 0 auto; }
+.demo__chrome-title { display: flex; flex-direction: column; line-height: 1.25; font-weight: 700; font-size: .92rem; color: var(--ink); min-width: 0; }
+.demo__chrome-title small { font-weight: 600; font-size: .72rem; color: var(--ink-soft); text-transform: none; letter-spacing: 0; }
+.demo__chrome-ava { display: grid; place-items: center; width: 30px; height: 30px; flex: 0 0 30px; border-radius: 50%; color: #fff; background: var(--chan); }
+.demo__chrome-ava svg { width: 17px; height: 17px; }
+.demo__chrome-tag { margin-left: auto; font-size: .66rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--chan); background: var(--chan-soft); padding: .2rem .5rem; border-radius: 999px; }
+
+/* Phone status bar (app + sms) */
+.demo__statusbar { align-items: center; justify-content: space-between; padding: .35rem .9rem .1rem; flex: 0 0 auto; font-size: .72rem; font-weight: 700; color: var(--ink); }
+.demo__statusbar-glyphs { display: inline-flex; gap: 3px; }
+.demo__statusbar-glyphs i { width: 5px; height: 5px; border-radius: 50%; background: var(--ink); opacity: .55; }
+
+/* (1) Consumer AI agent — clean desktop chat card */
+.demo[data-channel="agent"] .demo__screen { border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow-sm, 0 1px 2px rgba(16,32,58,.06)); }
+.demo[data-channel="agent"] .demo__chrome--agent { border-bottom: 1px solid var(--line-soft); background: var(--paper-soft); }
+.demo[data-channel="agent"] .demo__chrome-ava--spark { background: linear-gradient(135deg, var(--brand), #6f9bff); }
+
+/* (2) + (3) Phone frames — bezel around a phone screen */
+.demo[data-channel="app"] .demo__device,
+.demo[data-channel="sms"] .demo__device,
+.demo[data-channel="phone"] .demo__device {
+  max-width: 320px; margin: 0 auto; width: 100%;
+  padding: 8px; border-radius: 34px;
+  background: #11161f; box-shadow: 0 12px 30px rgba(8,12,20,.28);
+}
+.demo[data-channel="app"] .demo__screen,
+.demo[data-channel="sms"] .demo__screen,
+.demo[data-channel="phone"] .demo__screen { border-radius: 26px; }
+
+/* (2) Free government agent app — official blue header */
+.demo[data-channel="app"] .demo__chrome--app { background: var(--accent); color: #fff; padding-top: .25rem; }
+.demo[data-channel="app"] .demo__chrome--app .demo__chrome-title,
+.demo[data-channel="app"] .demo__chrome--app .demo__chrome-title small { color: #fff; }
+.demo[data-channel="app"] .demo__chrome--app .demo__chrome-ava { background: rgba(255,255,255,.22); }
+.demo[data-channel="app"] .demo__chrome-tag { color: #fff; background: rgba(255,255,255,.2); }
+.demo[data-channel="app"] .demo__stream { background: var(--paper-soft); }
+
+/* (3) SMS — messaging thread header + green/grey bubbles */
+.demo[data-channel="sms"] .demo__chrome--sms { background: #f2f2f7; border-bottom: 1px solid var(--line); color: var(--ink); }
+.demo[data-channel="sms"] .demo__sms-back { color: var(--chan); font-size: 1.5rem; line-height: 1; font-weight: 700; }
+.demo[data-channel="sms"] .demo__chrome-ava--sms { background: #c7c7cc; color: #fff; font-size: .72rem; font-weight: 700; }
+.demo[data-channel="sms"] .demo__chrome-title { font-size: .86rem; text-align: left; }
+.demo[data-channel="sms"] .demo__stream { background: #fff; }
+
+/* (4) Phone call — call header + waveform, transcript below */
+.demo[data-channel="phone"] .demo__screen { background: radial-gradient(120% 60% at 50% 0%, #241a44 0%, #15102b 60%, #100b22 100%); }
+.demo[data-channel="phone"] .demo__chrome--phone { flex-direction: column; gap: .35rem; text-align: center; padding: 1rem .8rem .7rem; }
+.demo[data-channel="phone"] .demo__call-ava { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: rgba(255,255,255,.12); color: #fff; }
+.demo[data-channel="phone"] .demo__call-ava svg { width: 22px; height: 22px; }
+.demo[data-channel="phone"] .demo__chrome--phone .demo__chrome-title { align-items: center; color: #fff; }
+.demo[data-channel="phone"] .demo__chrome--phone .demo__chrome-title small { color: #c7bdf2; }
+.demo[data-channel="phone"] .demo__call-timer { font-family: var(--mono); font-size: .8rem; color: #c7bdf2; }
+.demo__wave { display: inline-flex; align-items: center; gap: 3px; height: 16px; }
+.demo__wave i { width: 3px; height: 40%; border-radius: 3px; background: #a78bfa; animation: wave 1s ease-in-out infinite; }
+.demo__wave i:nth-child(2){ animation-delay:.1s } .demo__wave i:nth-child(3){ animation-delay:.2s }
+.demo__wave i:nth-child(4){ animation-delay:.3s } .demo__wave i:nth-child(5){ animation-delay:.4s }
+.demo__wave i:nth-child(6){ animation-delay:.5s } .demo__wave i:nth-child(7){ animation-delay:.6s }
+@keyframes wave { 0%,100%{ height:25% } 50%{ height:95% } }
+.demo[data-channel="phone"] .demo__stream { padding: .6rem .8rem; }
+
 .demo__bar { display: flex; background: var(--paper-soft); border-bottom: 1px solid var(--line); overflow-x: auto; }
 .demo__tab {
   flex: 1 1 0; min-width: 116px;
@@ -659,17 +756,16 @@ figcaption {
 
 .demo__body { display: grid; grid-template-columns: 1fr 1fr; }
 @media (max-width: 740px) { .demo__body { grid-template-columns: 1fr; } }
-.demo__chat { padding: 1.2rem; border-right: 1px solid var(--line-soft); border-top: 3px solid var(--chan); }
+.demo__chat { display: flex; flex-direction: column; min-height: 0; padding: 1.2rem; border-right: 1px solid var(--line-soft); border-top: 3px solid var(--chan); transition: border-color .2s; }
 .demo__behind { padding: 1.2rem; background: var(--paper-soft); }
 @media (max-width: 740px) {
   .demo__chat { border-right: none; border-bottom: 1px solid var(--line-soft); }
 }
 
 /* Fixed height: the demo holds its size as steps are revealed, so the page
-   doesn't jump. Each column scrolls internally instead of growing. */
+   doesn't jump. The message stream and the protocol column scroll inside. */
 @media (min-width: 741px) {
-  .demo[data-enhanced] .demo__body { height: clamp(360px, 56vh, 480px); }
-  .demo[data-enhanced] .demo__chat,
+  .demo[data-enhanced] .demo__body { height: clamp(420px, 60vh, 540px); }
   .demo[data-enhanced] .demo__behind { overflow-y: auto; }
 }
 .demo__col-label { font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 700; color: var(--ink-soft); margin: 0 0 .9rem; }

@@ -20,7 +20,7 @@
     var dots    = Array.prototype.slice.call(demo.querySelectorAll('.demo__dot'));
     var chans   = Array.prototype.slice.call(demo.querySelectorAll('.demo__chan'));
     var note    = demo.querySelector('[data-channel-note]');
-    var chat    = demo.querySelector('[data-chat]');
+    var stream  = demo.querySelector('[data-stream]');
     var prev    = demo.querySelector('.demo__prev');
     var next    = demo.querySelector('.demo__next');
     if (!tabs.length) return;
@@ -57,8 +57,8 @@
       dots.forEach(function (d, idx) { d.classList.toggle('is-on', idx === i); });
       if (prev) prev.disabled = i === 0;
       if (next) next.textContent = i === n - 1 ? 'Start over ↻' : 'Next step →';
-      // Keep the latest message in view within the fixed-height chat column.
-      if (chat) chat.scrollTop = chat.scrollHeight;
+      // Keep the latest message in view within the fixed-height stream.
+      if (stream) stream.scrollTop = stream.scrollHeight;
     }
 
     function go(to) { i = Math.max(0, Math.min(n - 1, to)); render(); }
