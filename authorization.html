@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Authorization, consent & identity — AGP</title>
   <meta name="description" content="AGP v1 names the authorization, consent, and identity gap explicitly: it defines the requirement and the interaction points between the two agents but defers the cryptographic and identity mechanism to a companion layer.">
-  <link rel="stylesheet" href="assets/styles.css?v=mq9e72ov">
+  <link rel="stylesheet" href="assets/styles.css?v=mq9g2n1g">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d4ed8'/%3E%3Cg fill='none' stroke='white' stroke-width='4' stroke-linecap='round'%3E%3Ccircle cx='20' cy='20' r='6'/%3E%3Ccircle cx='44' cy='20' r='6'/%3E%3Ccircle cx='32' cy='46' r='6'/%3E%3Cpath d='M24 24 28 40M40 24 36 40M26 20h12'/%3E%3C/g%3E%3C/svg%3E">
 </head>
 <body>
@@ -95,14 +95,14 @@
 
       <h2 class="anchored" id="requirement">The requirement<a class="h-anchor" href="#requirement" aria-label="Link to this section">#</a></h2>
       <p>For any AGP flow that acts on a constituent&rsquo;s behalf, four things must be true,
-      and an agency agent must be able to satisfy itself of each before the agency of
+      and a government agent must be able to satisfy itself of each before the agency of
       record acts:</p>
       <ol>
         <li><strong>Authorization exists.</strong> A specific constituent granted a
         specific agent permission to act for them.</li>
         <li><strong>Consent is scoped.</strong> The grant names the purpose, the data it
         covers, and the program(s) it applies to &mdash; not a blanket license.</li>
-        <li><strong>It is verifiable by the agency.</strong> The agency agent can check the
+        <li><strong>It is verifiable by the agency.</strong> The government agent can check the
         authorization against the request it received.</li>
         <li><strong>It is revocable and auditable.</strong> The constituent can withdraw
         it, and there is a durable record of what was authorized and used.</li>
@@ -118,7 +118,7 @@
         <tbody>
           <tr><td><strong>Grant</strong></td><td>The constituent issues a scoped <code>Authorization</code> to a named agent at step&nbsp;3.</td><td>The signature / credential format proving it.</td></tr>
           <tr><td><strong>Scope</strong></td><td>The grant carries purpose, data categories, and program scope.</td><td>The machine-enforceable mandate encoding.</td></tr>
-          <tr><td><strong>Verify</strong></td><td>The agency agent checks the session&rsquo;s <code>Authorization</code> on <code>submit</code>.</td><td>The identity-proofing and verification protocol.</td></tr>
+          <tr><td><strong>Verify</strong></td><td>The government agent checks the session&rsquo;s <code>Authorization</code> on <code>submit</code>.</td><td>The identity-proofing and verification protocol.</td></tr>
           <tr><td><strong>Revoke</strong></td><td>An authorization can be revoked and the revocation is reflected in the session status.</td><td>Revocation propagation / freshness guarantees.</td></tr>
           <tr><td><strong>Audit</strong></td><td>The <code>Determination</code> records what authorization was relied upon.</td><td>Tamper-evidence / non-repudiation cryptography.</td></tr>
         </tbody>
@@ -182,5 +182,6 @@
     </div>
   </div>
 </footer>
+<script src="assets/app.js?v=mq9g2n1g" defer></script>
 </body>
 </html>

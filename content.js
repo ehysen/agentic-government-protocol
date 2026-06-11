@@ -29,7 +29,7 @@ return [
           Imagine getting the benefit you qualify for the day you need it, without
           forms, offices, or phone trees. AGP is the open standard that makes that
           possible: it lets <strong>your agent talk directly to a government
-          agency&rsquo;s agent</strong> to find what you&rsquo;re eligible for, apply with your
+          agent</strong> to find what you&rsquo;re eligible for, apply with your
           consent, and deliver it &mdash; while the agency stays fully in charge of the
           decision.
         </p>
@@ -73,33 +73,88 @@ return [
       </div>
 
       ${h('story', 'What it feels like')}
-      <p>Maria was laid off two weeks ago. She has two kids and just lost her main
-      income. Here&rsquo;s the same moment, mediated by an agent that speaks AGP:</p>
+      <p>Maria was laid off two weeks ago, with two kids and her main income gone. Step
+      through the same moment below &mdash; <strong>what she experiences</strong> on the left,
+      and <strong>what the government agent and the session do behind the scenes</strong> on
+      the right.</p>
 
-      <div class="vignette" role="img" aria-label="An example conversation. Maria tells her agent she is worried about groceries. The agent says she likely qualifies for SNAP at about 535 dollars a month and offers to apply with her consent, using only her household size, income, and address for this application. Maria agrees. The agent reports the state approved her provisionally, benefits arrive on her EBT card in two days, and shares a receipt and appeal path. The whole exchange took under five minutes with no forms or office visit.">
-        <div class="vignette__head"><span class="dot"></span> Conversation with a constituent&rsquo;s agent</div>
-        <div class="bubble bubble--system"><small>Context</small> Maria, household of 3, recently lost her job.</div>
-        <div class="bubble bubble--person"><small>Maria</small> I&rsquo;m really worried about groceries this month.</div>
-        <div class="bubble bubble--agent"><small>Agent</small> You likely qualify for <strong>SNAP &mdash; about $535/month</strong>. I can apply for you right now with your okay. It would use your household size, income, and address, only for this application.</div>
-        <div class="bubble bubble--person"><small>Maria</small> Yes, please go ahead.</div>
-        <div class="bubble bubble--agent"><small>Agent</small> Done. The state approved you provisionally. Benefits reach your EBT card in <strong>about 2 days</strong>. Here&rsquo;s your receipt, and how to appeal if anything looks wrong.</div>
-        <div class="bubble bubble--system"><small>Elapsed</small> Under 5 minutes &middot; no forms &middot; no office visit</div>
+      <div class="demo" data-demo aria-label="Interactive walkthrough: Maria applies for food assistance through an agent">
+        <div class="demo__bar" role="tablist" aria-label="Stages of the interaction">
+          <button class="demo__tab is-active" type="button" role="tab" id="d-tab-0" aria-controls="d-bts-0" aria-selected="true" data-i="0"><span class="demo__tabnum">1</span><span class="demo__tablabel">Discovery</span></button>
+          <button class="demo__tab" type="button" role="tab" id="d-tab-1" aria-controls="d-bts-1" aria-selected="false" data-i="1"><span class="demo__tabnum">2</span><span class="demo__tablabel">Eligibility</span></button>
+          <button class="demo__tab" type="button" role="tab" id="d-tab-2" aria-controls="d-bts-2" aria-selected="false" data-i="2"><span class="demo__tabnum">3</span><span class="demo__tablabel">Authorization</span></button>
+          <button class="demo__tab" type="button" role="tab" id="d-tab-3" aria-controls="d-bts-3" aria-selected="false" data-i="3"><span class="demo__tabnum">4</span><span class="demo__tablabel">Submit</span></button>
+          <button class="demo__tab" type="button" role="tab" id="d-tab-4" aria-controls="d-bts-4" aria-selected="false" data-i="4"><span class="demo__tabnum">5</span><span class="demo__tablabel">Outcome</span></button>
+        </div>
+        <div class="demo__body">
+          <div class="demo__chat">
+            <p class="demo__col-label">What Maria experiences</p>
+            <div class="bubble bubble--system is-shown" data-stage="0"><small>Context</small> Maria, household of 3, just lost her job.</div>
+            <div class="bubble bubble--person is-shown" data-stage="0"><small>Maria</small> I&rsquo;m really worried about groceries this month.</div>
+            <div class="bubble bubble--agent is-shown" data-stage="0"><small>Agent</small> You may qualify for food assistance. Want me to check?</div>
+            <div class="bubble bubble--agent" data-stage="1"><small>Agent</small> You likely qualify for <strong>SNAP &mdash; about $535/month</strong>. Here&rsquo;s how I worked that out.</div>
+            <div class="bubble bubble--agent" data-stage="2"><small>Agent</small> Okay to apply for you &mdash; using your household, income, and address, just for this?</div>
+            <div class="bubble bubble--person" data-stage="2"><small>Maria</small> Yes, please go ahead.</div>
+            <div class="bubble bubble--agent" data-stage="3"><small>Agent</small> You&rsquo;re approved. Benefits reach your EBT card in <strong>about 2 days</strong>.</div>
+            <div class="bubble bubble--agent" data-stage="4"><small>Agent</small> Here&rsquo;s your receipt, and how to appeal if anything looks wrong.</div>
+            <div class="bubble bubble--system" data-stage="4"><small>Elapsed</small> Under 5 minutes &middot; no forms &middot; no office visit</div>
+          </div>
+          <aside class="demo__behind">
+            <p class="demo__col-label">Behind the scenes</p>
+            <div class="demo__bts is-active" id="d-bts-0" role="tabpanel" aria-labelledby="d-tab-0" data-i="0">
+              <span class="pill pill--ghost">read-only &middot; no session yet</span>
+              <h4>Discovery</h4>
+              <p>Her agent reads the government agent&rsquo;s published <a href="schema.html#catalog">catalog</a> and finds SNAP &mdash; its requirements, channels, and that it supports validate-after. None of Maria&rsquo;s data is touched.</p>
+              <p class="demo__obj"><span>reads &rarr;</span> Catalog</p>
+            </div>
+            <div class="demo__bts" id="d-bts-1" role="tabpanel" aria-labelledby="d-tab-1" data-i="1">
+              <span class="pill pill--blue">status: gathering</span>
+              <h4>Eligibility</h4>
+              <p>With consent, the agent <strong>creates a <a href="schema.html#session">ServiceSession</a></strong> and checks her attributes against the published <a href="schema.html#eligibility">EligibilityRule</a>. Its <code>messages</code> flag anything still missing &mdash; this is only a preview.</p>
+              <p class="demo__obj"><span>create &rarr;</span> ServiceSession</p>
+            </div>
+            <div class="demo__bts" id="d-bts-2" role="tabpanel" aria-labelledby="d-tab-2" data-i="2">
+              <span class="pill pill--blue">status: ready_to_submit</span>
+              <h4>Authorization &amp; consent</h4>
+              <p>Maria grants a scoped <a href="schema.html#authorization-obj">Authorization</a>; the agent attaches it to the session. The government agent will verify it on submit. The cryptographic proof is the deferred <a href="authorization.html">companion layer</a>.</p>
+              <p class="demo__obj"><span>update &rarr;</span> Authorization</p>
+            </div>
+            <div class="demo__bts" id="d-bts-3" role="tabpanel" aria-labelledby="d-tab-3" data-i="3">
+              <span class="pill pill--amber">status: in_progress &rarr; completed</span>
+              <h4>Submit &amp; delivery</h4>
+              <p>The agent submits. The government agent verifies the authorization and the <a href="actors.html#agency">agency of record</a> makes the determination &mdash; provisioning via validate-after. Authority never leaves the agency.</p>
+              <p class="demo__obj"><span>submit &rarr;</span> Determination</p>
+            </div>
+            <div class="demo__bts" id="d-bts-4" role="tabpanel" aria-labelledby="d-tab-4" data-i="4">
+              <span class="pill pill--teal">status: completed</span>
+              <h4>Determination &amp; recourse</h4>
+              <p>The session now holds the authoritative <a href="schema.html#determination">Determination</a>: award breakdown, audit trail, and a real appeal path. Two weeks later it reconciles to fully approved &mdash; the same session.</p>
+              <p class="demo__obj"><span>read &rarr;</span> Determination</p>
+            </div>
+          </aside>
+        </div>
+        <div class="demo__controls">
+          <button class="btn btn--ghost demo__prev" type="button" disabled>&larr; Back</button>
+          <div class="demo__dots" aria-hidden="true">
+            <span class="demo__dot is-on"></span><span class="demo__dot"></span><span class="demo__dot"></span><span class="demo__dot"></span><span class="demo__dot"></span>
+          </div>
+          <button class="btn btn--primary demo__next" type="button">Next step &rarr;</button>
+        </div>
       </div>
-      <p>Behind that short exchange, Maria&rsquo;s agent and the state agency&rsquo;s agent ran a
-      precise, auditable protocol. The <a href="example.html">worked example</a> opens it
-      up step by step.</p>
+      <p>That whole exchange ran a precise, auditable protocol between two agents. The
+      <a href="example.html">worked example</a> opens it up step by step.</p>
 
       ${h('how', 'How it works underneath')}
       <p>AGP is fundamentally <strong>agent-to-agent</strong>. A
       <strong>constituent-side agent</strong> (the person&rsquo;s own, a shared public agent,
       or one run by a trusted <a href="actors.html">intermediary</a>) speaks to a
-      <strong>government agency agent</strong> that represents the
+      <strong>government agent</strong> that represents the
       <strong>agency of record</strong>. The protocol is the common language those two
       agents share, decomposed into five steps:</p>
       <div class="grid grid-3">
-        <div class="card"><p class="card__role">Step 1</p><h3>Discovery</h3><p>The agency agent publishes a machine-readable catalog of services, requirements, and channels.</p></div>
+        <div class="card"><p class="card__role">Step 1</p><h3>Discovery</h3><p>The government agent publishes a machine-readable catalog of services, requirements, and channels.</p></div>
         <div class="card"><p class="card__role">Step 2</p><h3>Eligibility</h3><p>With consent, the constituent agent checks attributes against the agency&rsquo;s rules.</p></div>
-        <div class="card"><p class="card__role">Step 3</p><h3>Authorization</h3><p>The constituent grants a scoped authorization; the agency agent verifies it.</p></div>
+        <div class="card"><p class="card__role">Step 3</p><h3>Authorization</h3><p>The constituent grants a scoped authorization; the government agent verifies it.</p></div>
         <div class="card"><p class="card__role">Step 4</p><h3>Request &amp; delivery</h3><p>The request goes to the agency of record, which decides and provisions.</p></div>
         <div class="card"><p class="card__role">Step 5</p><h3>Receipt &amp; recourse</h3><p>A receipt, live status, and an appeal path return to the constituent.</p></div>
         <div class="card" style="background:var(--paper-soft);"><p class="card__role" style="color:var(--brand-ink)">Read next</p><h3>The canonical flow &rarr;</h3><p><a href="flow.html">Full step-by-step spec</a> &middot; <a href="schema.html">the schema</a></p></div>
@@ -158,7 +213,7 @@ return [
       ${h('p2', '2. Agency-of-record authority')}
       <p>The government agency remains the <strong>agency of record</strong>: it retains
       authority over eligibility determination and over provisioning the service or
-      benefit. The agency operates (or delegates) an <strong>agency agent</strong> that
+      benefit. The agency operates (or delegates) an <strong>government agent</strong> that
       acts strictly within that authority. AGP moves <em>requests</em> and
       <em>receipts</em>; it never moves <em>authority</em>. An agent assembles, asks, and
       reports back &mdash; it does not <em>become</em> the government, and the agency can
@@ -219,12 +274,12 @@ return [
  * ACTORS
  * ==================================================================== */
 { slug: 'actors',
-  desc: 'AGP is agent-to-agent: a constituent-side agent (the person’s own or an intermediary’s) speaks to a government agency agent that represents the agency of record. The four actors are Constituent, Agent, Intermediary, and Government agency.',
+  desc: 'AGP is agent-to-agent: a constituent-side agent (the person’s own or an intermediary’s) speaks to a government agent that represents the agency of record. The four actors are Constituent, Agent, Intermediary, and Government agency.',
   body: `      <p class="eyebrow">Specification</p>
       <h1>Actors &amp; roles</h1>
       <p class="lede">AGP is an <strong>agent-to-agent</strong> protocol. Its core
       interaction is between a <strong>constituent-side agent</strong> and a
-      <strong>government agency agent</strong>. Behind those agents stand the people and
+      <strong>government agent</strong>. Behind those agents stand the people and
       institutions they represent: four actors, one of which &mdash; the intermediary &mdash; is
       distinctive to the government context.</p>
 
@@ -232,7 +287,7 @@ return [
         <div class="figure-box">
           <svg viewBox="0 0 760 360" role="img" aria-labelledby="actorsDiagTitle actorsDiagDesc" width="760" height="360">
             <title id="actorsDiagTitle">AGP agent-to-agent actor diagram</title>
-            <desc id="actorsDiagDesc">A constituent (and an intermediary who can act for them) is represented by a constituent-side agent on the left. A government agency, the agency of record, is represented by a government agency agent on the right. The two agents exchange AGP messages: the constituent agent sends requests, the agency agent returns receipts. Authority over eligibility and provisioning stays with the agency of record.</desc>
+            <desc id="actorsDiagDesc">A constituent (and an intermediary who can act for them) is represented by a constituent-side agent on the left. A government agency, the agency of record, is represented by a government agent on the right. The two agents exchange AGP messages: the constituent agent sends requests, the government agent returns receipts. Authority over eligibility and provisioning stays with the agency of record.</desc>
             <defs>
               <marker id="aarrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#3c4a63"/></marker>
             </defs>
@@ -250,7 +305,7 @@ return [
               <text x="330" y="176" text-anchor="middle" font-size="15" font-weight="700" fill="#14358f">agent</text>
               <text x="330" y="206" text-anchor="middle" font-size="11.5" fill="#3c4a63">acts on behalf of</text>
               <text x="330" y="221" text-anchor="middle" font-size="11.5" fill="#3c4a63">the constituent</text>
-              <!-- agency agent -->
+              <!-- government agent -->
               <rect x="470" y="120" width="160" height="120" rx="14" fill="#fff" stroke="#0f766e" stroke-width="2.5"/>
               <text x="550" y="158" text-anchor="middle" font-size="15" font-weight="700" fill="#0f766e">Agency</text>
               <text x="550" y="176" text-anchor="middle" font-size="15" font-weight="700" fill="#0f766e">agent</text>
@@ -292,7 +347,7 @@ return [
           <tr><td><strong>Constituent</strong></td><td>The person or household seeking a service or benefit. The source of authority.</td><td>&mdash; (is represented)</td></tr>
           <tr><td><strong>Agent</strong></td><td>Software acting on the constituent&rsquo;s behalf &mdash; the Public AI Option, a state agent, or a trusted third-party / NGO agent.</td><td>Constituent-side agent</td></tr>
           <tr><td><strong>Intermediary</strong></td><td>NGOs, navigators, caseworkers, trusted orgs (and data intermediaries) that assist constituents &mdash; including by running an agent for them.</td><td>Constituent-side agent (for others)</td></tr>
-          <tr><td><strong>Government agency</strong></td><td>The service provider &mdash; the <strong>agency of record</strong> that retains authority over eligibility and provisioning.</td><td>Agency agent</td></tr>
+          <tr><td><strong>Government agency</strong></td><td>The service provider &mdash; the <strong>agency of record</strong> that retains authority over eligibility and provisioning.</td><td>Government agent</td></tr>
         </tbody>
       </table>
       </div>
@@ -305,11 +360,11 @@ return [
       ${h('agent', 'Constituent-side agent')}
       <p>Software acting on the constituent&rsquo;s behalf &mdash; discovering services, assembling
       attributes, checking eligibility, submitting requests, and relaying receipts by
-      speaking to agency agents. It may be the shared &ldquo;Public AI Option,&rdquo; a
+      speaking to government agents. It may be the shared &ldquo;Public AI Option,&rdquo; a
       state-operated agent, or a trusted third-party or NGO agent. It is a fiduciary of
       <em>action</em>, never a decision-maker of record.</p>
 
-      ${h('agency-agent', 'Government agency agent')}
+      ${h('government-agent', 'Government agent')}
       <p>The agency&rsquo;s machine endpoint and counterpart in every exchange. The agency
       agent advertises the agency&rsquo;s services, answers eligibility queries, verifies
       authorization, advances <a href="schema.html#session"><code>ServiceSession</code></a>s,
@@ -341,7 +396,7 @@ return [
         <p class="callout__label">Trust relationships in one line</p>
         <p>The <strong>constituent</strong> authorizes a <strong>constituent-side agent</strong>
         (possibly run by an <strong>intermediary</strong>) to advance a standardized
-        <strong>session</strong>, agent-to-agent, with the <strong>agency agent</strong> of the
+        <strong>session</strong>, agent-to-agent, with the <strong>government agent</strong> of the
         <strong>agency of record</strong>, which alone decides and provisions, then returns an
         authoritative determination along the same chain.</p>
       </div>`
@@ -357,7 +412,7 @@ return [
       <p class="lede">AGP keeps a deliberately small core &mdash; and it is smaller than it
       looks. Rather than a long pipeline of separate objects, the protocol turns on
       <strong>one living record, the <code>ServiceSession</code></strong>, that a constituent
-      agent and an agency agent advance together: a published <strong>catalog</strong> on one
+      agent and a government agent advance together: a published <strong>catalog</strong> on one
       end, an authoritative <strong>determination</strong> on the other. Concrete shapes live
       on <a href="schema.html">The schema</a>.</p>
 
@@ -435,11 +490,11 @@ return [
  * FLOW
  * ==================================================================== */
 { slug: 'flow', wide: true,
-  desc: 'The canonical AGP flow between a constituent-side agent and a government agency agent: service discovery, eligibility assessment, authorization and consent, service request and delivery, and receipt, status and recourse.',
+  desc: 'The canonical AGP flow between a constituent-side agent and a government agent: service discovery, eligibility assessment, authorization and consent, service request and delivery, and receipt, status and recourse.',
   body: `      <p class="eyebrow">Specification &middot; the heart of AGP</p>
       <h1>The canonical flow</h1>
       <p class="lede">A government interaction in AGP is <strong>one
-      <code>ServiceSession</code></strong> that a constituent agent and an agency agent
+      <code>ServiceSession</code></strong> that a constituent agent and a government agent
       advance together &mdash; agent-to-agent &mdash; through a <strong>status lifecycle</strong>.
       The same five conceptual steps still apply, but each is an <em>operation on the
       session</em> rather than a separate object. Often the life event itself &mdash; a job loss,
@@ -508,7 +563,7 @@ return [
         <li>
           ${h3('s1','Discovery')}
           <span class="step-type">read the Catalog</span>
-          <p>The constituent agent reads the agency agent&rsquo;s published
+          <p>The constituent agent reads the government agent&rsquo;s published
           <a href="schema.html#catalog">catalog</a> to learn which services exist, who&rsquo;s
           eligible, what&rsquo;s needed, through which channels, and which capabilities the agency
           supports. Discovery is read-only and uses no constituent data &mdash; it answers
@@ -537,7 +592,7 @@ return [
         <li>
           ${h3('s4','Submit &amp; delivery')}
           <span class="step-type">submit &rarr; status: in_progress &rarr; completed</span>
-          <p>The agent <strong>submits</strong> the session to the agency agent. The
+          <p>The agent <strong>submits</strong> the session to the government agent. The
           <strong>agency of record</strong> verifies the authorization, makes the determination,
           and &mdash; instantly where it can &mdash; provisions the benefit, driving the session to
           <code>completed</code> (or <code>requires_intervention</code> for review, or
@@ -593,7 +648,7 @@ return [
       </div>
 
       ${h('catalog', 'The catalog (discovery + capabilities)')}
-      <p>An agency agent advertises itself, its services, and <strong>what it supports</strong>
+      <p>An government agent advertises itself, its services, and <strong>what it supports</strong>
       with a single published <strong>catalog</strong> &mdash; the &ldquo;publish once, read
       everywhere&rdquo; artifact. The <code>capabilities</code> block lets agents negotiate rather
       than guess.</p>
@@ -602,7 +657,7 @@ return [
   <span class="c-key">"agp"</span>: <span class="c-str">"2026-06-01"</span>,                  <span class="c-com">// date-based version</span>
   <span class="c-key">"agencyOfRecord"</span>: { <span class="c-key">"id"</span>: <span class="c-str">"us-xx-dhs"</span>,
     <span class="c-key">"name"</span>: <span class="c-str">"State of XX, Department of Human Services"</span>, <span class="c-key">"jurisdiction"</span>: <span class="c-str">"us-xx"</span> },
-  <span class="c-key">"agencyAgent"</span>: { <span class="c-key">"endpoint"</span>: <span class="c-str">"https://agency.example.gov/agp"</span>,
+  <span class="c-key">"governmentAgent"</span>: { <span class="c-key">"endpoint"</span>: <span class="c-str">"https://agency.example.gov/agp"</span>,
     <span class="c-key">"transports"</span>: [<span class="c-str">"mcp"</span>, <span class="c-str">"https+json"</span>], <span class="c-key">"authorization"</span>: <span class="c-str">"ref:companion-layer"</span> },
   <span class="c-key">"capabilities"</span>: {
     <span class="c-key">"channels"</span>: [<span class="c-str">"agp"</span>, <span class="c-str">"web"</span>, <span class="c-str">"in-person"</span>, <span class="c-str">"phone"</span>],
@@ -746,7 +801,7 @@ return [
 }</code></pre>
 
       ${h('authorization-obj', 'Authorization — the deferred trust layer')}
-      <p>A scoped grant the agent attaches to the session before submit; the agency agent
+      <p>A scoped grant the agent attaches to the session before submit; the government agent
       verifies it. AGP carves the <em>proof</em> out into a separate companion layer &mdash; the
       same move agentic commerce makes with delegated payment (see
       <a href="related-work.html#acp">Related work</a>). v0.1 specifies the shape and scope;
@@ -772,7 +827,7 @@ return [
       decides whether a program can safely use it.</p>
 
       ${h('transport', 'Transport &amp; versioning')}
-      <p>AGP defines <em>what</em> moves, not a new wire protocol. Agency agents advertise
+      <p>AGP defines <em>what</em> moves, not a new wire protocol. Government agents advertise
       their <code>transports</code> &mdash; an existing agent transport such as
       <abbr title="Model Context Protocol">MCP</abbr> or plain HTTPS+JSON. The whole spec is
       <strong>date-versioned</strong> (<code>YYYY-MM-DD</code>), sent as <code>API-Version</code>
@@ -812,14 +867,14 @@ return [
 
       ${h('requirement', 'The requirement')}
       <p>For any AGP flow that acts on a constituent&rsquo;s behalf, four things must be true,
-      and an agency agent must be able to satisfy itself of each before the agency of
+      and a government agent must be able to satisfy itself of each before the agency of
       record acts:</p>
       <ol>
         <li><strong>Authorization exists.</strong> A specific constituent granted a
         specific agent permission to act for them.</li>
         <li><strong>Consent is scoped.</strong> The grant names the purpose, the data it
         covers, and the program(s) it applies to &mdash; not a blanket license.</li>
-        <li><strong>It is verifiable by the agency.</strong> The agency agent can check the
+        <li><strong>It is verifiable by the agency.</strong> The government agent can check the
         authorization against the request it received.</li>
         <li><strong>It is revocable and auditable.</strong> The constituent can withdraw
         it, and there is a durable record of what was authorized and used.</li>
@@ -835,7 +890,7 @@ return [
         <tbody>
           <tr><td><strong>Grant</strong></td><td>The constituent issues a scoped <code>Authorization</code> to a named agent at step&nbsp;3.</td><td>The signature / credential format proving it.</td></tr>
           <tr><td><strong>Scope</strong></td><td>The grant carries purpose, data categories, and program scope.</td><td>The machine-enforceable mandate encoding.</td></tr>
-          <tr><td><strong>Verify</strong></td><td>The agency agent checks the session&rsquo;s <code>Authorization</code> on <code>submit</code>.</td><td>The identity-proofing and verification protocol.</td></tr>
+          <tr><td><strong>Verify</strong></td><td>The government agent checks the session&rsquo;s <code>Authorization</code> on <code>submit</code>.</td><td>The identity-proofing and verification protocol.</td></tr>
           <tr><td><strong>Revoke</strong></td><td>An authorization can be revoked and the revocation is reflected in the session status.</td><td>Revocation propagation / freshness guarantees.</td></tr>
           <tr><td><strong>Audit</strong></td><td>The <code>Determination</code> records what authorization was relied upon.</td><td>Tamper-evidence / non-repudiation cryptography.</td></tr>
         </tbody>
@@ -897,7 +952,7 @@ return [
         engagement. She uses a <strong>Public AI Option agent</strong>; her local food bank, a
         trusted <strong>intermediary</strong>, is on hand if she needs a human; and the
         <strong>agency of record</strong> is the State of XX Department of Human Services (DHS),
-        reachable through its <strong>agency agent</strong>.</p>
+        reachable through its <strong>government agent</strong>.</p>
       </div>
 
       <ol class="steps">
@@ -922,7 +977,7 @@ return [
           <span class="step-type">update &rarr; status: ready_to_submit</span>
           <div class="grid grid-2">
             <div class="card"><p class="card__role">What Maria experiences</p><p>One clear question: <em>&ldquo;Okay to apply for SNAP for you, using your household, income, and address &mdash; just for this?&rdquo;</em> She says yes.</p></div>
-            <div class="card"><p class="card__role">What the system carries</p><p>The agent attaches a scoped <a href="schema.html#authorization-obj">Authorization</a> to the session, moving it to <code>ready_to_submit</code>. The DHS agency agent will verify it on submit.</p></div>
+            <div class="card"><p class="card__role">What the system carries</p><p>The agent attaches a scoped <a href="schema.html#authorization-obj">Authorization</a> to the session, moving it to <code>ready_to_submit</code>. The DHS government agent will verify it on submit.</p></div>
           </div>
           <div class="callout callout--gap" style="margin:.9rem 0 0;">
             <p class="callout__label">Where the gap shows up</p>
@@ -967,7 +1022,7 @@ return [
         <tbody>
           <tr><td>1 &middot; Discovery</td><td>read <code>Catalog</code></td><td><em>(no session)</em></td><td>Published by DHS</td></tr>
           <tr><td>2 &middot; Eligibility</td><td><code>create</code></td><td><code>gathering</code></td><td>Rules owned by DHS</td></tr>
-          <tr><td>3 &middot; Authorization</td><td><code>update</code></td><td><code>ready_to_submit</code></td><td>Verified by agency agent</td></tr>
+          <tr><td>3 &middot; Authorization</td><td><code>update</code></td><td><code>ready_to_submit</code></td><td>Verified by government agent</td></tr>
           <tr><td>4 &middot; Submit</td><td><code>submit</code></td><td><code>in_progress</code> &rarr; <code>completed</code></td><td><strong>DHS decides &amp; provisions</strong></td></tr>
           <tr><td>5 &middot; Determination</td><td><code>read</code></td><td><code>completed</code> (provisional)</td><td>Issued by DHS</td></tr>
         </tbody>
@@ -979,7 +1034,7 @@ return [
  * GET STARTED (for agencies)
  * ==================================================================== */
 { slug: 'get-started', wide: true,
-  desc: 'A practical guide for government agencies: how to make your services accessible to agents in five steps — describe your services, express eligibility rules, stand up an agency agent, choose delivery patterns, and return receipts.',
+  desc: 'A practical guide for government agencies: how to make your services accessible to agents in five steps — describe your services, express eligibility rules, stand up a government agent, choose delivery patterns, and return receipts.',
   body: `      <p class="eyebrow">For agencies</p>
       <h1>Get started: make your services accessible to agents</h1>
       <p class="lede">If you run a public service, here is what adopting AGP actually
@@ -991,13 +1046,13 @@ return [
         <p class="callout__label">The one rule that never changes</p>
         <p>Adopting AGP does <strong>not</strong> hand decisions to an agent. Your agency
         remains the <strong>agency of record</strong>. AGP gives agents a standard way to
-        <em>ask</em>; your agency agent enforces your rules and your authority on every
+        <em>ask</em>; your government agent enforces your rules and your authority on every
         request.</p>
       </div>
 
       ${h('overview', 'What you publish, and what you implement')}
       <p>Two published artifacts (a catalog and your rules) and one small resource (the
-      session) on your agency agent.</p>
+      session) on your government agent.</p>
       <ol class="steps">
         <li>
           ${h3('g1','Publish your catalog')}
@@ -1020,7 +1075,7 @@ return [
         </li>
         <li>
           ${h3('g3','Implement the session resource')}
-          <p>Expose an <strong>agency agent</strong> over a transport you already run (an
+          <p>Expose an <strong>government agent</strong> over a transport you already run (an
           <abbr title="Model Context Protocol">MCP</abbr> server or HTTPS+JSON) that implements
           the five <a href="schema.html#operations">operations</a> on a
           <a href="schema.html#session"><code>ServiceSession</code></a>:</p>
@@ -1058,7 +1113,7 @@ return [
       </ol>
 
       ${h('verify', 'Verifying authorization (the part you must enforce)')}
-      <p>On <code>submit</code>, your agency agent must check that a valid, in-scope
+      <p>On <code>submit</code>, your government agent must check that a valid, in-scope
       <a href="schema.html#authorization-obj"><code>Authorization</code></a> covers the session
       before the agency of record acts. v0.1 defines the
       <a href="authorization.html#interaction-points">interaction points</a>; the cryptographic
@@ -1122,7 +1177,7 @@ return [
         agreement of the stewarding group; proposals graduate by demonstrated use and
         consensus.</li>
         <li><strong>Reference implementations live separately.</strong> The spec and its
-        reference agency agents are versioned independently.</li>
+        reference government agents are versioned independently.</li>
       </ul>
 
       <div class="callout callout--official">
@@ -1137,9 +1192,9 @@ return [
       ${h('roles', 'Who participates')}
       <div class="grid grid-2">
         <div class="card"><h3>Stewarding nonprofit</h3><p>Hosts the spec, runs the process, keeps it neutral, and convenes releases by consensus.</p></div>
-        <div class="card"><h3>State &amp; local agencies</h3><p>Co-author the vocabulary and flow against real systems and run agency agents.</p></div>
+        <div class="card"><h3>State &amp; local agencies</h3><p>Co-author the vocabulary and flow against real systems and run government agents.</p></div>
         <div class="card"><h3>Intermediaries &amp; labs</h3><p>NGOs, navigators, legal-aid orgs, and innovation labs surface equity and real-world constraints.</p></div>
-        <div class="card"><h3>Agent &amp; tool builders</h3><p>Implement compliant agents and reference agency agents, and stress-test the spec through use.</p></div>
+        <div class="card"><h3>Agent &amp; tool builders</h3><p>Implement compliant agents and reference government agents, and stress-test the spec through use.</p></div>
       </div>
 
       ${h('contribute', 'How to get involved')}
@@ -1185,9 +1240,9 @@ return [
       ${h('shape', 'The likely path')}
       <ol class="steps">
         <li><h3 style="margin-top:-.2rem">v0.1 — this strawman</h3><p>Narrative spec + draft schema, published for scrutiny and co-authorship. Goal: agreement on actors, flow, and the core objects.</p></li>
-        <li><h3>v0.x — co-authored schema</h3><p>Work <em>with</em> agencies to formalize the core types against real program data. Pilot one service in one jurisdiction with a real agency agent.</p></li>
+        <li><h3>v0.x — co-authored schema</h3><p>Work <em>with</em> agencies to formalize the core types against real program data. Pilot one service in one jurisdiction with a real government agent.</p></li>
         <li><h3>Companion — authorization layer</h3><p>Advance the authorization / consent / identity mechanism in parallel, likely as its own standard, against AGP&rsquo;s defined interaction points.</p></li>
-        <li><h3>v1.0 — reference implementations</h3><p>Reference agency agents and templatized protocols states can adopt; broaden to more services and jurisdictions.</p></li>
+        <li><h3>v1.0 — reference implementations</h3><p>Reference government agents and templatized protocols states can adopt; broaden to more services and jurisdictions.</p></li>
       </ol>
 
       <div class="callout">
@@ -1242,7 +1297,7 @@ return [
       organizational boundaries.</p>
       <p><strong>What AGP took:</strong> the core posture that this is fundamentally
       <strong>agent-to-agent</strong> &mdash; a <a href="actors.html#agent">constituent-side
-      agent</a> talking to a <a href="actors.html#agency-agent">government agency agent</a> &mdash;
+      agent</a> talking to a <a href="actors.html#government-agent">government agent</a> &mdash;
       rather than an app calling an API.</p>
 
       ${h('vip', 'Voting Information Project (VIP)')}
@@ -1280,7 +1335,7 @@ return [
       <p>An existing protocol for connecting agents to tools and data sources through a
       common interface.</p>
       <p><strong>What AGP took:</strong> a likely <a href="schema.html#transport">transport</a>.
-      Rather than inventing a wire protocol, AGP agency agents can expose AGP-shaped
+      Rather than inventing a wire protocol, AGP government agents can expose AGP-shaped
       capabilities over MCP (or plain HTTPS+JSON), so AGP rides infrastructure agents already
       speak. But MCP is <em>plumbing</em> &mdash; it standardizes how an agent connects, not what a
       government interaction <em>means</em>. AGP is the shared meaning on top; for why that
@@ -1355,7 +1410,7 @@ return [
  * GLOSSARY
  * ==================================================================== */
 { slug: 'glossary',
-  desc: 'Definitions of the key AGP terms: the four actors, the constituent and agency agents, the agent-to-agent model, the core vocabulary types, agency-of-record, and validate-after.',
+  desc: 'Definitions of the key AGP terms: the four actors, the constituent and government agents, the agent-to-agent model, the core vocabulary types, agency-of-record, and validate-after.',
   body: `      <p class="eyebrow">Reference</p>
       <h1>Glossary</h1>
       <p class="lede">Key AGP terms in one place. Vocabulary types are defined more fully in
@@ -1364,14 +1419,11 @@ return [
       see <a href="related-work.html">Related work</a>.</p>
 
       <dl class="deflist">
-        <dt>Agency agent</dt>
-        <dd>The government agency&rsquo;s machine endpoint in an AGP exchange. It advertises services, answers eligibility queries, verifies authorization, advances service sessions, and returns authoritative determinations &mdash; strictly within the authority of the agency of record.</dd>
-
         <dt>Agency of record</dt>
         <dd>The government agency that owns a service and retains authority over eligibility determination and provisioning. Authority never transfers away from it to an agent.</dd>
 
         <dt>Agent-to-agent (A2A)</dt>
-        <dd>AGP&rsquo;s core posture: a constituent-side agent and a government agency agent exchange standardized messages directly, rather than an app calling a bespoke API.</dd>
+        <dd>AGP&rsquo;s core posture: a constituent-side agent and a government agent exchange standardized messages directly, rather than an app calling a bespoke API.</dd>
 
         <dt>Authorization</dt>
         <dd>A scoped grant from a constituent letting a specific agent act on their behalf and use specific data for a specific purpose. Attached to a session before submit; its cryptographic proof is deferred to the companion layer.</dd>
@@ -1380,7 +1432,7 @@ return [
         <dd>The block in an agency&rsquo;s catalog stating which channels, delivery patterns, and intervention types it supports, so agents negotiate rather than assume.</dd>
 
         <dt>Catalog</dt>
-        <dd>The single published document an agency agent serves to advertise itself and its services &mdash; the entry point for discovery and the &ldquo;publish once&rdquo; artifact.</dd>
+        <dd>The single published document a government agent serves to advertise itself and its services &mdash; the entry point for discovery and the &ldquo;publish once&rdquo; artifact.</dd>
 
         <dt>Companion layer</dt>
         <dd>The deferred authorization / consent / identity mechanism that proves a constituent authorized an agent. AGP v1 defines its interaction points but not its cryptography.</dd>
@@ -1399,6 +1451,9 @@ return [
 
         <dt>Extension</dt>
         <dd>A namespaced set of program- or jurisdiction-specific terms layered on the small core. May graduate into core by consensus.</dd>
+
+        <dt>Government agent</dt>
+        <dd>The government agency&rsquo;s machine endpoint in an AGP exchange. It advertises services, answers eligibility queries, verifies authorization, advances service sessions, and returns authoritative determinations &mdash; strictly within the authority of the agency of record. (The constituent&rsquo;s counterpart is the constituent-side agent.)</dd>
 
         <dt>Idempotency key</dt>
         <dd>A client-supplied key on every write so a retried operation never creates a duplicate &mdash; e.g. one job loss never yields two applications.</dd>
@@ -1449,7 +1504,7 @@ return [
       consent), checks them against published rules, and submits a request. The
       <a href="actors.html#agency">agency of record</a> &mdash; the government &mdash; makes the
       actual eligibility determination and provisions the benefit, through its
-      <a href="actors.html#agency-agent">agency agent</a>. Authority <em>never</em> moves to
+      <a href="actors.html#government-agent">government agent</a>. Authority <em>never</em> moves to
       your agent.</p>
 
       ${h('liable', 'Who is liable if something goes wrong?')}
@@ -1518,7 +1573,7 @@ return [
       your <a href="schema.html#eligibility">eligibility rules</a>, and implement the five
       <a href="schema.html#operations">operations</a> on a
       <a href="schema.html#session">ServiceSession</a> on your
-      <a href="actors.html#agency-agent">agency agent</a> &mdash; verifying authorization on
+      <a href="actors.html#government-agent">government agent</a> &mdash; verifying authorization on
       <code>submit</code> and producing a <a href="schema.html#determination">Determination</a>.
       The <a href="get-started.html">Get started</a> guide walks through each.</p>
 

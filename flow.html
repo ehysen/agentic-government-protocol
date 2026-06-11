@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The canonical flow — AGP</title>
-  <meta name="description" content="The canonical AGP flow between a constituent-side agent and a government agency agent: service discovery, eligibility assessment, authorization and consent, service request and delivery, and receipt, status and recourse.">
-  <link rel="stylesheet" href="assets/styles.css?v=mq9e72ov">
+  <meta name="description" content="The canonical AGP flow between a constituent-side agent and a government agent: service discovery, eligibility assessment, authorization and consent, service request and delivery, and receipt, status and recourse.">
+  <link rel="stylesheet" href="assets/styles.css?v=mq9g2n1g">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d4ed8'/%3E%3Cg fill='none' stroke='white' stroke-width='4' stroke-linecap='round'%3E%3Ccircle cx='20' cy='20' r='6'/%3E%3Ccircle cx='44' cy='20' r='6'/%3E%3Ccircle cx='32' cy='46' r='6'/%3E%3Cpath d='M24 24 28 40M40 24 36 40M26 20h12'/%3E%3C/g%3E%3C/svg%3E">
 </head>
 <body>
@@ -77,7 +77,7 @@
       <p class="eyebrow">Specification &middot; the heart of AGP</p>
       <h1>The canonical flow</h1>
       <p class="lede">A government interaction in AGP is <strong>one
-      <code>ServiceSession</code></strong> that a constituent agent and an agency agent
+      <code>ServiceSession</code></strong> that a constituent agent and a government agent
       advance together &mdash; agent-to-agent &mdash; through a <strong>status lifecycle</strong>.
       The same five conceptual steps still apply, but each is an <em>operation on the
       session</em> rather than a separate object. Often the life event itself &mdash; a job loss,
@@ -146,7 +146,7 @@
         <li>
           <h3 class="anchored" id="s1">Discovery<a class="h-anchor" href="#s1" aria-label="Link to this section">#</a></h3>
           <span class="step-type">read the Catalog</span>
-          <p>The constituent agent reads the agency agent&rsquo;s published
+          <p>The constituent agent reads the government agent&rsquo;s published
           <a href="schema.html#catalog">catalog</a> to learn which services exist, who&rsquo;s
           eligible, what&rsquo;s needed, through which channels, and which capabilities the agency
           supports. Discovery is read-only and uses no constituent data &mdash; it answers
@@ -175,7 +175,7 @@
         <li>
           <h3 class="anchored" id="s4">Submit &amp; delivery<a class="h-anchor" href="#s4" aria-label="Link to this section">#</a></h3>
           <span class="step-type">submit &rarr; status: in_progress &rarr; completed</span>
-          <p>The agent <strong>submits</strong> the session to the agency agent. The
+          <p>The agent <strong>submits</strong> the session to the government agent. The
           <strong>agency of record</strong> verifies the authorization, makes the determination,
           and &mdash; instantly where it can &mdash; provisions the benefit, driving the session to
           <code>completed</code> (or <code>requires_intervention</code> for review, or
@@ -229,5 +229,6 @@
     </div>
   </div>
 </footer>
+<script src="assets/app.js?v=mq9g2n1g" defer></script>
 </body>
 </html>

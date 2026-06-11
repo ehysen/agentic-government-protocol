@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Glossary — AGP</title>
-  <meta name="description" content="Definitions of the key AGP terms: the four actors, the constituent and agency agents, the agent-to-agent model, the core vocabulary types, agency-of-record, and validate-after.">
-  <link rel="stylesheet" href="assets/styles.css?v=mq9e72ov">
+  <meta name="description" content="Definitions of the key AGP terms: the four actors, the constituent and government agents, the agent-to-agent model, the core vocabulary types, agency-of-record, and validate-after.">
+  <link rel="stylesheet" href="assets/styles.css?v=mq9g2n1g">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d4ed8'/%3E%3Cg fill='none' stroke='white' stroke-width='4' stroke-linecap='round'%3E%3Ccircle cx='20' cy='20' r='6'/%3E%3Ccircle cx='44' cy='20' r='6'/%3E%3Ccircle cx='32' cy='46' r='6'/%3E%3Cpath d='M24 24 28 40M40 24 36 40M26 20h12'/%3E%3C/g%3E%3C/svg%3E">
 </head>
 <body>
@@ -82,14 +82,11 @@
       see <a href="related-work.html">Related work</a>.</p>
 
       <dl class="deflist">
-        <dt>Agency agent</dt>
-        <dd>The government agency&rsquo;s machine endpoint in an AGP exchange. It advertises services, answers eligibility queries, verifies authorization, advances service sessions, and returns authoritative determinations &mdash; strictly within the authority of the agency of record.</dd>
-
         <dt>Agency of record</dt>
         <dd>The government agency that owns a service and retains authority over eligibility determination and provisioning. Authority never transfers away from it to an agent.</dd>
 
         <dt>Agent-to-agent (A2A)</dt>
-        <dd>AGP&rsquo;s core posture: a constituent-side agent and a government agency agent exchange standardized messages directly, rather than an app calling a bespoke API.</dd>
+        <dd>AGP&rsquo;s core posture: a constituent-side agent and a government agent exchange standardized messages directly, rather than an app calling a bespoke API.</dd>
 
         <dt>Authorization</dt>
         <dd>A scoped grant from a constituent letting a specific agent act on their behalf and use specific data for a specific purpose. Attached to a session before submit; its cryptographic proof is deferred to the companion layer.</dd>
@@ -98,7 +95,7 @@
         <dd>The block in an agency&rsquo;s catalog stating which channels, delivery patterns, and intervention types it supports, so agents negotiate rather than assume.</dd>
 
         <dt>Catalog</dt>
-        <dd>The single published document an agency agent serves to advertise itself and its services &mdash; the entry point for discovery and the &ldquo;publish once&rdquo; artifact.</dd>
+        <dd>The single published document a government agent serves to advertise itself and its services &mdash; the entry point for discovery and the &ldquo;publish once&rdquo; artifact.</dd>
 
         <dt>Companion layer</dt>
         <dd>The deferred authorization / consent / identity mechanism that proves a constituent authorized an agent. AGP v1 defines its interaction points but not its cryptography.</dd>
@@ -117,6 +114,9 @@
 
         <dt>Extension</dt>
         <dd>A namespaced set of program- or jurisdiction-specific terms layered on the small core. May graduate into core by consensus.</dd>
+
+        <dt>Government agent</dt>
+        <dd>The government agency&rsquo;s machine endpoint in an AGP exchange. It advertises services, answers eligibility queries, verifies authorization, advances service sessions, and returns authoritative determinations &mdash; strictly within the authority of the agency of record. (The constituent&rsquo;s counterpart is the constituent-side agent.)</dd>
 
         <dt>Idempotency key</dt>
         <dd>A client-supplied key on every write so a retried operation never creates a duplicate &mdash; e.g. one job loss never yields two applications.</dd>
@@ -175,5 +175,6 @@
     </div>
   </div>
 </footer>
+<script src="assets/app.js?v=mq9g2n1g" defer></script>
 </body>
 </html>

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The schema — AGP</title>
   <meta name="description" content="The concrete AGP schema: draft JSON shapes for the agency catalog, Service, EligibilityRule, Authorization, ServiceRequest, and Receipt — plus how AGP reuses existing government data definitions and rides existing agent transports.">
-  <link rel="stylesheet" href="assets/styles.css?v=mq9e72ov">
+  <link rel="stylesheet" href="assets/styles.css?v=mq9g2n1g">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d4ed8'/%3E%3Cg fill='none' stroke='white' stroke-width='4' stroke-linecap='round'%3E%3Ccircle cx='20' cy='20' r='6'/%3E%3Ccircle cx='44' cy='20' r='6'/%3E%3Ccircle cx='32' cy='46' r='6'/%3E%3Cpath d='M24 24 28 40M40 24 36 40M26 20h12'/%3E%3C/g%3E%3C/svg%3E">
 </head>
 <body>
@@ -93,7 +93,7 @@
       </div>
 
       <h2 class="anchored" id="catalog">The catalog (discovery + capabilities)<a class="h-anchor" href="#catalog" aria-label="Link to this section">#</a></h2>
-      <p>An agency agent advertises itself, its services, and <strong>what it supports</strong>
+      <p>An government agent advertises itself, its services, and <strong>what it supports</strong>
       with a single published <strong>catalog</strong> &mdash; the &ldquo;publish once, read
       everywhere&rdquo; artifact. The <code>capabilities</code> block lets agents negotiate rather
       than guess.</p>
@@ -102,7 +102,7 @@
   <span class="c-key">"agp"</span>: <span class="c-str">"2026-06-01"</span>,                  <span class="c-com">// date-based version</span>
   <span class="c-key">"agencyOfRecord"</span>: { <span class="c-key">"id"</span>: <span class="c-str">"us-xx-dhs"</span>,
     <span class="c-key">"name"</span>: <span class="c-str">"State of XX, Department of Human Services"</span>, <span class="c-key">"jurisdiction"</span>: <span class="c-str">"us-xx"</span> },
-  <span class="c-key">"agencyAgent"</span>: { <span class="c-key">"endpoint"</span>: <span class="c-str">"https://agency.example.gov/agp"</span>,
+  <span class="c-key">"governmentAgent"</span>: { <span class="c-key">"endpoint"</span>: <span class="c-str">"https://agency.example.gov/agp"</span>,
     <span class="c-key">"transports"</span>: [<span class="c-str">"mcp"</span>, <span class="c-str">"https+json"</span>], <span class="c-key">"authorization"</span>: <span class="c-str">"ref:companion-layer"</span> },
   <span class="c-key">"capabilities"</span>: {
     <span class="c-key">"channels"</span>: [<span class="c-str">"agp"</span>, <span class="c-str">"web"</span>, <span class="c-str">"in-person"</span>, <span class="c-str">"phone"</span>],
@@ -246,7 +246,7 @@
 }</code></pre>
 
       <h2 class="anchored" id="authorization-obj">Authorization — the deferred trust layer<a class="h-anchor" href="#authorization-obj" aria-label="Link to this section">#</a></h2>
-      <p>A scoped grant the agent attaches to the session before submit; the agency agent
+      <p>A scoped grant the agent attaches to the session before submit; the government agent
       verifies it. AGP carves the <em>proof</em> out into a separate companion layer &mdash; the
       same move agentic commerce makes with delegated payment (see
       <a href="related-work.html#acp">Related work</a>). v0.1 specifies the shape and scope;
@@ -272,7 +272,7 @@
       decides whether a program can safely use it.</p>
 
       <h2 class="anchored" id="transport">Transport &amp; versioning<a class="h-anchor" href="#transport" aria-label="Link to this section">#</a></h2>
-      <p>AGP defines <em>what</em> moves, not a new wire protocol. Agency agents advertise
+      <p>AGP defines <em>what</em> moves, not a new wire protocol. Government agents advertise
       their <code>transports</code> &mdash; an existing agent transport such as
       <abbr title="Model Context Protocol">MCP</abbr> or plain HTTPS+JSON. The whole spec is
       <strong>date-versioned</strong> (<code>YYYY-MM-DD</code>), sent as <code>API-Version</code>
@@ -308,5 +308,6 @@
     </div>
   </div>
 </footer>
+<script src="assets/app.js?v=mq9g2n1g" defer></script>
 </body>
 </html>
